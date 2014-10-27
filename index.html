@@ -1,0 +1,243 @@
+<html>
+  <head>
+    <title>MArge Fifa</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <style>
+     .filterLabel {
+      margin-right: 5px;
+    }
+    .img-circle {
+      cursor: pointer;
+      height: 48px;
+      width: 48px;
+      vertical-align:middle !important; 
+    }
+    ul {
+      margin-top: 10px;
+    }
+    .middleData td {
+      vertical-align:middle !important;  
+    }
+
+    td {
+      font-size: 24px;
+    }
+
+    .Juan {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECIWVhdKdlJvbjAEiC3ZjYXJkX3Bob3RvKigzYzZiNTk5ZjAzMzM1MTU1NzNlNDE3Nzc4MDViMDkwYzc0MmMzMmY2MAFS850B0ncfEupIj0rfSIxJCL_ZKw?sz=48");
+    }
+
+    .Charly {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABDCNzEvb24t8i9CyILdmNhcmRfcGhvdG8qKGUwMzNiMTY0YTE4N2Q5ZTVhYzZlYWU0MjEwMTJjNzU5NGIzNjIxNTQwAQ8eeq4jHQCdb3q-V4PmpRd7PibY?sz=48");
+    }
+    .Hernan  {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/private/AIbEiAIAAABDCOj7loXP1IDxbiILdmNhcmRfcGhvdG8qKDcyNDZlZTU2ZDJmMTZjZWY1ZmUyMzUwYzk4NGZiMzRhNGNiMTkzOGQwAftZTim0nU6NnUHe9ykWRudTHTiv?sz=48");
+    }
+    .Gaby {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/private/AIbEiAIAAABECIzd2py-v5venQEiC3ZjYXJkX3Bob3RvKigyNTc5YjY0Y2FlMjM2Njc0YmM3NDJkMjcxMGE5ODgzYTM4ZDIyMjk2MAE-gbFzeepJvJT2xt4o6sR3i2Wp_A?sz=48");
+    }
+    .FerO {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABDCLzlmPDMm_SwFiILdmNhcmRfcGhvdG8qKGI2ZDgzMWRhN2QwNTlmOWNiZTcxY2VkOWJmMWI4MjhlZGE1ZGY4MGYwAcpulXxHmH12MHvFqPbTl13IBhQR?sz=48");
+    }
+    .Mauri {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABDCLTqsL_W0cveTyILdmNhcmRfcGhvdG8qKDBmYmZjZDc5MmFkZjY3ODExMGRmODRmNWRmMjk5ODA0YmEyY2VhYWMwAUKlDiBzacegcT28LgA2Hk4hzmmm?sz=48");
+    }
+    .Leandro {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECKfb44Cd8bLFrAEiC3ZjYXJkX3Bob3RvKigxNDQwNWYyNWFhMTk1MDU4MDRlYjVkNTQ3OWRmNDA1ZDAxZDRiMmFhMAFZjI9APFqEvd3e2_InCDSMXZFq_Q?sz=48");
+    }
+    .Santi {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABDCLbA8LbF4NPzOiILdmNhcmRfcGhvdG8qKDQzZTU1YTBmMGZhNTE4MjgxNThiY2NlNDFhMjBhMThmODA0ZDRiMzEwAUhvcqOryRVVWA3OypRI5zhrVy89?sz=48");
+    }
+    .Ariel {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECMylqqeqjrX4vgEiC3ZjYXJkX3Bob3RvKigyYzk5Y2YxNGZhNjkwZjMyM2MwYWM1YjczZjVlYzgzYzYwMjlkYWUxMAHQ1SvtVXeGb4kmrIHtT4n_i15W9A?sz=48");
+    }
+    .Leo {
+      background-image: url("pics/leo.png");
+    }
+    .Martin {
+      background-image: url("pics/martin.jpg");
+    }
+    .NicoL {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECMqkibSx_7SJigEiC3ZjYXJkX3Bob3RvKigzMDk0YmRlZWYzOWFlM2YyYmY2YTQyNWE1OGZiMjNhNzc4NDliODIxMAHY_wtUiGtUXONZhsNqvXWYH64Sbw?sz=48");
+    }
+    .NicoR {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABDCIP87cWd8ouociILdmNhcmRfcGhvdG8qKDU0MjQwZWI4YmViNWY2NGZkZTA0MmYyMjRhZmNhNjAwOWM4MzY3NzMwAcvPrAEb6wMJxQbKSHHBY0Ia-r3a?sz=48");
+    }
+    .Michu {
+      background-image: url("pics/michu.jpg");
+    }
+    .FerP {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABDCP-nvu6GiJuVVCILdmNhcmRfcGhvdG8qKGYzZGU2NjZmNDQxOTc5ZjIzNjNhN2E4OGUxNmRmYWMzOTZjZDlkNGUwAbJDpImCsw21Byzs_Xz0HbwdQ-kQ?sz=48");
+    }
+    .DaniG {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABDCLmmmqaIpOrlayILdmNhcmRfcGhvdG8qKDQwMjA2M2Q2NjM1NTk0NTA4ZjVlMjUzZGI4ZTUwYjZmYzljOWMwNDMwAYkrSRDfvi1LONg-o0hnqBNALA6S?sz=48");
+    }
+    .Malcom {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECJ65oK3y0Pi76AEiC3ZjYXJkX3Bob3RvKig5MjVlMjgzNzRhYTZiYjEzZmYzMDI3ZDU4ZmZjMmJjMDA1MzIxYzA4MAE7usmKsIaBSbT8WE4mLAwxW3MXDg?sz=48");
+    }
+    .Gamba {
+      background-image: url("https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECLOf8pqU-Kj-ugEiC3ZjYXJkX3Bob3RvKig2ZDVkMjFlOTFmYTZhNGJlZTU0MjcyNjRjYjZhZjlmMjA5YTU3YmI3MAERgy6VesqpWATCVQtRFbZhD3udfA?sz=48");
+    }
+    .Cristian {
+      background-image: url( "https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECJHj_K21iJGYnQEiC3ZjYXJkX3Bob3RvKigwZWNkMjg4MjUzOWM0OTU2ZmRmZDEwMTQzNTA2MTcwMmMwYzg5ZWQ1MAEEdFsN6sonHZzKOW-6PoSAUc4BNQ?sz=48");
+    }
+    .Sebas {
+      background-image: url( "pics/sebastian.jpg");
+    }
+    .team {
+      width: 57px;
+      height: 50px;
+      display: inline-block;
+      vertical-align:middle !important; 
+    }
+    .Argentina {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/arg.png");
+    }
+    .Alemania {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/ger.png");
+    }
+    .Brasil {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/bra.png");
+    }
+    .Espana {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/esp.png");
+    }
+    .Francia {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/fra.png");
+    }
+    .Holanda {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/ned.png");
+    }
+    .Inglaterra {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/eng.png");
+    }
+    .Italia {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/ita.png");
+    }
+    .Mexico {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/mex.png");
+    }
+    .Uruguay {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/uru.png");
+    }
+    .Colombia {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/col.png");
+    }
+    .CdMarfil {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/civ.png");
+    }
+    .EEUU {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/usa.png");
+    }
+    .Portugal {
+      background-image: url("http://www.fifa.com/imgml/flags/reflected/m/por.png");
+    }
+    </style>
+  </head>
+  <body ng-app="fifa" ng-controller="MainCtrl">
+    <div style="width:800px" class="center-block">
+       <img src="http://www.medallia.com/wp-content/uploads/2013/07/medallia-logo-2013.png">
+       <img src="http://www.fifplay.com/images/public/fifa-15-logo.jpg" style="width:10%;height:10%;">
+
+       <ul class="nav nav-tabs" role="tablist">
+          <li ng-repeat="tournament in tournaments"  ng-class="{active:theTournament===tournament}">
+            <a href="#" ng-click="selectTournament(tournament)" >{{tournament}}</a>
+          </li>
+       </ul>
+
+       <ul class="nav nav-justified" >
+          <li ng-repeat="phase in tournamentsConfig[theTournament].phases"  ng-class="{active:thePhase===phase}">
+            <a href="#" ng-click="selectPhase(phase)" >{{phase}}</a>
+          </li>
+       </ul>
+       <br>
+       <a ng-repeat="player in players" ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} </a>
+       <a ng-repeat="tagFilter in tagFilters | filter: '!'+thePhase" ng-click="removeTagFilter(tagFilter)" class="filterLabel label label-info" href="#" role="button" > {{tagFilter}} </a>
+
+       <table class="table table-hover center-block middleData" style="width:800px">
+              <thead>
+                  <tr>
+                      <th class="text-left">Date</th>
+                      <th colspan="3" class="text-right">Home</th>
+                      <th colspan="3">Away</th>
+                      <!--th>Tags</th-->
+                  </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="match in filteredMatches = (matches | tagFilter: [theTournament] | matchFilter:players | tagFilter: tagFilters)">
+                      <td>
+                      {{match.date | date:'yyyy-MM-dd'}}
+                      </td>
+                      <td>
+                        <img class="img-circle {{match.home.players[0]}}" ng-click="addPlayer(match.home.players[0])" >
+                        <img class="img-circle {{match.home.players[1]}}" ng-click="addPlayer(match.home.players[1])"> 
+                      </td>
+                      <td>
+                        <div class="team {{match.home.team}}"></div>
+                      </td>
+                      <td>
+                        {{match.home.goals}}
+                        <span ng-if="match.home.penalties">({{match.home.penalties}})</span>
+                      </td>
+                      <td>
+                        {{match.away.goals}}
+                        <span ng-if="match.away.penalties">({{match.away.penalties}})</span>
+                      </td>
+                      <td>
+                        <div class="team {{match.away.team}}"></div>
+                      </td>
+                      <td>
+                        <img class="img-circle {{match.away.players[0]}}" ng-click="addPlayer(match.away.players[0])" >
+                        <img class="img-circle {{match.away.players[1]}}" ng-click="addPlayer(match.away.players[1])"> 
+                      </td>
+                      <!--td>
+                        <a ng-repeat="tag in match.tags | filter: '!'+theTournament | filter: '!'+thePhase" ng-click="addTagFilter(tag)" class="filterLabel label label-info" href="#" role="button" >{{tag}}</a>
+                      </td -->
+                </tr>
+                <tr ng-hide="filteredMatches.length"><td colspan="8">Nada por aqui!</td></tr>
+              </tbody>
+          </table>
+
+          <table class="table table-hover center-block middleData" style="width:800px"
+            ng-show="hasStandings(theTournament, thePhase)">
+              <thead>
+                  <tr>
+                      <th>Posicion</th>
+                      <th>Equipo</th>
+                      <th>PJ</th>
+                      <th>PG</th>
+                      <th>PE</th>
+                      <th>PP</th>
+                      <th>GF</th>
+                      <th>GC</th>
+                      <th>DG</th>
+                      <th>Puntos</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="position in calculateStandings(theTournament, thePhase, filteredMatches)">
+                    <td>{{$index + 1}}</td>
+                    <td>
+                        <div ng-if="position.team" class="team {{position.team}}"></div>
+                        <img class="img-circle {{position.players[0]}}">
+                        <img ng-if="position.players[1]" class="img-circle {{position.players[1]}}">
+                    </td>
+                    <td>{{position.matchesPlayed}}</td>
+                    <td>{{position.matchesWon}}</td>
+                    <td>{{position.matchesTied}}</td>
+                    <td>{{position.matchesLost}}</td>
+                    <td>{{position.goalsScored}}</td>
+                    <td>{{position.goalsReceived}}</td>
+                    <td>{{position.goalsDiff}}</td>
+                    <td>{{position.points}}</td>
+                </tr>
+              </tbody>
+          </table>
+    </div>
+  </body>
+</html>
