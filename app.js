@@ -269,6 +269,24 @@ angular.module('fifa', [])
 	$scope.loadMatches = function () {
 		return dataService.t;
 	};
+	$scope.homeResulsClass = function(match) {
+		if (match.home.goals > match.away.goals) {
+			return "won";
+		} else if (match.home.goals < match.away.goals) {
+			return "lost"
+		} else {
+			return "tie";
+		}
+	};
+	$scope.awayResulsClass = function(match) {
+		if (match.away.goals > match.home.goals) {
+			return "won";
+		} else if (match.away.goals < match.home.goals) {
+			return "lost"
+		} else {
+			return "tie";
+		}	
+	};
  	$scope.matches = [
 	  {
 	  	date:'',
