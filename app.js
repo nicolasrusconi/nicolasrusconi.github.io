@@ -269,6 +269,7 @@ angular.module('fifa', [])
 	$scope.loadMatches = function () {
 		return dataService.t;
 	};
+
 	$scope.homeResulsClass = function(match) {
 		if (match.home.goals > match.away.goals) {
 			return "won";

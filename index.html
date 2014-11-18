@@ -29,7 +29,7 @@
        <br>
        <a ng-repeat="player in players" ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} </a>
        <a ng-repeat="tagFilter in tagFilters | filter: '!'+thePhase" ng-click="removeTagFilter(tagFilter)" class="filterLabel label label-info" href="#" role="button" > {{tagFilter}} </a>
- 
+
        <table class="table table-hover center-block middleData" style="width:800px">
               <thead>
                   <tr>
