@@ -1,4 +1,4 @@
-var schemas = require("./models/schemas");
+var schemas = require("./model/schemas");
 
 function getPlayerId(username) {
 	var id = null;
@@ -25,11 +25,7 @@ module.exports = function(app) {
 	app.get("/api/players/:username", function(req, res) {
 		schemas.Player.findOne({"username": req.params.username}, function(err, player) {
 			if (err) res.send(err);
-
 			res.json(player);
 		})
 	});
-	app.get("/api/team", function(req, res) {
-	});
 };
-
