@@ -35,7 +35,7 @@ ul {
 }
 
 .player {
-    background-image: url(players.png);
+    background-image: url(../images/players.png);
     background-repeat: no-repeat;
 }
 
