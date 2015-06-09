@@ -30,12 +30,6 @@ module.exports = function(app) {
 		})
 	});
 	app.get("/api/team", function(req, res) {
-		
-		var team = new schemas.Team();
-		team.player1 = getPlayerId("ezequiel");
-		team.player2 = getPlayerId("nico");
-		team.save();
-		res.json({});
 	});
 };
 
