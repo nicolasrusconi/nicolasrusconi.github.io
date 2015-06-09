@@ -34,10 +34,6 @@ ul {
 	vertical-align:middle!important;
 }
 
-td {
-	font-size:24px;
-}
-
 .player {
     background-image: url(players.png);
     background-repeat: no-repeat;
@@ -236,4 +232,48 @@ background-image:url(http://www.fifa.com/imgml/flags/reflected/m/usa.png);
 
 .Portugal {
 background-image:url(http://www.fifa.com/imgml/flags/reflected/m/por.png);
+}
+
+/* Side Navigation */
+
+@media(min-width:768px) {
+    .side-nav {
+        position: fixed;
+        top: 59px;
+        left: 225px;
+        width: 225px;
+        margin-left: -225px;
+        border: none;
+        border-radius: 0;
+        overflow-y: auto;
+
+        bottom: 0;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+    }
+
+    .side-nav>li>a {
+        width: 225px;
+    }
+
+    .side-nav li a:hover,
+    .side-nav li a:focus {
+        outline: none;
+        background-image: linear-gradient(to bottom,#fff 0,#f8f8f8 100%);
+    }
+}
+
+.side-nav>li>ul {
+    padding: 0;
+}
+
+.side-nav>li>ul>li>a {
+    display: block;
+    padding: 10px 15px 10px 38px;
+    text-decoration: none;
+    color: #999;
+}
+
+.side-nav>li>ul>li>a:hover {
+    color: #fff;
 }

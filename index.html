@@ -1,114 +1,178 @@
 <html>
-  <head>
+<head>
     <title>MArge Fifa</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <script src="app.js"></script>
     <link rel="stylesheet" href="app.css">
-  </head>
-  <body ng-app="fifa" ng-controller="MainCtrl">
-    <div style="width:800px" class="center-block">
-       <img src="http://www.medallia.com/wp-content/uploads/2013/07/medallia-logo-2013.png">
-       <img src="http://www.fifplay.com/images/public/fifa-15-logo.jpg" style="width:10%;height:10%;">
+</head>
+<body ng-app="fifa" ng-controller="MainCtrl">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="http://www.medallia.com/wp-content/uploads/2013/07/medallia-logo-2013.png">
+            </a>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Ezequiel Bergamaschi <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li class="active">
+                    <a href="#"><i class="fa fa-fw fa-trophy"></i> Torneo en curso </a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-star"></i> Ranking</a>
+                </li>
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-folder"></i> Torneos Anteriores<i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="demo" class="collapse">
+                        <li ng-repeat="tournament in tournaments" ng-click="selectTournament(tournament)">
+                            <a href="#">{{tournament}}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-table"></i> Estadisticas</a>
+                </li>
 
-       <ul class="nav nav-tabs" role="tablist">
-          <li ng-repeat="tournament in tournaments"  ng-class="{active:theTournament===tournament}">
-            <a href="#" ng-click="selectTournament(tournament)" >{{tournament}}</a>
-          </li>
-       </ul>
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-sign-in"></i> Registro</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
 
-       <ul class="nav nav-justified" >
-          <li ng-repeat="phase in tournamentsConfig[theTournament].phases"  ng-class="{active:thePhase===phase}">
-            <a href="#" ng-click="selectPhase(phase)" ng-class="{active:thePhase===phase}" >{{phase}}</a>
-          </li>
-       </ul>
-       <br>
-       <a ng-repeat="player in players" ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} </a>
-       <a ng-repeat="tagFilter in tagFilters | filter: '!'+thePhase" ng-click="removeTagFilter(tagFilter)" class="filterLabel label label-info" href="#" role="button" > {{tagFilter}} </a>
+<div style="width:800px" class="center-block">
 
-       <table class="table table-hover center-block middleData" style="width:800px">
-              <thead>
-                  <tr>
-                      <th class="text-left">Date</th>
-                      <th colspan="3" class="text-right">Home</th>
-                      <th colspan="3">Away</th>
-                      <!--th>Tags</th-->
-                  </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="match in filteredMatches = (matches | tagFilter: [theTournament] | matchFilter:players | tagFilter: tagFilters)">
-                      <td>
-                      {{match.date | date:'yyyy-MM-dd'}}
-                      </td>
-                      <td>
-                        <img class="img-circle player {{match.home.players[0]}}" ng-click="addPlayer(match.home.players[0])" title="{{match.home.players[0]}}" >
-                        <img class="img-circle player {{match.home.players[1]}}" ng-click="addPlayer(match.home.players[1])" title="{{match.home.players[1]}}"> 
-                      </td>
-                      <td>
-                        <div class="team {{match.home.team}}"></div>
-                      </td>
-                      <td class="{{homeResulsClass(match)}}">
-                        {{match.home.goals}}
-                        <span ng-if="match.home.penalties">({{match.home.penalties}})</span>
-                      </td>
-                      <td class="{{awayResulsClass(match)}}">
-                        {{match.away.goals}}
-                        <span ng-if="match.away.penalties">({{match.away.penalties}})</span>
-                      </td>
-                      <td>
-                        <div class="team {{match.away.team}}"></div>
-                      </td>
-                      <td>
-                        <img class="img-circle player {{match.away.players[0]}}" ng-click="addPlayer(match.away.players[0])"  title="{{match.away.players[0]}}">
-                        <img class="img-circle player {{match.away.players[1]}}" ng-click="addPlayer(match.away.players[1])" title="{{match.away.players[1]}}"> 
-                      </td>
-                      <!--td>
-                        <a ng-repeat="tag in match.tags | filter: '!'+theTournament | filter: '!'+thePhase" ng-click="addTagFilter(tag)" class="filterLabel label label-info" href="#" role="button" >{{tag}}</a>
-                      </td -->
+     <ul class="nav nav-tabs" role="tablist">
+        <li ng-repeat="tournament in tournaments"  ng-class="{active:theTournament===tournament}">
+          <a href="#" ng-click="selectTournament(tournament)" >{{tournament}}</a>
+        </li>
+     </ul>
+
+     <ul class="nav nav-justified" >
+        <li ng-repeat="phase in tournamentsConfig[theTournament].phases"  ng-class="{active:thePhase===phase}">
+          <a href="#" ng-click="selectPhase(phase)" ng-class="{active:thePhase===phase}" >{{phase}}</a>
+        </li>
+     </ul>
+     <br>
+     <a ng-repeat="player in players" ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} </a>
+     <a ng-repeat="tagFilter in tagFilters | filter: '!'+thePhase" ng-click="removeTagFilter(tagFilter)" class="filterLabel label label-info" href="#" role="button" > {{tagFilter}} </a>
+
+     <table class="table table-hover center-block middleData" style="width:800px">
+            <thead>
+                <tr>
+                    <th class="text-left">Date</th>
+                    <th colspan="3" class="text-right">Home</th>
+                    <th colspan="3">Away</th>
+                    <!--th>Tags</th-->
                 </tr>
-                <tr ng-hide="filteredMatches.length"><td colspan="8">Nada por aqui!</td></tr>
-              </tbody>
-          </table>
-
-          <table class="table table-hover center-block middleData" style="width:800px"
-            ng-show="hasStandings(theTournament, thePhase)">
-              <thead>
-                  <tr>
-                      <th>Posicion</th>
-                      <th>Equipo</th>
-                      <th>PJ</th>
-                      <th>PG</th>
-                      <th>PE</th>
-                      <th>PP</th>
-                      <th>GF</th>
-                      <th>GC</th>
-                      <th>DG</th>
-                      <th class="points" >Puntos</th>
-                  </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="position in calculateStandings(theTournament, thePhase, filteredMatches)">
-                    <td>{{$index + 1}}</td>
+            </thead>
+            <tbody>
+              <tr ng-repeat="match in filteredMatches = (matches | tagFilter: [theTournament] | matchFilter:players | tagFilter: tagFilters)">
                     <td>
-                        <div ng-if="position.team" class="team {{position.team}}"></div>
-                        <img class="img-circle player {{position.players[0]}}">
-                        <img ng-if="position.players[1]" class="img-circle player {{position.players[1]}}">
+                    {{match.date | date:'yyyy-MM-dd'}}
                     </td>
-                    <td>{{position.matchesPlayed}}</td>
-                    <td>{{position.matchesWon}}</td>
-                    <td>{{position.matchesTied}}</td>
-                    <td>{{position.matchesLost}}</td>
-                    <td>{{position.goalsScored}}</td>
-                    <td>{{position.goalsReceived}}</td>
-                    <td>{{position.goalsDiff}}</td>
-                    <td class="points" >{{position.points}}</td>
+                    <td>
+                      <img class="img-circle player {{match.home.players[0]}}" ng-click="addPlayer(match.home.players[0])" title="{{match.home.players[0]}}" >
+                      <img class="img-circle player {{match.home.players[1]}}" ng-click="addPlayer(match.home.players[1])" title="{{match.home.players[1]}}">
+                    </td>
+                    <td>
+                      <div class="team {{match.home.team}}"></div>
+                    </td>
+                    <td class="{{homeResulsClass(match)}}">
+                      {{match.home.goals}}
+                      <span ng-if="match.home.penalties">({{match.home.penalties}})</span>
+                    </td>
+                    <td class="{{awayResulsClass(match)}}">
+                      {{match.away.goals}}
+                      <span ng-if="match.away.penalties">({{match.away.penalties}})</span>
+                    </td>
+                    <td>
+                      <div class="team {{match.away.team}}"></div>
+                    </td>
+                    <td>
+                      <img class="img-circle player {{match.away.players[0]}}" ng-click="addPlayer(match.away.players[0])"  title="{{match.away.players[0]}}">
+                      <img class="img-circle player {{match.away.players[1]}}" ng-click="addPlayer(match.away.players[1])" title="{{match.away.players[1]}}">
+                    </td>
+                    <!--td>
+                      <a ng-repeat="tag in match.tags | filter: '!'+theTournament | filter: '!'+thePhase" ng-click="addTagFilter(tag)" class="filterLabel label label-info" href="#" role="button" >{{tag}}</a>
+                    </td -->
+              </tr>
+              <tr ng-hide="filteredMatches.length"><td colspan="8">Nada por aqui!</td></tr>
+            </tbody>
+        </table>
+
+        <table class="table table-hover table-striped text-center center-block" style="width:800px"
+          ng-show="hasStandings(theTournament, thePhase)">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Equipo</th>
+                    <th class="text-center">PJ</th>
+                    <th class="text-center">PG</th>
+                    <th class="text-center">PE</th>
+                    <th class="text-center">PP</th>
+                    <th class="text-center">GF</th>
+                    <th class="text-center">GC</th>
+                    <th class="text-center">DG</th>
+                    <th class="text-center" >Pts</th>
                 </tr>
-              </tbody>
-          </table>
-    </div>
-  </body>
+            </thead>
+            <tbody>
+              <tr ng-repeat="position in calculateStandings(theTournament, thePhase, filteredMatches)">
+                  <td>{{$index + 1}}</td>
+                  <td>
+                      <div ng-if="position.team" class="team {{position.team}}"></div>
+                      <img class="img-circle player {{position.players[0]}}">
+                      <img ng-if="position.players[1]" class="img-circle player {{position.players[1]}}">
+                  </td>
+                  <td>{{position.matchesPlayed}}</td>
+                  <td>{{position.matchesWon}}</td>
+                  <td>{{position.matchesTied}}</td>
+                  <td>{{position.matchesLost}}</td>
+                  <td>{{position.goalsScored}}</td>
+                  <td>{{position.goalsReceived}}</td>
+                  <td>{{position.goalsDiff}}</td>
+                  <td class="table-bordered" >{{position.points}}</td>
+              </tr>
+            </tbody>
+        </table>
+  </div>
+</body>
 </html>
