@@ -30,10 +30,10 @@ var matchSchema = new Schema({
 
 var tournamentSchema = new Schema({
     name: String,
-    date: Date,
-    winner: {type: Schema.Types.ObjectId, ref: 'User'},
-    second: {type: Schema.Types.ObjectId, ref: 'User'},
-    third: {type: Schema.Types.ObjectId, ref: 'User'}
+    creationDate: { type: Date, default: Date.now },
+    winner: {type: Schema.Types.ObjectId, ref: 'User', default: null},
+    second: {type: Schema.Types.ObjectId, ref: 'User', default: null},
+    third: {type: Schema.Types.ObjectId, ref: 'User', default: null}
 });
 
 exports.Player = mongoose.model("Player", playerSchema);
