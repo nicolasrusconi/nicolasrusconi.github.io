@@ -1,15 +1,5 @@
 var schemas = require("./model/schemas");
 
-function getPlayerId(username) {
-	var id = null;
-	schemas.Player.findOne({"username": username}, "_id", function(err, player) {
-		if (err) console.log(err);
-		console.log(player);
-		id = player.id
-	});
-	return id;
-}
-
 module.exports = function(app) {
 	app.get("/", function(req, res) {
 		res.sendFile("./public/index.html");
