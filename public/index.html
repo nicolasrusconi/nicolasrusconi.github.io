@@ -76,7 +76,7 @@
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-folder"></i> Torneos Anteriores<i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
-                        <li ng-repeat="tournament in tournaments" ng-click="selectTournament(tournament)">
+                        <li ng-repeat="tournament in tournaments" ng-click="selectTournament(tournament)" ng-class="{active:theTournament===tournament}">
                             <a href="#">{{tournament}}</a>
                         </li>
                     </ul>

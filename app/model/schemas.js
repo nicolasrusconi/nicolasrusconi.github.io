@@ -23,21 +23,23 @@ var teamSchema = new Schema({
 var matchSchema = new Schema({
     date: Date,
     home: {
-        players: [{type: String, limit: 2, required: true}],
+        player: {type: String, required: true},
+        partner: {type: String, required: true},
         goals: {type: Number, default: -1},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},
         team: String
     },
     away: {
-        players: [{type: String, limit: 2, required: true}],
+        player: {type: String, required: true},
+        partner: {type: String, required: true},
         goals: {type: Number, default: -1},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},
         team: String
     },
     tournament: {type: Schema.Types.ObjectId, ref: "Tournament"},
-    phase: String
+    phase: {type: String, required: true}
 });
 
 var tournamentSchema = new Schema({
