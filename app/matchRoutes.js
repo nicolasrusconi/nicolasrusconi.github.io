@@ -14,6 +14,14 @@ module.exports = function(app) {
             })
         })
     });
+    app.put("/api/match/", function(req, res) {
+        var body = req.body;
+        schemas.Match.update({"home.player": body.home.player, "away.player": body.away.player}, {$set: body}, function(err, result) {
+            if (err) res.send(err);
+            res.json(result);
+
+        })
+    });
     app.get("/api/match/tournament/:tournament", function(req, res) {
         schemas.Tournament.findOne({"name": req.params.tournament}, function(err, tournament) {
             if (err) res.send(err);
