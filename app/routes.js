@@ -9,7 +9,7 @@ module.exports = function(app) {
 	});
 	app.get("/oauth2callback", function(req, res) {
 		console.log(req.query.code);
-		
+		res.redirect("/");
 	});
 	app.get("/api/players", function(req, res) {
 		schemas.Player.find(function(err, players) {

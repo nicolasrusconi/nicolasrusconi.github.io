@@ -104,7 +104,8 @@
      <a ng-repeat="player in players" ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} </a>
      <a ng-repeat="tagFilter in tagFilters | filter: '!'+thePhase" ng-click="removeTagFilter(tagFilter)" class="filterLabel label label-info" href="#" role="button" > {{tagFilter}} </a>
 
-    <h1>Partidos</h1>
+    <h1>{{thePhase}}</h1>
+    <h2>Partidos</h2>
      <table class="table table-hover middleData" style="width:800px">
             <thead>
                 <tr>
@@ -159,7 +160,7 @@
             </tbody>
         </table>
     
-    <h1 ng-show="hasStandings(theTournament, thePhase)">Posiciones</h1>
+    <h2 ng-show="hasStandings(theTournament, thePhase)">Posiciones</h2>
         <table class="table table-hover table-striped text-center middleData" style="width:800px"
           ng-show="hasStandings(theTournament, thePhase)">
             <thead>
