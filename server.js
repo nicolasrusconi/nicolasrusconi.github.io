@@ -20,6 +20,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 
 require('./app/api/routes.js')(app);
+require('./app/api/player.js')(app);
 require('./app/api/tournamentRoutes.js')(app);
 require('./app/api/matchRoutes.js')(app);
 
