@@ -59,18 +59,18 @@ angular.module('fifa', [])
 		if (index != -1) {
 			$scope.players.splice(index, 1);	
 		}
-	}
+	};
 	$scope.addTagFilter = function(tag) {
 		if ($scope.tagFilters.indexOf(tag) == -1) {
 		$scope.tagFilters.push(tag);
 	}
-	}
+	};
 	$scope.removeTagFilter = function(tag) {
 		var index = $scope.tagFilters.indexOf(tag);
 		if (index != -1) {
 			$scope.tagFilters.splice(tag, 1);	
 		}
-	}
+	};
 	$scope.selectTournament = function(tournament) {
 		$scope.theTournament = tournament;
 		var phase = $scope.tournamentsConfig[tournament].defaultPhase;
@@ -78,7 +78,7 @@ angular.module('fifa', [])
 			phase = '';
 		}
 		$scope.selectPhase(phase);
-	}
+	};
 	$scope.selectPhase = function(phase) {
 		$scope.tagFilters = [];
 		$scope.players = [];
@@ -97,7 +97,7 @@ angular.module('fifa', [])
 		  		goalsDiff: 0,
 		  		points:0,
 	  		};
-	}
+	};
 
 	$scope.processMatchTeam = function(standings, team, goalsReceived) {
 		var position = standings[team.team + team.players];
@@ -108,17 +108,17 @@ angular.module('fifa', [])
 		}
 
 		$scope.updatePosition(position, team.goals, goalsReceived);
-	}
+	};
 
 	$scope.processMatchIndividualWithSupport = function(standings, team, goalsReceived) {
 		var position = $scope.processIndividual(standings, team.players[0], team.goals, goalsReceived);	
 		position["team"] = team.team;
-	}
+	};
 
 	$scope.processMatchIndividual = function(standings, team, goalsReceived) {
 		$scope.processIndividual(standings, team.players[0], team.goals, goalsReceived);
 		$scope.processIndividual(standings, team.players[1], team.goals, goalsReceived);
-	}
+	};
 
 	$scope.processIndividual = function(standings, player, goalsScored, goalsReceived) {
 		var position = standings[player];
@@ -127,7 +127,7 @@ angular.module('fifa', [])
 	  		standings[player] = position;
 		}
 		return $scope.updatePosition(position, goalsScored, goalsReceived);
-	}
+	};
 
 	$scope.updatePosition = function(position, goalsScored, goalsReceived) {
 		position.matchesPlayed = position.matchesPlayed + 1;
@@ -147,7 +147,7 @@ angular.module('fifa', [])
 
 		position.points = position.points + (won * 3) + tied;
 		return position;
-	}
+	};
 
 	$scope.comparePositions  = function(aPosition, anotherPosition) {
 		var order = anotherPosition.points - aPosition.points;
@@ -158,7 +158,7 @@ angular.module('fifa', [])
 			}
 		}
 		return order; 
-	}
+	};
 	$scope.standingsCache = {};
 
 	$scope.calculateStandings  = function(tournament, phase, matches) {

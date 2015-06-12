@@ -34,7 +34,7 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-require('./app/routes.js')(app);
+require('./app/routes.js')(app, oauth2Client);
 require('./app/tournamentRoutes.js')(app);
 require('./app/matchRoutes.js')(app);
 
