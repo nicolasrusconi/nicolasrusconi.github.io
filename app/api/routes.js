@@ -1,12 +1,12 @@
-var schemas = require("./model/schemas");
-var google = require("./google");
+var schemas = require("../model/schemas");
+var google = require("../google");
 
 module.exports = function(app) {
 	app.get("/", function(req, res) {
 		res.sendFile("./public/index.html");
 	});
 	app.get("/authUrl", function(req, res) {
-		res.send(google.authUrl);
+		res.redirect(google.authUrl);
 	});
 	app.get("/oauth2callback", function(req, res) {
 		var code = req.query.code;

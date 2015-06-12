@@ -1,4 +1,4 @@
-var schemas = require("./model/schemas");
+var schemas = require("../model/schemas");
 
 module.exports = function(app) {
     app.post("/api/tournament", function(req, res) {

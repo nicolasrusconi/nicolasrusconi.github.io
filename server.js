@@ -21,8 +21,8 @@ app.use(methodOverride());
 
 require('./app/api/routes.js')(app);
 require('./app/api/player.js')(app);
-require('./app/api/tournamentRoutes.js')(app);
-require('./app/api/matchRoutes.js')(app);
+require('./app/api/tournament.js')(app);
+require('./app/api/match.js')(app);
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);

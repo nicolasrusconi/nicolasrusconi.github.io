@@ -50,11 +50,15 @@
             </button>
             <a class="navbar-brand" href="index.html">
                 <img alt="Brand" src="http://www.medallia.com/wp-content/uploads/2013/07/medallia-logo-2013.png">
+                <img style="margin-left: 0.4em" width="60" height="20" src="images/fifa15.png">
             </a>
         </div>
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
+            <li>
+                
+            </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -75,7 +79,7 @@
         <!-- /.navbar-top-links -->
 
         <div>
-            <ul class="nav navbar-nav" style="margin-left: 5em">
+            <ul class="nav navbar-nav"">
                 <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                 <li class="hidden">
                     <a class="page-scroll" href="#page-top"></a>
@@ -162,9 +166,11 @@
                             </td>
                             <td> <!--Jugador-->
                                 <img class="img-circle player {{match.home.players[0]}}" ng-click="addPlayer(match.home.players[0])">
+                                <span>{{match.home.players[0]}}</span>
                             </td>
                             <td> <!--Pareja-->
                                 <img class="img-circle player {{match.home.players[1]}}" ng-click="addPlayer(match.home.players[1])">
+                                <span>{{match.home.players[1]}}</span>
                             </td>
                             <td> <!--Equipo-->
                                 <div class="team {{match.home.team}}"></div>
@@ -182,9 +188,11 @@
                             </td>
                             <td> <!--Jugador-->
                                 <img class="img-circle player {{match.away.players[0]}}" ng-click="addPlayer(match.away.players[0])">
+                                <span>{{match.away.players[0]}}</span>
                             </td>
                             <td>    <!--Pareja-->
                                 <img class="img-circle player {{match.away.players[1]}}" ng-click="addPlayer(match.away.players[1])"  >
+                                <span>{{match.away.players[1]}}</span>
                             </td>
                             <!--td>
                               <a ng-repeat="tag in match.tags | filter: '!'+theTournament | filter: '!'+thePhase" ng-click="addTagFilter(tag)" class="filterLabel label label-info" href="#" role="button" >{{tag}}</a>
@@ -217,7 +225,9 @@
                             <td>
                                 <div ng-if="position.team" class="team {{position.team}}"></div>
                                 <img class="img-circle player {{position.players[0]}}">
+                                <span class="playerPosition">{{position.players[0]}}</span>
                                 <img ng-if="position.players[1]" class="img-circle player {{position.players[1]}}">
+                                <span class="playerPosition" ng-if="position.players[1]">{{position.players[1]}}</span>
                             </td>
                             <td>{{position.matchesPlayed}}</td>
                             <td>{{position.matchesWon}}</td>
