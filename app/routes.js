@@ -1,14 +1,18 @@
 var schemas = require("./model/schemas");
+var google = require("./google");
 
 module.exports = function(app) {
 	app.get("/", function(req, res) {
 		res.sendFile("./public/index.html");
 	});
 	app.get("/authUrl", function(req, res) {
-		res.send(app.locals.authUrl);
+		res.send(google.authUrl);
 	});
 	app.get("/oauth2callback", function(req, res) {
-		console.log(req.query.code);
+		var code = req.query.code;
+		google.getUserInfo(code, function(response) {
+			console.log(response);
+		});
 		res.redirect("/");
 	});
 	app.get("/api/players", function(req, res) {

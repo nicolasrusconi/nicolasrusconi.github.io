@@ -37,5 +37,11 @@ module.exports = function(app) {
             if (err) res.send(err);
             res.json(matches);
         })
+    });
+    app.get("/api/match", function(req, res) {
+        schemas.Match.find({}, "-_id -__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
+            if (err) res.send(err);
+            res.json(matches);
+        })
     })
 };
