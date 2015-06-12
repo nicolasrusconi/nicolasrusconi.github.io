@@ -19,9 +19,9 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-require('./app/routes.js')(app);
-require('./app/tournamentRoutes.js')(app);
-require('./app/matchRoutes.js')(app);
+require('./app/api/routes.js')(app);
+require('./app/api/tournamentRoutes.js')(app);
+require('./app/api/matchRoutes.js')(app);
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);
