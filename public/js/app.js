@@ -45,10 +45,7 @@ angular.module('fifa', [])
       return out;
     }
   })
-  .service('dataService',['$http', function ($http) {
-  	this.t = $http.get('matches.json');
-  }])
-.controller('MainCtrl', ['$scope','dataService', function($scope, dataService){
+.controller('MainCtrl', ['$scope','matchService', function($scope, matchService){
 	$scope.addPlayer = function(player) {
 	if ($scope.players.indexOf(player) == -1) {
 		$scope.players.push(player);
@@ -95,7 +92,7 @@ angular.module('fifa', [])
 		  		goalsScored:0,
 		  		goalsReceived:0,
 		  		goalsDiff: 0,
-		  		points:0,
+		  		points:0
 	  		};
 	};
 
@@ -267,7 +264,7 @@ angular.module('fifa', [])
 	$scope.tagFilters = [];
 	$scope.selectTournament("Mundial 2");
 	$scope.loadMatches = function () {
-		return dataService.t;
+		return matchService.matches;
 	};
 
 	$scope.homeResulsClass = function(match) {
