@@ -3,12 +3,12 @@ var Schema = mongoose.Schema;
 
 var playerSchema = new Schema({
     username: String,
-    password: String,
     firstName: String,
     lastName: String,
     email: String,
+    image: String,
     lastAccess: { type: Date, default: Date.now },
-    ranking: Number
+    ranking: {type: Number, default: 1500}
 });
 
 var teamSchema = new Schema({
