@@ -20,6 +20,15 @@ angular.module('fifa', [])
       return out;
     }
   })
+	.filter('tournamentFilter', function() {
+		return function(tournaments, filterKey) {
+			var filter = [];
+			$.each(tournaments, function(index, tournament) {
+				filter.push(tournament[filterKey])
+			});
+			return filter;
+		};
+	})
   .filter('tagFilter', function() {
     return function(matches, tagFilter) {
       var out = [];
@@ -45,8 +54,14 @@ angular.module('fifa', [])
       return out;
     }
   })
-.controller('MainCtrl', ['$scope','matchService', function($scope, matchService){
-	$scope.addPlayer = function(player) {
+.controller('MainCtrl', ['$scope','matchService', 'tournamentService', "$http", function($scope, matchService,tournamentService, $http){
+	tournamentService.getTournaments().then(function(response) {
+		$scope.tournaments = response.data;
+		$scope.selectTournament(response.data[0])
+	})
+	;
+
+		$scope.addPlayer = function(player) {
 	if ($scope.players.indexOf(player) == -1) {
 		$scope.players.push(player);
 	}
@@ -70,7 +85,7 @@ angular.module('fifa', [])
 	};
 	$scope.selectTournament = function(tournament) {
 		$scope.theTournament = tournament;
-		var phase = $scope.tournamentsConfig[tournament].defaultPhase;
+		var phase = tournament.config.defaultPhase;
 		if (!phase) {
 			phase = '';
 		}
@@ -163,7 +178,7 @@ angular.module('fifa', [])
 			return [];
 		}
 
-		var positions = $scope.standingsCache[tournament + phase];
+		var positions = $scope.standingsCache[tournament.name + phase];
 		if (positions) {
 			return positions;
 		}
@@ -181,12 +196,12 @@ angular.module('fifa', [])
 		    positions.push(standings[key]);
 		}
 		positions.sort($scope.comparePositions);
-		$scope.standingsCache[tournament + phase] = positions;
+		$scope.standingsCache[tournament.name + phase] = positions;
 		return positions;
 	};
 
 	$scope.standingsModel = function(theTournament, thePhase) {
-		var model = $scope.tournamentsConfig[theTournament].standingsModel;
+		var model = theTournament.config.standingsModel;
 		var standingCalcFunction;
 		switch(model) {
 		    case "Team":
@@ -205,12 +220,14 @@ angular.module('fifa', [])
 	};
 
 	$scope.hasStandings = function(theTournament, thePhase) {
-		return $scope.tournamentsConfig[theTournament].phasesWithStandings.indexOf(thePhase) != -1;
+		return theTournament ? theTournament.config.phasesWithStandings.indexOf(thePhase) != -1 : false;
 	};
 
  	//Data
- 	$scope.tournaments =["Mundial 2", "Torneo 4", "Torneo 3", "Mundial 1", "Torneo 2", "Torneo 1", "Torneo 0", "Historico"];
-	$scope.tournamentsConfig = {
+
+		
+ 	//$scope.tournaments =["Mundial 2", "Torneo 4", "Torneo 3", "Mundial 1", "Torneo 2", "Torneo 1", "Torneo 0", "Historico"];
+	/*$scope.tournamentsConfig = {
 		"Mundial 2" : {
 			"phases" : ["Grupo A", "Grupo B", "Semifinales", "Final"],
 			"defaultPhase" : "Grupo A",
@@ -258,11 +275,11 @@ angular.module('fifa', [])
 			"defaultPhase" : "",
 			"phasesWithStandings" : [],
 		},
-	};
+	};*/
 
 	$scope.players = [];
 	$scope.tagFilters = [];
-	$scope.selectTournament("Mundial 2");
+
 	$scope.loadMatches = function () {
 		return matchService.matches;
 	};

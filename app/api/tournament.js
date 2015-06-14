@@ -3,11 +3,7 @@ var schemas = require("../model/schemas");
 module.exports = function(app) {
     app.post("/api/tournament", function(req, res) {
         var body = req.body;
-        var tournament = new schemas.Tournament();
-        tournament.name = body.name;
-        if (body.date) {
-            tournament.date = body.date;
-        }
+        var tournament = new schemas.Tournament(body);
         tournament.save(function(err) {
             if (err) res.send(err);
             res.send("created");
