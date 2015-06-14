@@ -28,13 +28,18 @@ angular.module('fifa').controller('modalController', function ($scope, $modal, $
 
 });
 
-angular.module('fifa').controller('modalInstanceController', function ($scope, $modalInstance, match) {
+angular.module('fifa').controller('modalInstanceController', function ($scope, $modalInstance, match, $http) {
 
     $scope.match = match;
 
 
     $scope.ok = function () {
-        $modalInstance.close();
+        $http.put("/api/match", match).success(function(response) {
+            $modalInstance.close();
+        }).error(
+            $modalInstance.dismiss("error")
+        )
+        
     };
 
     $scope.cancel = function () {

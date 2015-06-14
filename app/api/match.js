@@ -16,11 +16,15 @@ module.exports = function(app) {
     });
     app.put("/api/match/", function(req, res) {
         var body = req.body;
-        schemas.Match.update({"home.player": body.home.player, "away.player": body.away.player}, {$set: body}, function(err, result) {
+        schemas.Tournament.findOne(body.tournament, function(err, tournament2) {
             if (err) res.send(err);
-            res.json(result);
-
+            body.tournament = tournament2;
+            schemas.Match.update({"home.player": body.home.player, "away.player": body.away.player, tournament: tournament2._id, phase: body.phase}, {$set: body}, function(err, result) {
+                if (err) res.send(err);
+                res.json(result);
+            })    
         })
+        
     });
     app.get("/api/match/tournament/:tournament", function(req, res) {
         schemas.Tournament.findOne({"name": req.params.tournament}, function(err, tournament) {
