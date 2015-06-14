@@ -6,7 +6,7 @@ module.exports = function(app) {
         var tournament = body.tournament;
         schemas.Tournament.findOne({"name": tournament}, "_id", function(err, tournamentId) {
             if (err) res.send(err);
-            body.tournament = tournamentId.id;
+            body.tournament = tournamentId._id;
             var match = new schemas.Match(body);
             match.save(function(err, match) {
                 if (err) res.send(err);

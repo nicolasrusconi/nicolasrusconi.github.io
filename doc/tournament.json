@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Mundial 2",
+    "creationDate": "00-01-01",
+    "config": {
+      "phases": [
+        "Grupo A",
+        "Grupo B",
+        "Semifinales",
+        "Final"
+      ],
+      "defaultPhase": "Grupo A",
+      "phasesWithStandings": ["Grupo A", "Grupo B"],
+      "standingsModel": "Team"
+    }
+  },
+  {
+    "name": "Torneo 4",
+    "creationDate": "00-01-01",
+    "config":{
+      "phases": ["Primera", "Segunda", "Tercera"],
+      "defaultPhase": "Primera",
+      "phasesWithStandings": ["Primera", "Segunda", "Tercera"],
+      "standingsModel": "Individual"
+    }
+  },
+  {
+    "name": "Torneo 3",
+    "creationDate": "00-01-01",
+    "config" : {
+      "phases" : ["Primera", "Segunda"],
+      "defaultPhase" : "Primera",
+      "phasesWithStandings" : ["Primera", "Segunda"],
+      "standingsModel" : "Individual"
+    }
+  },
+  {
+    "name": "Mundial 1",
+    "creationDate": "00-01-01",
+    "config" : {
+      "phases" : ["Grupo A", "Grupo B", "Grupo C", "Grupo D", "Cuartos de final", "Semifinal", "Tercer Puesto", "Final"],
+      "defaultPhase" : "Grupo A",
+      "phasesWithStandings" : ["Grupo A", "Grupo B", "Grupo C", "Grupo D"],
+      "standingsModel" : "IndividualWithSupport"
+    }
+  },
+  {
+    "name": "Torneo 2",
+    "creationDate": "00-01-01",
+    "config" : {
+      "phases" : ["Primera", "Segunda"],
+      "defaultPhase" : "Primera",
+      "phasesWithStandings" : ["Primera", "Segunda"],
+      "standingsModel" : "Individual"
+    }
+  },
+  {
+    "name": "Torneo 1",
+    "creationDate": "00-01-01",
+    "config" : {
+      "phases" : ["Primera", "Segunda"],
+      "defaultPhase" : "Primera",
+      "phasesWithStandings" : ["Primera", "Segunda"],
+      "standingsModel" : "Individual"
+    }
+  },
+  {
+    "name": "Torneo 0",
+    "creationDate": "00-01-01",
+    "config" : {
+      "phases" : ["Primera"],
+      "defaultPhase" : "Primera",
+      "phasesWithStandings" : ["Primera"],
+      "standingsModel" : "Team"
+    }
+  }
+]
