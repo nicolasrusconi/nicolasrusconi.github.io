@@ -1,4 +1,4 @@
-angular.module('fifa', [])
+angular.module('fifa', ['ui.bootstrap'])
   .filter('matchFilter', function() {
     return function(matches, filter) {
       var out = [];
@@ -59,7 +59,7 @@ angular.module('fifa', [])
 		$scope.matches = response.data;
 		tournamentService.getTournaments().then(function(response) {
 			$scope.tournaments = response.data;
-			$scope.selectTournament(response.data[0])
+			//$scope.selectTournament(response.data[0])
 		});
 	});
 		
@@ -88,11 +88,9 @@ angular.module('fifa', [])
 	};
 	$scope.selectTournament = function(tournament) {
 		$scope.theTournament = tournament;
-		var phase = tournament.config.defaultPhase;
-		if (!phase) {
-			phase = '';
+		if (tournament && tournament.config.defaultPhase) {
+			$scope.selectPhase(tournament.config.defaultPhase);
 		}
-		$scope.selectPhase(phase);
 	};
 	$scope.selectPhase = function(phase) {
 		$scope.tagFilters = [];

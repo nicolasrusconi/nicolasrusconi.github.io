@@ -33,8 +33,17 @@ ul {
 .middleData td {
 	vertical-align:middle!important;
 }
+table tr th {
+    vertical-align:middle!important;
+    text-align: center;
+}
+
+.table input {
+    width: 4em;
+}
 
 .player {
+    margin-left: 2px;
     background-image: url(../images/players.png);
     background-repeat: no-repeat;
 }
