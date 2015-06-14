@@ -54,8 +54,8 @@ angular.module('fifa', [])
       return out;
     }
   })
-.controller('MainCtrl', ['$scope','matchService', 'tournamentService', "matchService", "$http", function($scope, matchService,tournamentService, matchService, $http){
-	matchService.getMatches().then(function(response) {
+.controller('MainCtrl', ['$scope', "$window", 'matchService', 'tournamentService', "$http", function($scope, $window, matchService,tournamentService, $http){
+		matchService.getMatches().then(function(response) {
 		$scope.matches = response.data;
 		tournamentService.getTournaments().then(function(response) {
 			$scope.tournaments = response.data;
@@ -254,6 +254,13 @@ angular.module('fifa', [])
 		}	
 	};
 
+	$scope.signIn = function() {
+		$window.location = "/authUrl"
+	}
 }])
+	.config(function($locationProvider) {
+		$locationProvider.html5Mode(true).hashPrefix('!');
+	})
+
 ;
 

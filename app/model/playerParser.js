@@ -25,7 +25,7 @@ function parse(jsonPlayer) {
     var firstEmail = jsonPlayer.emails[0].value;
     var domain = jsonPlayer.domain || firstEmail.split("@")[1];
     if (domain != medalliaDomain) {
-        console.error("invalid domain: " + jsonPlayer.domain);
+        console.error("invalid domain: " + domain);
         return;
     }
     player.firstName = jsonPlayer.name.givenName;

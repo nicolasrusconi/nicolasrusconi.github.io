@@ -59,9 +59,10 @@
 
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                
+                <button type="button" class="btn btn-default navbar-btn btn-google" ng-click="signIn()">
+                    <i class="fa fa-google-plus"></i><span>Sign in with Google</span></button>
             </li>
-            <li class="dropdown">
+            <!--<li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
@@ -74,14 +75,14 @@
                     <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
-                <!-- /.dropdown-user -->
-            </li>
+                &lt;!&ndash; /.dropdown-user &ndash;&gt;
+            </li>-->
             <!-- /.dropdown -->
         </ul>
         <!-- /.navbar-top-links -->
 
         <div>
-            <ul class="nav navbar-nav">
+            <ul class="nav nav navbar-top-links ">
                 <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                 <li class="hidden">
                     <a class="page-scroll" href="#page-top"></a>
@@ -111,8 +112,8 @@
                     <li>
                         <a href="ranking.html"><i class="fa fa-fw fa-star"></i> Ranking</a>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-folder fa-fw"></i> Torneos anteriores <span class="fa arrow"></span></a>
+                    <li class="active">
+                        <a href="#" class="active"><i class="fa fa-folder fa-fw"></i> Torneos anteriores <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li ng-repeat="tournament in tournaments" ng-click="selectTournament(tournament)" ng-class="{active:theTournament===tournament}">
                                 <a href="#">{{tournament.name}}</a>
@@ -123,10 +124,6 @@
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-fw fa-table"></i> Estadisticas</a>
-                    </li>
-
-                    <li>
-                        <a href="/authUrl"><i class="fa fa-fw fa-sign-in" ></i> Registro <i class="fa fa-2x  fa-google-plus" style="float: right;"></i></a>
                     </li>
                 </ul>
             </div>
@@ -144,8 +141,9 @@
                     <a ng-repeat="player in players" ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} </a>
                     <a ng-repeat="tagFilter in tagFilters | filter: '!'+thePhase" ng-click="removeTagFilter(tagFilter)" class="filterLabel label label-info" href="#" role="button" > {{tagFilter}} </a>
 
-                    <h1>{{thePhase}}</h1>
-                    <h2>Partidos</h2>
+                    <h1>{{theTournament.name}}</h1>
+                    <h2>{{thePhase}}</h2>
+                    <h3>Partidos</h3>
                     <table class="table table-hover middleData" style="width:800px">
                         <thead>
                         <tr>
@@ -196,15 +194,17 @@
                                 <img class="img-circle player {{match.away.partner}}" ng-click="addPlayer(match.away.partner)"  >
                                 <span>{{match.away.partner}}</span>
                             </td>
+                            <td style="border-top: 0px"><button class="btn-circle btn-primary"><i class="fa fa-edit"></i></button></td>
                             <!--td>
                               <a ng-repeat="tag in match.tags | filter: '!'+theTournament | filter: '!'+thePhase" ng-click="addTagFilter(tag)" class="filterLabel label label-info" href="#" role="button" >{{tag}}</a>
                             </td -->
                         </tr>
+
                         <tr ng-hide="filteredMatches.length"><td colspan="8">Nada por aqui!</td></tr>
                         </tbody>
                     </table>
 
-                    <h2 ng-show="hasStandings(theTournament, thePhase)">Posiciones</h2>
+                    <h3 ng-show="hasStandings(theTournament, thePhase)">Posiciones</h3>
                     <table class="table table-hover table-striped text-center middleData" style="width:800px"
                            ng-show="hasStandings(theTournament, thePhase)">
                         <thead>
