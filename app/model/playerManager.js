@@ -9,7 +9,7 @@ PlayerManager.prototype.addPlayer = function(player) {
     this._players.push(player);
 };
 
-PlayerManager.prototype.createNewPlayer = function(jsonPlayer) {
+PlayerManager.prototype.createNewPlayer = function(jsonPlayer, callback) {
     var schemaPlayer = parser.parse(jsonPlayer);
     if (schemaPlayer) {
         var me = this;
@@ -28,6 +28,7 @@ PlayerManager.prototype.createNewPlayer = function(jsonPlayer) {
             }
         });
     }
+    callback.call(this, schemaPlayer);
 };
 var playerManager = new PlayerManager();
 

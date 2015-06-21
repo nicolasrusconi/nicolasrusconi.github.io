@@ -19,7 +19,7 @@ var schemas = require("../model/schemas");
  */
 
 function parse(jsonPlayer) {
-    console.log(jsonPlayer);
+    //console.log(jsonPlayer);
     var player = new schemas.Player();
     var medalliaDomain = "medallia.com";
     var firstEmail = jsonPlayer.emails[0].value;
@@ -33,6 +33,7 @@ function parse(jsonPlayer) {
     player.username = firstEmail.replace("@" + medalliaDomain, "");
     player.email = firstEmail;
     player.image = jsonPlayer.image.url;
+    player.id_token = jsonPlayer.tokens.id_token;
     return player;
 }
 

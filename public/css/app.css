@@ -18,6 +18,9 @@
 .tie {
 	color:black;
 }
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #fffbc0;
+}
 
 .img-circle {
 	cursor:pointer;

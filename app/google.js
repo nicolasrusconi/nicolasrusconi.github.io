@@ -26,6 +26,7 @@ googleApi.getUserInfo = function(code, callback) {
         }
         var plus = google.plus('v1');
         plus.people.get({ userId: 'me', auth: oauth2Client }, function(err, response) {
+            response.tokens = tokens;
             callback.call(this, response);
         });
     });
