@@ -9,11 +9,11 @@ PlayerManager.prototype.addPlayer = function(player) {
     this._players.push(player);
 };
 
-PlayerManager.prototype.createNewPlayer = function(jsonPlayer, callback) {
+PlayerManager.prototype.createNewPlayer = function(jsonPlayer) {
     var schemaPlayer = parser.parse(jsonPlayer);
     if (schemaPlayer) {
         var me = this;
-        schemas.Player.findOne({username: schemaPlayer.username}, function(err, player) {
+        schemas.Player.findOne({googleId: schemaPlayer.googleId}, function(err, player) {
             if (err) console.error(err);
             else if (player) {
                 console.info("Player already created. " + schemaPlayer.username);
@@ -28,7 +28,7 @@ PlayerManager.prototype.createNewPlayer = function(jsonPlayer, callback) {
             }
         });
     }
-    callback.call(this, schemaPlayer);
+    return schemaPlayer;
 };
 var playerManager = new PlayerManager();
 

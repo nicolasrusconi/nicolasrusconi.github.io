@@ -1,39 +1,35 @@
 var schemas = require("../model/schemas");
 /*
- { kind: 'plus#person',
- etag: '"xxxxxxxxxxxxx"',
- gender: 'male',
- emails: [ { value: 'ebergamaschi@medallia.com', type: 'account' } ],
- objectType: 'person',
- id: 'xxxxxxxxxxxx',
+ { provider: 'google',
+ id: '110890234919138773163',
  displayName: 'Ezequiel Bergamaschi',
  name: { familyName: 'Bergamaschi', givenName: 'Ezequiel' },
- url: 'https://plus.google.com/110890234919138773163',
- image:
- { url: 'https://lh3.googleusercontent.com/-iSWoErT7a24/AAAAAAAAAAI/AAAAAAAAACA/qgBbFeWXFv4/photo.jpg?sz=50',
- isDefault: false },
+ isPerson: true,
  isPlusUser: true,
- circledByCount: 1,
- verified: false,
- domain: 'medallia.com' }
+ language: 'en',
+ emails: [ { value: 'ebergamaschi@medallia.com', type: 'account' } ],
+ email: 'ebergamaschi@medallia.com',
+ gender: 'male',
+ photos: [ { value: 'https://lh3.googleusercontent.com/-iSWoErT7a24/AAAAAAAAAAI/AAAAAAAAACA/qgBbFeWXFv4/photo.jpg?sz=50' } ]
+ }
  */
 
 function parse(jsonPlayer) {
     //console.log(jsonPlayer);
     var player = new schemas.Player();
     var medalliaDomain = "medallia.com";
-    var firstEmail = jsonPlayer.emails[0].value;
-    var domain = jsonPlayer.domain || firstEmail.split("@")[1];
+    var email = jsonPlayer.email;
+    var domain = jsonPlayer.domain || email.split("@")[1];
     if (domain != medalliaDomain) {
         console.error("invalid domain: " + domain);
         return;
     }
     player.firstName = jsonPlayer.name.givenName;
     player.lastName = jsonPlayer.name.familyName;
-    player.username = firstEmail.replace("@" + medalliaDomain, "");
-    player.email = firstEmail;
-    player.image = jsonPlayer.image.url;
-    player.id_token = jsonPlayer.tokens.id_token;
+    player.username = email.replace("@" + medalliaDomain, "");
+    player.email = jsonPlayer.email;
+    player.image = jsonPlayer.photos[0].value;
+    player.googleId = jsonPlayer.id;
     return player;
 }
 

@@ -9,7 +9,7 @@ var playerSchema = new Schema({
     image: String,
     lastAccess: { type: Date, default: Date.now },
     ranking: {type: Number, default: 1500},
-    id_token: {type: String, required: true},
+    googleId: {type: String, required: true}
 });
 
 var teamSchema = new Schema({
