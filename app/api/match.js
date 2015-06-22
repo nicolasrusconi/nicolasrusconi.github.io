@@ -1,7 +1,8 @@
 var schemas = require("../model/schemas");
+var validation = require("./validation");
 
 module.exports = function(app) {
-    app.post("/api/match", function(req, res) {
+    app.post("/api/match", validation.authenticateUser, function(req, res) {
         var body = req.body;
         var tournament = body.tournament;
         schemas.Tournament.findOne({"name": tournament}, "_id", function(err, tournamentId) {
@@ -14,7 +15,7 @@ module.exports = function(app) {
             })
         })
     });
-    app.put("/api/match/", function(req, res) {
+    app.put("/api/match/", validation.authenticateUser, function(req, res) {
         var body = req.body;
         schemas.Tournament.findOne(body.tournament, function(err, tournament2) {
             if (err) res.send(err);

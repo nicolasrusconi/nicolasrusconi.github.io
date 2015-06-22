@@ -11,9 +11,12 @@ module.exports = function(passport) {
         },
         function(request, accessToken, refreshToken, profile, done) {
             // asynchronous verification, for effect...
-            process.nextTick(function () {
-                return done(null, playerManager.createNewPlayer(profile));
-            });
+            playerManager.createNewPlayer(profile, function(player) {
+                process.nextTick(function () {
+                    return done(null, player);
+                })
+            })
+            ;
         }
     ));
 };
