@@ -1,0 +1,24 @@
+{
+  "name": "fifa.tournament",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ebergama/fifa.tournament",
+  "authors": [
+    "Ezequiel Bergamaschi <ebergamaschi@medallia.com>"
+  ],
+  "main": "server.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.13.0",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.3.0",
+    "metisMenu": "~2.0.2",
+    "jquery": "~2.1.4"
+  }
+}

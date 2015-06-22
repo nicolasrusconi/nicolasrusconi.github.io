@@ -253,7 +253,7 @@ angular.module('fifa', ['ui.bootstrap'])
 	};
 
 	$scope.signIn = function() {
-		$window.location = "/authUrl"
+		$window.location = "/account"
 	}
 }])
 	.config(function($locationProvider) {
