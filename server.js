@@ -37,7 +37,11 @@ passport.deserializeUser(function(obj, done) {
 require("./app/config/google")(passport);
 // configuration =================
 
-mongoose.connect('mongodb://localhost/fifa');
+var mongoUri = process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/fifa';
+
+mongoose.connect(mongoUri);
 
 
 app.use( session({
