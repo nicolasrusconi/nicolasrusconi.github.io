@@ -101,7 +101,9 @@ controllers.controller('tournamentController', ['$scope', 'matchService', 'tourn
     
     matchService.getMatches($routeParams.tournamentName).then(function(response) {
         $scope.matches = response.data;
-        $scope.selectTournament(response.data[0].tournament);
+        tournamentService.getTournament($routeParams.tournamentName).then(function(response) {
+            $scope.selectTournament(response.data);
+        })
     });
 
     $scope.$watch(function () { return Data.getCurrentPhase(); }, function (newValue, oldValue) {

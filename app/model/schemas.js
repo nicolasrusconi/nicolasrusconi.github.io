@@ -47,6 +47,7 @@ var matchSchema = new Schema({
 var tournamentSchema = new Schema({
     name: {type: String, required: true},
     creationDate: { type: Date, default: Date.now },
+    current: {type: Boolean, default: false},
     config: {
         phases: [String],
         defaultPhase: String,

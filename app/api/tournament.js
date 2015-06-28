@@ -12,13 +12,16 @@ module.exports = function(app) {
 
     });
     app.get("/api/tournament", function(req, res) {
-        schemas.Tournament.find({}, "-_id -__v", function(err, tournaments) {
+        schemas.Tournament.find({}, "-_id -__v").sort({creationDate: 'desc'}).exec(function(err, tournaments) {
             if (err) res.send(err);
             res.json(tournaments);
         });
     });
     app.get("/api/tournament/:name", function(req, res) {
-        schemas.Tournament.findOne({"name": req.params.name}, "-_id -__v", function(err, tournament) {
+        var name = req.params.name;
+        var condition = {};
+        name == "current" ? condition.current = true : condition.name = name;
+        schemas.Tournament.findOne(condition, "-_id -__v", function(err, tournament) {
             if (err) res.send(err);
             res.json(tournament);
         })
