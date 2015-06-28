@@ -5,6 +5,7 @@ var playerSchema = new Schema({
     username: String,
     firstName: String,
     lastName: String,
+    alias: String,
     email: String,
     image: String,
     lastAccess: { type: Date, default: Date.now },

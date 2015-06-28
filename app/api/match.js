@@ -39,9 +39,9 @@ module.exports = function(app) {
             res.json(matches);
         });
     });
-    app.get("/api/match/player/:username", function(req, res) {
-        var username = req.params.username;
-        schemas.Match.find({ $or: [{"home.player": username}, {"away.player": username}]}, "-_id -__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
+    app.get("/api/match/player/:alias", function(req, res) {
+        var alias = req.params.alias;
+        schemas.Match.find({ $or: [{"home.player": alias}, {"away.player": alias}, {"home.partner": alias}, {"away.partner": alias}]}, "-_id -__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
             if (err) res.send(err);
             res.json(matches);
         })

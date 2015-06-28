@@ -21,5 +21,10 @@ angular.module("fifa").service("tournamentService", ["$http", function($http) {
                 return data;
             });
 
+        };
+        this.getMatchesForPlayer = function(player) {
+            return $http.get("/api/match/player/" + player.alias).then(function(data) {
+                return data;
+            });
         }
     }]);

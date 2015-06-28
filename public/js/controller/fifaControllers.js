@@ -12,15 +12,50 @@ controllers.factory('Data', function() {
 
 });
 
-controllers.controller("playerController", ["$scope", "$http", "$location", function($scope, $http, $location) {
+controllers.controller("playerController", ["$scope", "$http", "$location", "matchService", function($scope, $http, $location, matchService) {
     if ($location.path().lastIndexOf("profile") != -1) {
         $http.get("/api/player" + $location.path().substring($location.path().lastIndexOf("/")))
             .success(function(data, status, headers, config) {
                 data.image = data.image.substring(0, data.image.lastIndexOf('?'));
                 $scope.thePlayer = data;
+                matchService.getMatchesForPlayer(data).then(function(response) {
+                    $scope.calculateBasicStat(response.data);
+                })
             }
         );
     }
+    
+    //FIXME: should be a better way to do this...
+    $scope.calculateBasicStat = function(matches, alias) {
+        $scope.thePlayer.matchesPlayed = matches.length;
+        $scope.thePlayer.matchesWon = 0;
+        $scope.thePlayer.matchesLost = 0;
+        $scope.thePlayer.matchesTied = 0;
+        $scope.thePlayer.goalsScored = 0;
+        $scope.thePlayer.goalsReceived =0;
+        $.each(matches, function(index, match) {
+            var awayGoals = match.away.goals;
+            var homeGoals = match.home.goals;
+            var homeWon = homeGoals > awayGoals ? 1 : 0;
+            var tied = homeGoals == awayGoals ? 1 : 0;
+            var awayWon= homeGoals < awayGoals ? 1 : 0;
+            if (match.home.player == alias || match.home.partner == alias) {
+                $scope.thePlayer.matchesWon += homeWon;
+                $scope.thePlayer.matchesLost += awayWon;
+                $scope.thePlayer.matchesTied += tied;
+                $scope.thePlayer.goalsScored += homeGoals != -1 ? homeGoals : 0;
+                $scope.thePlayer.goalsReceived += awayGoals != -1 ? awayGoals : 0;
+            } else {
+                $scope.thePlayer.matchesWon += awayWon;
+                $scope.thePlayer.matchesLost += homeWon;
+                $scope.thePlayer.matchesTied += tied;
+                $scope.thePlayer.goalsScored += awayGoals != -1 ? awayGoals : 0;
+                $scope.thePlayer.goalsReceived += homeGoals != -1 ? homeGoals : 0;
+            }
+        });
+        
+    };
+    
     
     $scope.goTo = function(player) {
         $location.path('/profile/' + player.username);
@@ -338,7 +373,6 @@ controllers.controller('tournamentController', ['$scope', 'matchService', 'tourn
     .filter('tagFilter', function() {
         return function(matches, tagFilter) {
             var out = [];
-            var index;
             var index = tagFilter.indexOf("Historico");
             if (index != -1) {
                 tagFilter.splice("Historico", 1);

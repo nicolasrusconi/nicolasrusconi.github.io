@@ -28,6 +28,7 @@ function parse(jsonPlayer) {
     player.lastName = jsonPlayer.name.familyName;
     player.username = email.replace("@" + medalliaDomain, "");
     player.email = jsonPlayer.email;
+    player.alias = player.username;
     player.image = jsonPlayer.photos[0].value;
     player.googleId = jsonPlayer.id;
     return player;
