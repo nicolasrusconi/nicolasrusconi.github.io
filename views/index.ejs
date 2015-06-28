@@ -100,7 +100,7 @@
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
                         <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" placeholder="Search..." disabled>
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
                                         <i class="fa fa-search"></i>
@@ -110,7 +110,7 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="#current"><i class="fa fa-trophy fa-fw"></i> Torneo en curso</a>
+                        <a href="/tournament/current"><i class="fa fa-trophy fa-fw"></i> Torneo en curso</a>
                     </li>
                     <li>
                         <a href="ranking" ng-click="selectTournament(null)"><i class="fa fa-fw fa-star"></i> Ranking</a>
@@ -159,6 +159,9 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="js/plugins/sb-admin-2.js"></script>
+
+<!-- Countdown -->
+<script src="/bower_components/jquery.countdown/dist/jquery.countdown.js"></script>
 
 </body>
 

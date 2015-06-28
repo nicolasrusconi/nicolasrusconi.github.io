@@ -69,8 +69,7 @@
         </table>
 
         <h4 ng-show="hasStandings(theTournament, thePhase)">Posiciones</h4>
-        <table class="center-block table table-hover table-striped text-center middleData""
-               ng-show="hasStandings(theTournament, thePhase)">
+        <table class="center-block table table-hover table-striped text-center middleData" ng-show="hasStandings(theTournament, thePhase)">
             <thead>
             <tr>
                 <th class="text-center">#</th>
@@ -108,6 +107,8 @@
         </table>
     </div>
 </div>
+
+
 <div ng-controller="modalController">
     <script type="text/ng-template" id="resultsEditor">
         <div class="modal-header">
@@ -130,23 +131,23 @@
                 <tbody>
                 <tr>
                     <td> <!--Jugador-->
-                        <img class="img-circle player {{match.home.player}}" ng-click="addPlayer(match.home.player)">
+                        <img class="img-circle player {{match.home.player}}">
                         <span>{{match.home.player}}</span>
                     </td>
                     <th>Jugadores</th>
                     <td> <!--Jugador-->
-                        <img class="img-circle player {{match.away.player}}" ng-click="addPlayer(match.away.player)">
+                        <img class="img-circle player {{match.away.player}}">
                         <span>{{match.away.player}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <img class="img-circle player {{match.home.partner}}" ng-click="addPlayer(match.home.partner)">
+                        <img class="img-circle player {{match.home.partner}}">
                         <span>{{match.home.partner}}</span>
                     </td>
                     <th>Compañeros</th>
                     <td>
-                        <img class="img-circle player {{match.away.partner}}" ng-click="addPlayer(match.away.partner)">
+                        <img class="img-circle player {{match.away.partner}}">
                         <span>{{match.away.partner}}</span>
                     </td>
                 </tr>
@@ -156,14 +157,14 @@
                     <td><input type="number" ng-model="match.away.goals"></td>
                 </tr>
                 <tr>
-                    <td><input type="number"></td>
+                    <td><input type="number" ng-model="match.home.yellowCards"></td>
                     <th>Amarillas</th>
-                    <td><input type="number"></td>
+                    <td><input type="number" ng-model="match.away.yellowCards"></td>
                 </tr>
                 <tr>
-                    <td><input type="number"></td>
+                    <td><input type="number" ng-model="match.home.redCards"></td>
                     <th>Rojas</th>
-                    <td><input type="number"></td>
+                    <td><input type="number" ng-model="match.away.redCards"></td>
                 </tr>
                 </tbody>
             </table>

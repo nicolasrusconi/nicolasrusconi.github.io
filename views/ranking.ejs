@@ -8,17 +8,17 @@
                 <thead>
                 <tr>
                     <th class="text-center">Jugador</th>
+                    <th></th>
                     <th class="text-center">Ranking</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="player in players">
                     <td>
-                        <div>
-                            <img ng-src="{{player.image}}" class="img-circle">
-                            <span>{{player.firstName}}</span>
-                        </div>
-
+                        <img ng-src="{{player.image}}" class="img-circle">
+                    </td>
+                    <td>
+                        <span>{{player.firstName}}</span>
                     </td>
                     <td>{{player.ranking}}</td>
                 </tr>
