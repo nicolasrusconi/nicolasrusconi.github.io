@@ -25,7 +25,6 @@ module.exports = function(app) {
                 res.json(result);
             })    
         })
-        
     });
     app.get("/api/match/tournament/:tournament", function(req, res) {
         schemas.Match.find({}, "-_id -__v").populate({

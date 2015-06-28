@@ -15,6 +15,10 @@ angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     templateUrl: 'stats',
                     controller: 'tournamentController'
                 }).
+                when("/profile/:username",{
+                    templateUrl: 'profile',
+                    controller: 'playerController'
+                }).
                 otherwise({
                     redirectTo: '/'
                 });

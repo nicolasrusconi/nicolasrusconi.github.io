@@ -12,7 +12,20 @@ controllers.factory('Data', function() {
 
 });
 
-controllers.controller("playerController", ["$scope", "$http", function($scope, $http) {
+controllers.controller("playerController", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    if ($location.path().lastIndexOf("profile") != -1) {
+        $http.get("/api/player" + $location.path().substring($location.path().lastIndexOf("/")))
+            .success(function(data, status, headers, config) {
+                data.image = data.image.substring(0, data.image.lastIndexOf('?'));
+                $scope.thePlayer = data;
+            }
+        );
+    }
+    
+    $scope.goTo = function(player) {
+        $location.path('/profile/' + player.username);
+    };
+
     $http.get("/api/player")
         .success(function(data, status, headers, config) {
             $scope.players = data;

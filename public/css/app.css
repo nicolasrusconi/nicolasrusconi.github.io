@@ -29,6 +29,13 @@
 	vertical-align:middle!important;
 }
 
+.img-circle-large {
+    cursor:pointer;
+    height:248px;
+    width:248px;
+    vertical-align:middle!important;
+}
+
 ul {
 	margin-top:10px;
 }
