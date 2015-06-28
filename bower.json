@@ -19,6 +19,7 @@
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.3.0",
     "metisMenu": "~2.0.2",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "angular-route": "~1.4.1"
   }
 }

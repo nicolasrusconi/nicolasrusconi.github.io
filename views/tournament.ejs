@@ -1,0 +1,176 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title" style="font-size: 30px">{{theTournament.name}}</h3>
+    </div>
+    <div class="panel-body">
+        <span style="display: inline-block;" ng-show="players.length > 0">Tags: </span>
+        <div style="display: inline-block;" ng-repeat="player in players">
+            <a  ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} X </a>
+        </div>
+        <h3>{{thePhase}}</h3>
+        <h4>Partidos</h4>
+        <table class="center-block table table-striped table-hover middleData">
+            <thead>
+            <tr>
+                <th>Dia</th>
+                <th>Jugador</th>
+                <th>Pareja</th>
+                <th>Equipo</th>
+                <th>L</th>
+                <th>V</th>
+                <th>Equipo</th>
+                <th>Jugador</th>
+                <th>Pareja</th>
+                <!--th>Tags</th-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters)">
+                <td> <!--Dia-->
+                    {{match.date | date:'yyyy-MM-dd'}}
+                </td>
+                <td> <!--Jugador-->
+                    <img class="img-circle player {{match.home.player}}" ng-click="addPlayer(match.home.player)">
+                    <span>{{match.home.player}}</span>
+                </td>
+                <td> <!--Pareja-->
+                    <img class="img-circle player {{match.home.partner}}" ng-click="addPlayer(match.home.partner)">
+                    <span>{{match.home.partner}}</span>
+                </td>
+                <td> <!--Equipo-->
+                    <div class="team {{match.home.team}}"></div>
+                </td>
+                <td class="{{homeResulsClass(match)}}"> <!--Local-->
+                    {{match.home.goals}}
+                    <span ng-if="match.home.penalties">({{match.home.penalties}})</span>
+                </td>
+                <td class="{{awayResulsClass(match)}}"> <!--Visitante-->
+                    {{match.away.goals}}
+                    <span ng-if="match.away.penalties">({{match.away.penalties}})</span>
+                </td>
+                <td> <!--Equipo-->
+                    <div class="team {{match.away.team}}"></div>
+                </td>
+                <td> <!--Jugador-->
+                    <img class="img-circle player {{match.away.player}}" ng-click="addPlayer(match.away.player)">
+                    <span>{{match.away.player}}</span>
+                </td>
+                <td>    <!--Pareja-->
+                    <img class="img-circle player {{match.away.partner}}" ng-click="addPlayer(match.away.partner)"  >
+                    <span>{{match.away.partner}}</span>
+                </td>
+                <% if (user.admin) { %>
+                <td ng-controller="modalController" style="border-top: 0px; background-color: transparent"><button class="btn-circle btn-primary" ng-click="open(match)"><i class="fa fa-edit"></i></button></td>
+                <% } %>
+            </tr>
+
+            <tr ng-hide="filteredMatches.length"><td colspan="8">Nada por aqui!</td></tr>
+            </tbody>
+        </table>
+
+        <h4 ng-show="hasStandings(theTournament, thePhase)">Posiciones</h4>
+        <table class="center-block table table-hover table-striped text-center middleData""
+               ng-show="hasStandings(theTournament, thePhase)">
+            <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Equipo</th>
+                <th class="text-center" >Pts</th>
+                <th class="text-center">PJ</th>
+                <th class="text-center">PG</th>
+                <th class="text-center">PE</th>
+                <th class="text-center">PP</th>
+                <th class="text-center">GF</th>
+                <th class="text-center">GC</th>
+                <th class="text-center">DG</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="position in calculateStandings(theTournament, thePhase, filteredMatches)">
+                <td>{{$index + 1}}</td>
+                <td>
+                    <div ng-if="position.team" class="team {{position.team}}"></div>
+                    <img class="img-circle player {{position.player}}">
+                    <span class="playerPosition">{{position.player}}</span>
+                    <img ng-if="position.partner" class="img-circle player {{position.partner}}">
+                    <span class="playerPosition" ng-if="position.partner">{{position.partner}}</span>
+                </td>
+                <td class="table-bordered" style="background-color: aliceblue" >{{position.points}}</td>
+                <td>{{position.matchesPlayed}}</td>
+                <td>{{position.matchesWon}}</td>
+                <td>{{position.matchesTied}}</td>
+                <td>{{position.matchesLost}}</td>
+                <td>{{position.goalsScored}}</td>
+                <td>{{position.goalsReceived}}</td>
+                <td>{{position.goalsDiff}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div ng-controller="modalController">
+    <script type="text/ng-template" id="resultsEditor">
+        <div class="modal-header">
+            <h3>Editar</h3>
+            <h4 class="modal-title">{{match.tournament.name}} - {{match.phase}} - {{match.date | date:'yyyy-MM-dd'}}</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table table-striped table-hover middleData text-center">
+                <thead>
+                <tr>
+                    <th class=""> <!--Equipo-->
+                        <div class="team {{match.home.team}}"></div>
+                    </th>
+                    <th class="col-md-1"></th>
+                    <th class=""> <!--Equipo-->
+                        <div class="team {{match.away.team}}"></div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td> <!--Jugador-->
+                        <img class="img-circle player {{match.home.player}}" ng-click="addPlayer(match.home.player)">
+                        <span>{{match.home.player}}</span>
+                    </td>
+                    <th>Jugadores</th>
+                    <td> <!--Jugador-->
+                        <img class="img-circle player {{match.away.player}}" ng-click="addPlayer(match.away.player)">
+                        <span>{{match.away.player}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img class="img-circle player {{match.home.partner}}" ng-click="addPlayer(match.home.partner)">
+                        <span>{{match.home.partner}}</span>
+                    </td>
+                    <th>Compañeros</th>
+                    <td>
+                        <img class="img-circle player {{match.away.partner}}" ng-click="addPlayer(match.away.partner)">
+                        <span>{{match.away.partner}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="number" ng-model="match.home.goals"></td>
+                    <th>Goles</th>
+                    <td><input type="number" ng-model="match.away.goals"></td>
+                </tr>
+                <tr>
+                    <td><input type="number"></td>
+                    <th>Amarillas</th>
+                    <td><input type="number"></td>
+                </tr>
+                <tr>
+                    <td><input type="number"></td>
+                    <th>Rojas</th>
+                    <td><input type="number"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>

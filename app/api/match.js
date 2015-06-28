@@ -28,13 +28,17 @@ module.exports = function(app) {
         
     });
     app.get("/api/match/tournament/:tournament", function(req, res) {
-        schemas.Tournament.findOne({"name": req.params.tournament}, function(err, tournament) {
+        schemas.Match.find({}, "-_id -__v").populate({
+            path: "tournament"/*,
+            match: { name: "Torneo 0"},
+            select: "-_id -__v"*/
+        }).exec(function(err, matches) {
             if (err) res.send(err);
-            schemas.Match.find({"tournament": tournament.id}, function(err, matches) {
-                if (err) res.send(err);
-                res.json(matches);
-            })
-        })
+            matches = matches.filter(function(match) {
+                return match.tournament.name == req.params.tournament;
+            });
+            res.json(matches);
+        });
     });
     app.get("/api/match/player/:username", function(req, res) {
         var username = req.params.username;

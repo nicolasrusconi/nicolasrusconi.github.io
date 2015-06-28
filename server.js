@@ -73,6 +73,11 @@ require('./app/api/player.js')(app);
 require('./app/api/tournament.js')(app);
 require('./app/api/match.js')(app);
 
+
+app.use(function(req, res, next) {
+    res.status(404).redirect("/");
+});
+
 // listen (start app with node server.js) ======================================
 app.set('port', (process.env.PORT || 8080));
 app.listen(app.get('port'), function() {

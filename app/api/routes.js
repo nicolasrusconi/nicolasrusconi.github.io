@@ -2,10 +2,15 @@ module.exports = function(app, passport) {
 	app.get('/', ensureAuthenticated, function(req, res){
 		res.render('index', { user: req.user });
 	});
-	
+
+	app.get('/:name', function (req, res) {
+		var name = req.params.name;
+		res.render(name, { user: req.user });
+	});
+
 	app.get('/auth/google',
 		passport.authenticate('google', { scope:
-			[ 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.email' ] }));
+			[ 'https://www.googleapis.com/auth/plus.me', 'https://www.googleapis.com/auth/userinfo.email' ] }));
 
 	app.get( '/auth/google/callback',
 		passport.authenticate( 'google', {
@@ -21,7 +26,7 @@ module.exports = function(app, passport) {
 		res.render('account', { user: req.user });
 	});
 
-	app.get('/logout', function(req, res){
+	app.get('/account/logout', function(req, res){
 		req.logout();
 		res.redirect('/');
 	});

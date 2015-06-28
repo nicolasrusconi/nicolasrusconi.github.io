@@ -17,7 +17,7 @@ PlayerManager.prototype.createNewPlayer = function(jsonPlayer, callback) {
             if (err) console.error(err);
             else if (player) {
                 console.info("Player already created. " + schemaPlayer.username);
-                callback.call(this, schemaPlayer);
+                callback.call(this, player);
             } else {
                 schemaPlayer.save(function(err, saved) {
                     if (err) console.error("cannot save player");
