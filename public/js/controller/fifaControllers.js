@@ -26,7 +26,8 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "mat
     }
     
     //FIXME: should be a better way to do this...
-    $scope.calculateBasicStat = function(matches, alias) {
+    $scope.calculateBasicStat = function(matches) {
+        var alias = $scope.thePlayer.alias;
         $scope.thePlayer.matchesPlayed = matches.length;
         $scope.thePlayer.matchesWon = 0;
         $scope.thePlayer.matchesLost = 0;
@@ -36,22 +37,19 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "mat
         $.each(matches, function(index, match) {
             var awayGoals = match.away.goals;
             var homeGoals = match.home.goals;
+            if (awayGoals == -1 || homeGoals == -1) {
+                return;
+            }
             var homeWon = homeGoals > awayGoals ? 1 : 0;
             var tied = homeGoals == awayGoals ? 1 : 0;
-            var awayWon= homeGoals < awayGoals ? 1 : 0;
-            if (match.home.player == alias || match.home.partner == alias) {
-                $scope.thePlayer.matchesWon += homeWon;
-                $scope.thePlayer.matchesLost += awayWon;
-                $scope.thePlayer.matchesTied += tied;
-                $scope.thePlayer.goalsScored += homeGoals != -1 ? homeGoals : 0;
-                $scope.thePlayer.goalsReceived += awayGoals != -1 ? awayGoals : 0;
-            } else {
-                $scope.thePlayer.matchesWon += awayWon;
-                $scope.thePlayer.matchesLost += homeWon;
-                $scope.thePlayer.matchesTied += tied;
-                $scope.thePlayer.goalsScored += awayGoals != -1 ? awayGoals : 0;
-                $scope.thePlayer.goalsReceived += homeGoals != -1 ? homeGoals : 0;
-            }
+            var awayWon = homeGoals < awayGoals ? 1 : 0;
+            console.log(alias);
+            var isHome = match.home.player == alias || match.home.partner == alias;
+            $scope.thePlayer.matchesWon += isHome ? homeWon : awayWon;
+            $scope.thePlayer.matchesLost += isHome ? awayWon : homeWon;
+            $scope.thePlayer.matchesTied += tied;
+            $scope.thePlayer.goalsScored += isHome ? homeGoals : awayGoals;
+            $scope.thePlayer.goalsReceived += isHome ? awayGoals : homeGoals;
         });
         
     };
