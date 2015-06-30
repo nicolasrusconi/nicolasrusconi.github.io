@@ -27,6 +27,10 @@ module.exports = function(app) {
         })
     });
     app.get("/api/match/tournament/:tournament", function(req, res) {
+        var tournamentName = req.params.tournament;
+        var filter = function(match) {
+            return tournamentName == "current" ? match.tournament.current == true : match.tournament.name == tournamentName;
+        };
         schemas.Match.find({}, "-_id -__v").populate({
             path: "tournament"/*,
             match: { name: "Torneo 0"},
@@ -34,7 +38,7 @@ module.exports = function(app) {
         }).exec(function(err, matches) {
             if (err) res.send(err);
             matches = matches.filter(function(match) {
-                return match.tournament.name == req.params.tournament;
+                return filter(match);
             });
             res.json(matches);
         });

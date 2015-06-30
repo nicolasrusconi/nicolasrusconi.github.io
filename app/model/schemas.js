@@ -27,7 +27,7 @@ var matchSchema = new Schema({
     date: Date,
     home: {
         player: {type: String, required: true},
-        partner: {type: String, required: true},
+        partner: {type: String, required: false},
         goals: {type: Number, default: -1},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},
@@ -35,7 +35,7 @@ var matchSchema = new Schema({
     },
     away: {
         player: {type: String, required: true},
-        partner: {type: String, required: true},
+        partner: {type: String, required: false},
         goals: {type: Number, default: -1},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},

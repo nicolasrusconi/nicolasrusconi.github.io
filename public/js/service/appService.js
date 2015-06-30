@@ -5,20 +5,22 @@ angular.module("fifa").service("tournamentService", ["$http", function($http) {
         });
     };
     this.getTournament = function(tournamentName) {
-        return $http.get("/api/tournament/" + tournamentName).then(function(data) {
-            return data;
+        return $http.get("/api/tournament/" + tournamentName).then(function(response) {
+            return response.data;
         });
     }
 }])
-    .service("matchService", ["$http", function($http) {
-        this.getMatches = function() {
-            return $http.get("/api/match").then(function(data) {
-                return data;
+    .service("playerService", ["$http", function($http) {
+        this.getPlayers = function() {
+            return $http.get("/api/player").then(function(response) {
+                return response.data;
             });
-        };
+        }
+    }])
+    .service("matchService", ["$http", function($http) {
         this.getMatches = function(tournamentName) {
-            return $http.get("/api/match/tournament/" + tournamentName).then(function(data) {
-                return data;
+            return $http.get("/api/match/tournament/" + tournamentName).then(function(response) {
+                return response.data;
             });
 
         };

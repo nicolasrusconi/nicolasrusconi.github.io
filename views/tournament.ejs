@@ -30,11 +30,11 @@
                     {{match.date | date:'yyyy-MM-dd'}}
                 </td>
                 <td> <!--Jugador-->
-                    <img class="img-circle player {{match.home.player}}" ng-click="addPlayer(match.home.player)">
+                    <img class="img-circle" ng-src="{{getPicture(match.home.player)}}" ng-click="addPlayer(match.home.player)">
                     <span>{{match.home.player}}</span>
                 </td>
                 <td> <!--Pareja-->
-                    <img class="img-circle player {{match.home.partner}}" ng-click="addPlayer(match.home.partner)">
+                    <img class="img-circle" ng-src="{{getPicture(match.home.partner)}}" ng-click="addPlayer(match.home.partner)">
                     <span>{{match.home.partner}}</span>
                 </td>
                 <td> <!--Equipo-->
@@ -52,11 +52,11 @@
                     <div class="team {{match.away.team}}"></div>
                 </td>
                 <td> <!--Jugador-->
-                    <img class="img-circle player {{match.away.player}}" ng-click="addPlayer(match.away.player)">
+                    <img class="img-circle" ng-src="{{getPicture(match.away.player)}}" ng-click="addPlayer(match.away.player)">
                     <span>{{match.away.player}}</span>
                 </td>
                 <td>    <!--Pareja-->
-                    <img class="img-circle player {{match.away.partner}}" ng-click="addPlayer(match.away.partner)"  >
+                    <img class="img-circle" ng-src="{{getPicture(match.away.partner)}}" ng-click="addPlayer(match.away.partner)"  >
                     <span>{{match.away.partner}}</span>
                 </td>
                 <% if (user.admin) { %>
@@ -89,9 +89,9 @@
                 <td>{{$index + 1}}</td>
                 <td>
                     <div ng-if="position.team" class="team {{position.team}}"></div>
-                    <img class="img-circle player {{position.player}}">
+                    <img class="img-circle" ng-src="{{getPicture(position.player)}}">
                     <span class="playerPosition">{{position.player}}</span>
-                    <img ng-if="position.partner" class="img-circle player {{position.partner}}">
+                    <img ng-if="position.partner" class="img-circle" ng-src="{{getPicture(position.partner)}}">
                     <span class="playerPosition" ng-if="position.partner">{{position.partner}}</span>
                 </td>
                 <td class="table-bordered" style="background-color: aliceblue" >{{position.points}}</td>
@@ -131,23 +131,23 @@
                 <tbody>
                 <tr>
                     <td> <!--Jugador-->
-                        <img class="img-circle player {{match.home.player}}">
+                        <img class="img-circle" ng-src="{{getPicture(match.home.player)}}" >
                         <span>{{match.home.player}}</span>
                     </td>
                     <th>Jugadores</th>
                     <td> <!--Jugador-->
-                        <img class="img-circle player {{match.away.player}}">
+                        <img class="img-circle" ng-src="{{getPicture(match.away.player)}}">
                         <span>{{match.away.player}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <img class="img-circle player {{match.home.partner}}">
+                        <img class="img-circle" ng-src="{{getPicture(match.home.partner)}}">
                         <span>{{match.home.partner}}</span>
                     </td>
                     <th>Compañeros</th>
                     <td>
-                        <img class="img-circle player {{match.away.partner}}">
+                        <img class="img-circle" ng-src="{{getPicture(match.away.partner)}}">
                         <span>{{match.away.partner}}</span>
                     </td>
                 </tr>

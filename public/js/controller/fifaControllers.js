@@ -117,15 +117,15 @@ angular.module('fifa').controller('modalInstanceController', function ($scope, $
 
 
 controllers.controller('mainController', ['$scope', 'tournamentService', 'Data', function($scope, tournamentService, Data) {
-    
+
     $scope.mainPage = function() {
         Data.setCurrentTournament(undefined);
     };
-    
+
     $scope.logout = function() {
         window.location = '/account/logout';
     };
-    
+
     tournamentService.getTournaments().then(function(response) {
         $scope.tournaments = response.data;
     });
@@ -133,24 +133,17 @@ controllers.controller('mainController', ['$scope', 'tournamentService', 'Data',
     $scope.$watch(function () { return Data.getCurrentTournament(); }, function (newValue, oldValue) {
         if (newValue !== oldValue) $scope.theTournament = newValue;
     });
-    
+
     $scope.selectPhase = function(phase) {
         Data.setCurrentPhase(phase);
     }
 }]);
 
-controllers.controller('tournamentController', ['$scope', 'matchService', 'tournamentService', '$routeParams', 'Data', function($scope, matchService,tournamentService, $routeParams, Data){
-
-    //Data
-    $scope.players = [];
-    $scope.tagFilters = [];
-    
-    matchService.getMatches($routeParams.tournamentName).then(function(response) {
-        $scope.matches = response.data;
-        tournamentService.getTournament($routeParams.tournamentName).then(function(response) {
-            $scope.selectTournament(response.data);
-        })
-    });
+controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data', "playersData", "matches", "tournament", function($scope, $routeParams, Data, playersData, matches, tournament){
+    $scope.getPicture = function(alias) {
+        var player = $scope.playersInfo[alias];
+        return player ? player.image : "images/icon.question.png";
+    };
 
     $scope.$watch(function () { return Data.getCurrentPhase(); }, function (newValue, oldValue) {
         if (newValue !== oldValue) $scope.selectPhase(newValue);
@@ -237,22 +230,27 @@ controllers.controller('tournamentController', ['$scope', 'matchService', 'tourn
     };
 
     $scope.updatePosition = function(position, goalsScored, goalsReceived) {
-        position.matchesPlayed = position.matchesPlayed + 1;
+        var valid = goalsReceived != -1;
+        
+        if (valid) {
+            position.matchesPlayed = position.matchesPlayed + 1;
 
-        var won = goalsScored > goalsReceived ? 1 : 0;
-        position.matchesWon = position.matchesWon + won;
+            var won = goalsScored > goalsReceived ? 1 : 0;
+            position.matchesWon = position.matchesWon + won;
 
-        var tied = goalsScored == goalsReceived ? 1 : 0;
-        position.matchesTied = position.matchesTied + tied;
+            var tied = goalsScored == goalsReceived ? 1 : 0;
+            position.matchesTied = position.matchesTied + tied;
 
-        var lost = goalsScored < goalsReceived ? 1 : 0;
-        position.matchesLost = position.matchesLost + lost;
+            var lost = goalsScored < goalsReceived ? 1 : 0;
+            position.matchesLost = position.matchesLost + lost;
 
-        position.goalsScored = position.goalsScored + goalsScored;
-        position.goalsReceived = position.goalsReceived + goalsReceived;
-        position.goalsDiff = position.goalsScored - position.goalsReceived;
+            position.goalsScored = position.goalsScored + goalsScored;
+            position.goalsReceived = position.goalsReceived + goalsReceived;
+            position.goalsDiff = position.goalsScored - position.goalsReceived;
 
-        position.points = position.points + (won * 3) + tied;
+            position.points = position.points + (won * 3) + tied;
+        }
+
         return position;
     };
 
@@ -336,7 +334,18 @@ controllers.controller('tournamentController', ['$scope', 'matchService', 'tourn
             return "tie";
         }
     };
-    
+
+    //Data
+    $scope.players = [];
+    $scope.tagFilters = [];
+    $scope.playersInfo = {};
+
+    $.each(playersData, function (index, player) {
+        $scope.playersInfo[player.alias] = player;
+    });
+    $scope.matches = matches;
+    $scope.selectTournament(tournament);
+
 }])
     .filter('matchFilter', function() {
         return function(matches, filter) {

@@ -9,7 +9,18 @@ angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                 }).
                 when('/tournament/:tournamentName', {
                     templateUrl: 'tournament',
-                    controller: 'tournamentController'
+                    controller: 'tournamentController',
+                    resolve: {
+                        playersData: function(playerService) {
+                            return playerService.getPlayers();
+                        },
+                        matches:  function($route, matchService) {
+                            return matchService.getMatches($route.current.params.tournamentName);
+                        },
+                        tournament: function($route, tournamentService) {
+                            return tournamentService.getTournament($route.current.params.tournamentName);
+                        }
+                    }
                 }).
                 when("/stats", {
                     templateUrl: 'stats',
