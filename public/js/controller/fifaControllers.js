@@ -28,7 +28,7 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "mat
     //FIXME: should be a better way to do this...
     $scope.calculateBasicStat = function(matches) {
         var alias = $scope.thePlayer.alias;
-        $scope.thePlayer.matchesPlayed = matches.length;
+        $scope.thePlayer.matchesPlayed = 0;
         $scope.thePlayer.matchesWon = 0;
         $scope.thePlayer.matchesLost = 0;
         $scope.thePlayer.matchesTied = 0;
@@ -40,6 +40,7 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "mat
             if (awayGoals == -1 || homeGoals == -1) {
                 return;
             }
+            $scope.thePlayer.matchesPlayed += 1;
             var homeWon = homeGoals > awayGoals ? 1 : 0;
             var tied = homeGoals == awayGoals ? 1 : 0;
             var awayWon = homeGoals < awayGoals ? 1 : 0;
