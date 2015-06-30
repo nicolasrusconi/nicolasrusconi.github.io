@@ -122,7 +122,12 @@
                     <th class=""> <!--Equipo-->
                         <div class="team {{match.home.team}}"></div>
                     </th>
-                    <th class="col-md-1"></th>
+                    <th class="col-md-1" >
+                        <p class="input-group">
+                            <input type="date" class="form-control" datepicker-popup="{{format}}"  ng-model="match.date" is-open="opened" ng-required="true"  />
+                        </p>
+
+                    </th>
                     <th class=""> <!--Equipo-->
                         <div class="team {{match.away.team}}"></div>
                     </th>
@@ -131,24 +136,20 @@
                 <tbody>
                 <tr>
                     <td> <!--Jugador-->
-                        <img class="img-circle" ng-src="{{getPicture(match.home.player)}}" >
                         <span>{{match.home.player}}</span>
                     </td>
                     <th>Jugadores</th>
                     <td> <!--Jugador-->
-                        <img class="img-circle" ng-src="{{getPicture(match.away.player)}}">
                         <span>{{match.away.player}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <img class="img-circle" ng-src="{{getPicture(match.home.partner)}}">
-                        <span>{{match.home.partner}}</span>
+                        <input type="text" ng-model="match.home.partner">
                     </td>
                     <th>Compañeros</th>
                     <td>
-                        <img class="img-circle" ng-src="{{getPicture(match.away.partner)}}">
-                        <span>{{match.away.partner}}</span>
+                        <input type="text" ng-model="match.away.partner">
                     </td>
                 </tr>
                 <tr>

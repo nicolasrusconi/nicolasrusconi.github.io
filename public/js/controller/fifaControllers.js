@@ -99,14 +99,16 @@ controllers.controller('modalController', function ($scope, $modal, $log) {
 angular.module('fifa').controller('modalInstanceController', function ($scope, $modalInstance, match, $http) {
 
     $scope.match = match;
-
+    if (match.date) {
+        match.date = new Date(match.date);
+    }
 
     $scope.ok = function () {
         $http.put("/api/match", match).success(function(response) {
             $modalInstance.close();
-        }).error(
-            $modalInstance.dismiss("error")
-        )
+        }).error(function() {
+                $modalInstance.dismiss("error")
+            })
 
     };
 
