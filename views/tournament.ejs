@@ -25,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters)">
+            <tr ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters) | orderBy:'date'">
                 <td> <!--Dia-->
                     {{match.date | date:'yyyy-MM-dd'}}
                 </td>
