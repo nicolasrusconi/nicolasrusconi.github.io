@@ -29,11 +29,15 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "mat
     $scope.calculateBasicStat = function(matches) {
         var alias = $scope.thePlayer.alias;
         $scope.thePlayer.matchesPlayed = 0;
+        $scope.thePlayer.matchesAsHome = 0;
+        $scope.thePlayer.matchesAsAway = 0;
         $scope.thePlayer.matchesWon = 0;
         $scope.thePlayer.matchesLost = 0;
         $scope.thePlayer.matchesTied = 0;
         $scope.thePlayer.goalsScored = 0;
-        $scope.thePlayer.goalsReceived =0;
+        $scope.thePlayer.goalsReceived = 0;
+        $scope.thePlayer.yellowCards = 0;
+        $scope.thePlayer.redCards= 0;
         $.each(matches, function(index, match) {
             var awayGoals = match.away.goals;
             var homeGoals = match.home.goals;
@@ -44,8 +48,9 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "mat
             var homeWon = homeGoals > awayGoals ? 1 : 0;
             var tied = homeGoals == awayGoals ? 1 : 0;
             var awayWon = homeGoals < awayGoals ? 1 : 0;
-            console.log(alias);
             var isHome = match.home.player == alias || match.home.partner == alias;
+            $scope.thePlayer.matchesAsHome += isHome ? 1 : 0; 
+            $scope.thePlayer.matchesAsAway += isHome ? 0 : 1; 
             $scope.thePlayer.matchesWon += isHome ? homeWon : awayWon;
             $scope.thePlayer.matchesLost += isHome ? awayWon : homeWon;
             $scope.thePlayer.matchesTied += tied;
