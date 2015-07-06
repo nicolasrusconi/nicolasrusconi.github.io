@@ -121,7 +121,7 @@
                     <li>
                         <a href="#previous" ><i class="fa fa-folder fa-fw"></i> Torneos anteriores <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li ng-repeat="tournament in tournaments" ng-class="{active:theTournament===tournament}">
+                            <li ng-repeat="tournament in tournaments | orderBy:'[-current, -creationDate]'" ng-class="{active:theTournament===tournament}">
                                 <a href="/tournament/{{tournament.name}}">{{tournament.name}}</a>
                             </li>
 

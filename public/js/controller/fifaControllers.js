@@ -89,8 +89,8 @@ controllers.controller('modalController', function ($scope, $modal, $log) {
             }
         });
 
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
+        modalInstance.result.then(function () {
+            $scope.calculateStandings();
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -185,6 +185,7 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
         if (tournament && tournament.config.defaultPhase) {
             $scope.selectPhase(tournament.config.defaultPhase);
         }
+        $scope.calculateStandings();
     };
     $scope.selectPhase = function(phase) {
         $scope.tagFilters = [];
@@ -274,31 +275,32 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
     };
     $scope.standingsCache = {};
 
-    $scope.calculateStandings  = function(tournament, phase, matches) {
+    $scope.calculateStandings = function() {
+        var tournament = $scope.theTournament;
+        var phase = $scope.thePhase;
+        var matches = $scope.matches;
         if (!$scope.hasStandings(tournament, phase)) {
             return [];
-        }
-
-        var positions = $scope.standingsCache[tournament.name + phase];
-        if (positions) {
-            return positions;
         }
 
         var standingCalcFunction = $scope.standingsModel(tournament, phase);
         var standings = {};
         for (var i = matches.length - 1; i >= 0; i--) {
             var match = matches[i];
-            standingCalcFunction(standings, match.home, match.away.goals);
-            standingCalcFunction(standings, match.away, match.home.goals);
+            if (match.phase == phase) {
+                standingCalcFunction(standings, match.home, match.away.goals);
+                standingCalcFunction(standings, match.away, match.home.goals);
+            }
+
         }
-        positions = new Array();
+        var positions = [];
 
         for (var key in standings) {
             positions.push(standings[key]);
         }
         positions.sort($scope.comparePositions);
-        $scope.standingsCache[tournament.name + phase] = positions;
-        return positions;
+        //$scope.standingsCache[tournament.name + phase] = positions;
+        $scope.positions = positions;
     };
 
     $scope.standingsModel = function(theTournament, thePhase) {
@@ -352,6 +354,7 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
         $scope.playersInfo[player.alias] = player;
     });
     $scope.matches = matches;
+    $scope.filteredMatches = {}
     $scope.selectTournament(tournament);
 
 }])
