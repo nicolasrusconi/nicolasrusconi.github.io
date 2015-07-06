@@ -12,7 +12,9 @@ controllers.factory('Data', function() {
 
 });
 
-controllers.controller("playerController", ["$scope", "$http", "$location", "matchService", function($scope, $http, $location, matchService) {
+controllers.controller("playerController", ["$scope", "$http", "$location", "matchService", "Data", function($scope, $http, $location, matchService, Data) {
+    Data.setCurrentTournament(undefined);
+    
     if ($location.path().lastIndexOf("profile") != -1) {
         $http.get("/api/player" + $location.path().substring($location.path().lastIndexOf("/")))
             .success(function(data, status, headers, config) {
@@ -402,7 +404,7 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
             for (index = 0; index < matches.length; ++index) {
                 var match = matches[index];
                 var hasAllTags = true;
-                for (j = 0; j < tagFilter.length && hasAllTags; ++j) {
+                for (var j = 0; j < tagFilter.length && hasAllTags; ++j) {
                     hasAllTags = tagFilter[j] == match.tournament.name  || tagFilter[j] == match.phase;
                 }
                 if (hasAllTags) {

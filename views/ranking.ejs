@@ -13,7 +13,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="player in players" ng-click="goTo(player)" style="cursor: pointer">
+                <tr ng-repeat="player in players | orderBy:'-ranking'" ng-click="goTo(player)" style="cursor: pointer">
                     <td>
                         <img ng-src="{{player.image}}" class="img-circle">
                     </td>
