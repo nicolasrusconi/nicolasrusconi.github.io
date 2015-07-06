@@ -187,13 +187,13 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
         if (tournament && tournament.config.defaultPhase) {
             $scope.selectPhase(tournament.config.defaultPhase);
         }
-        $scope.calculateStandings();
     };
     $scope.selectPhase = function(phase) {
         $scope.tagFilters = [];
         $scope.players = [];
         $scope.thePhase = phase;
         $scope.addTagFilter(phase);
+        $scope.calculateStandings();
     };
     $scope.initPosition = function(player, partner) {
         return {
