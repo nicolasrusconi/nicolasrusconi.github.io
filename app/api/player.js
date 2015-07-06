@@ -14,7 +14,7 @@ module.exports = function(app) {
             res.json(player);
         })
     });
-    app.get("/api/player", function(req, res) {
+    app.post("/api/player", function(req, res) {
         var body = req.body;
         new schemas.Player(body).save(function(err, created) {
             if (err) res.send(err);
