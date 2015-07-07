@@ -230,7 +230,9 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
 
     $scope.processMatchIndividual = function(standings, team, goalsReceived) {
         $scope.processIndividual(standings, team.player, team.goals, goalsReceived);
-        $scope.processIndividual(standings, team.partner, team.goals, goalsReceived);
+        if (team.partner) {
+            $scope.processIndividual(standings, team.partner, team.goals, goalsReceived);
+        }
     };
 
     $scope.processIndividual = function(standings, player, goalsScored, goalsReceived) {
