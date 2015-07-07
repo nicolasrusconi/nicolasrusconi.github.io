@@ -10,18 +10,22 @@
 	background-color:#D9D9F1;	
 }
 .won {
-	color:green;
+    background-color: #C9F2D7;
+    color: green;
 }
 .lost {
-	color:red;
+    background-color: #F4BDBC;
+    color: red;
 }
 .tie {
-	color:black;
-}
-.table tbody tr:hover td, .table tbody tr:hover th {
     background-color: #fffbc0;
+
 }
 
+.matchGoals {
+    font-weight: bold;
+
+}
 .img-circle {
 	cursor:pointer;
 	height:48px;

@@ -12,7 +12,8 @@ controllers.factory('Data', function() {
 
 });
 
-controllers.controller("playerController", ["$scope", "$http", "$location", "matchService", "Data", function($scope, $http, $location, matchService, Data) {
+controllers.controller("playerController", ["$scope", "$http", "$location", "Data", "matchesForPlayer", function($scope, $http, $location, Data, matchesForPlayer) {
+    //FIMXE separate controllers...
     Data.setCurrentTournament(undefined);
     
     if ($location.path().lastIndexOf("profile") != -1) {
@@ -20,11 +21,12 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "mat
             .success(function(data, status, headers, config) {
                 data.image = data.image.substring(0, data.image.lastIndexOf('?'));
                 $scope.thePlayer = data;
-                matchService.getMatchesForPlayer(data).then(function(response) {
-                    $scope.calculateBasicStat(response.data);
-                })
+                $scope.matchesForPlayer = matchesForPlayer;
+                $scope.calculateBasicStat(matchesForPlayer);
+
             }
         );
+
     }
     
     //FIXME: should be a better way to do this...
@@ -328,25 +330,7 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
         return theTournament ? theTournament.config.phasesWithStandings.indexOf(thePhase) != -1 : false;
     };
 
-    $scope.homeResulsClass = function(match) {
-        if (match.home.goals > match.away.goals) {
-            return "won";
-        } else if (match.home.goals < match.away.goals) {
-            return "lost"
-        } else {
-            return "tie";
-        }
-    };
-    $scope.awayResulsClass = function(match) {
-        if (match.away.goals > match.home.goals) {
-            return "won";
-        } else if (match.away.goals < match.home.goals) {
-            return "lost"
-        } else {
-            return "tie";
-        }
-    };
-
+    
     //Data
     $scope.players = [];
     $scope.tagFilters = [];
@@ -375,6 +359,7 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
                     match.away.player == filter[j] || match.away.partner ==filter[j];
                 }
                 if (hasAllPlayers) {
+                    //setResultsClass(match);
                     out.push(match);
                 }
             }
@@ -391,6 +376,18 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
         };
     })
     .filter('tagFilter', function() {
+        var setResultsClass = function(match) {
+            if (match.home.goals > match.away.goals) {
+                match.home.clazz = "won";
+                match.away.clazz = "lost";
+            } else if (match.home.goals < match.away.goals) {
+                match.home.clazz = "lost";
+                match.away.clazz = "won";
+            } else if (match.home.goals != -1){
+                match.home.clazz = "tie";
+                match.away.clazz = "tie";
+            }
+        };
         return function(matches, tagFilter) {
             var out = [];
             var index = tagFilter.indexOf("Historico");
@@ -408,6 +405,7 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
                     hasAllTags = tagFilter[j] == match.tournament.name  || tagFilter[j] == match.phase;
                 }
                 if (hasAllTags) {
+                    setResultsClass(match);
                     out.push(match);
                 }
             }
