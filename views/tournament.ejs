@@ -25,43 +25,43 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters) | orderBy:'date'">
+            <tr ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters) | orderBy:'date'" ng-class="match.clazz">
                 <td> <!--Dia-->
                     {{match.date | date:'dd-MM-yyyy'}}
                 </td>
 
-                <td > <!--Jugador-->
+                <td ng-class="match.home.clazz"> <!--Jugador-->
                     <img class="img-circle" ng-src="{{getPicture(match.home.player)}}" ng-click="addPlayer(match.home.player)">
                     <span>{{match.home.player}}</span>
                 </td>
-                <td > <!--Pareja-->
+                <td ng-class="match.home.clazz"> <!--Pareja-->
                         <img class="img-circle" ng-src="{{getPicture(match.home.partner)}}" ng-click="addPlayer(match.home.partner)">
                         <span>{{match.home.partner}}</span>
                 </td>
                 <td > <!--Equipo-->
                     <div class="team {{match.home.team}}"></div>
                 </td>
-                <td ng-class="match.home.clazz" class="matchGoals"> <!--Local-->
+                <td class="matchGoals"> <!--Local-->
                     {{match.home.goals}}
                     <span ng-if="match.home.penalties">({{match.home.penalties}})</span>
                 </td>
-                <td ng-class="match.away.clazz" class="matchGoals"> <!--Visitante-->
+                <td class="matchGoals"> <!--Visitante-->
                     {{match.away.goals}}
                     <span ng-if="match.away.penalties">({{match.away.penalties}})</span>
                 </td>
                 <td > <!--Equipo-->
                     <div class="team {{match.away.team}}"></div>
                 </td>
-                <td > <!--Jugador-->
+                <td ng-class="match.away.clazz"> <!--Jugador-->
                     <img class="img-circle" ng-src="{{getPicture(match.away.player)}}" ng-click="addPlayer(match.away.player)">
                     <span>{{match.away.player}}</span>
                 </td>
-                <td >    <!--Pareja-->
+                <td ng-class="match.away.clazz">    <!--Pareja-->
                     <img class="img-circle" ng-src="{{getPicture(match.away.partner)}}" ng-click="addPlayer(match.away.partner)"  >
                     <span>{{match.away.partner}}</span>
                 </td>
                 <% if (user.admin) { %>
-                <td ng-controller="modalController" style="border-top: 0px; background-color: transparent"><button class="btn-circle btn-primary" ng-click="open(match)"><i class="fa fa-edit"></i></button></td>
+                <td ng-controller="modalController" style="border-top: 0px; background-color: #ffffff!important;"><button type="button" class="btn btn-circle btn-success" ng-click="open(match)"><i class="fa fa-fw fa-edit"></i></button></td>
                 <% } %>
             </tr>
 

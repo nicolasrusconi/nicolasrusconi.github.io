@@ -19,7 +19,10 @@
 }
 .tie {
     background-color: #fffbc0;
+}
 
+.notPlayed {
+    opacity: 0.2;
 }
 
 .matchGoals {

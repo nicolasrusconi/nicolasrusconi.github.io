@@ -379,16 +379,16 @@ controllers.controller('tournamentController', ['$scope', '$routeParams', 'Data'
     })
     .filter('tagFilter', function() {
         var setResultsClass = function(match) {
+            if (match.home.goals == -1) {
+                match.clazz = "notPlayed";
+            }
             if (match.home.goals > match.away.goals) {
                 match.home.clazz = "won";
-                match.away.clazz = "lost";
+                match.away.clazz = "";
             } else if (match.home.goals < match.away.goals) {
-                match.home.clazz = "lost";
+                match.home.clazz = "";
                 match.away.clazz = "won";
-            } else if (match.home.goals != -1){
-                match.home.clazz = "tie";
-                match.away.clazz = "tie";
-            }
+            } 
         };
         return function(matches, tagFilter) {
             var out = [];
