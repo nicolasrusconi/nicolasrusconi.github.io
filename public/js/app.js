@@ -1,7 +1,7 @@
-angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
+var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
 
-.config(['$routeProvider',
-        function($routeProvider) {
+.config(['$routeProvider', "$locationProvider",
+        function($routeProvider, $locationProvider) {
             $routeProvider.
                 when('/ranking', {
                     templateUrl: 'ranking',
@@ -43,9 +43,5 @@ angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                 otherwise({
                     redirectTo: '/tournament/current'
                 });
-}])
-
-.config(function($locationProvider) {
-        $locationProvider.html5Mode(true).hashPrefix('!');
-    })
-;
+            $locationProvider.html5Mode(true);
+}]);
