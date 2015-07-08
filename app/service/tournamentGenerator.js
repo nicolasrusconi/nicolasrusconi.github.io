@@ -7,9 +7,9 @@ var randomSelect = function(players, teams, callback) {
     }
     var shuffledPlayers = _.shuffle(players);
     var shuffledTeams = _.shuffle(teams);
-    var result = []
+    var result = [];
     for (var i=0; i<players.length; i++) {
-        var select = {}
+        var select = {};
         select.player = shuffledPlayers[i];
         select.team = shuffledTeams[i];
         result.push(select);

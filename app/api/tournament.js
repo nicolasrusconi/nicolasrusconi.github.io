@@ -1,5 +1,6 @@
 var schemas = require("../model/schemas");
 var validation = require("./validation");
+var generator = require('../service/tournamentGenerator');
 
 module.exports = function(app) {
     app.post("/api/tournament", validation.authenticateUser, function(req, res) {
@@ -38,6 +39,19 @@ module.exports = function(app) {
             if (err) res.send(err);
             res.json(updated);
         })
+    });
+    app.post('/api/tournament/generate', validation.authenticateUser, function(req, res) {
+        generator.generate(req.body);
+        res.send("Received, generating tournament...");
+    });
+    app.post('/api/tournament/csvGenerate', validation.authenticateUser, function(req, res) {
+        generator.createMatchFromCSV(req.body.data);
+        res.send("Received, generating matches...");
+    });
+    app.get("/api/tournament/randomSelect", validation.authenticateUser, function(req, res) {
+        generator.randomSelect(req.body.players, req.body.teams, function(selections) {
+            res.json(selections);
+        });
     });
 };
 
