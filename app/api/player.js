@@ -1,4 +1,7 @@
 var schemas = require("../model/schemas");
+var ranking = require("../service/ranking");
+var validation = require("./validation");
+var _ = require("underscore");
 
 module.exports = function(app) {
     app.get("/api/player", function(req, res) {
@@ -20,6 +23,10 @@ module.exports = function(app) {
             if (err) res.send(err);
             res.send("created");
         })
-        
-    })
+    });
+    app.post("/api/player/ranking", validation.authenticateUser, function(req, res) {
+        ranking.calculateGeneralRanking(function(glickoPlayers) {
+            res.send("Finished successfully")
+        })
+    });
 };

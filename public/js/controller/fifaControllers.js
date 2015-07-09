@@ -13,7 +13,7 @@ controllers.factory('Data', function() {
 });
 
 controllers.controller("playerController", ["$scope", "$http", "$location", "Data", "matchesForPlayer", function($scope, $http, $location, Data, matchesForPlayer) {
-    //FIMXE separate controllers...
+    //FIXME separate controllers...
     Data.setCurrentTournament(undefined);
     
     if ($location.path().lastIndexOf("profile") != -1) {

@@ -21,6 +21,14 @@
     background-color: #fffbc0;
 }
 
+.rankPositive {
+    color: green;
+}
+
+.rankNegative {
+    color: red;
+}
+
 .notPlayed {
     opacity: 0.2;
 }
