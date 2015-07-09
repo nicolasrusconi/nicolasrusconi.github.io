@@ -74,6 +74,14 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "Dat
             $scope.players = data;
         }
     );
+    
+    $scope.updateRanking = function() {
+        if(confirm("Estas seguro?")) {
+            $http.post("/api/player/ranking").success(function() {
+                $location.path("/");
+            });
+        }
+    }
 }]);
 
 controllers.controller('modalController', function ($scope, $modal, $log) {

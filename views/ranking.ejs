@@ -1,6 +1,9 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title" style="font-size: 30px">Ranking</h3>
+        <h3 class="panel-title" style="font-size: 30px; display: inline-block">Ranking</h3>
+        <% if (user.admin) { %>
+            <button style="float: right;" type="button" class="btn btn-danger" ng-click="updateRanking()" >Actualizar ranking!</button>
+        <% } %>
     </div>
     <div class="panel-body">
         <div id="ranking">
