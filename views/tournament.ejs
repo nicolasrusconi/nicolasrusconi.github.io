@@ -5,7 +5,7 @@
     <div class="panel-body">
         <span style="display: inline-block;" ng-show="players.length > 0">Tags: </span>
         <div style="display: inline-block;" ng-repeat="player in players">
-            <a  ng-click="removePlayer(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} X </a>
+            <a  ng-click="removePlayerTag(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} X </a>
         </div>
         <h3>{{thePhase}}</h3>
         <h4>Partidos</h4>
@@ -31,11 +31,11 @@
                 </td>
 
                 <td ng-class="match.home.clazz"> <!--Jugador-->
-                    <img class="img-circle" ng-src="{{getPicture(match.home.player)}}" ng-click="addPlayer(match.home.player)">
+                    <img class="img-circle" ng-src="{{getPicture(match.home.player)}}" ng-click="addPlayerTag(match.home.player)">
                     <span>{{match.home.player}}</span>
                 </td>
                 <td ng-class="match.home.clazz"> <!--Pareja-->
-                        <img class="img-circle" ng-src="{{getPicture(match.home.partner)}}" ng-click="addPlayer(match.home.partner)">
+                        <img class="img-circle" ng-src="{{getPicture(match.home.partner)}}" ng-click="addPlayerTag(match.home.partner)">
                         <span>{{match.home.partner}}</span>
                 </td>
                 <td > <!--Equipo-->
@@ -53,11 +53,11 @@
                     <div class="team {{match.away.team}}"></div>
                 </td>
                 <td ng-class="match.away.clazz"> <!--Jugador-->
-                    <img class="img-circle" ng-src="{{getPicture(match.away.player)}}" ng-click="addPlayer(match.away.player)">
+                    <img class="img-circle" ng-src="{{getPicture(match.away.player)}}" ng-click="addPlayerTag(match.away.player)">
                     <span>{{match.away.player}}</span>
                 </td>
                 <td ng-class="match.away.clazz">    <!--Pareja-->
-                    <img class="img-circle" ng-src="{{getPicture(match.away.partner)}}" ng-click="addPlayer(match.away.partner)"  >
+                    <img class="img-circle" ng-src="{{getPicture(match.away.partner)}}" ng-click="addPlayerTag(match.away.partner)"  >
                     <span>{{match.away.partner}}</span>
                 </td>
                 <% if (user.admin) { %>
