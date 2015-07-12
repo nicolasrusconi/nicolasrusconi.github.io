@@ -7,7 +7,11 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     templateUrl: 'ranking',
                     controller: 'playerController',
                     resolve: {
-                        matchesForPlayer: function() {return []}
+                        matchesForPlayer: function() {return []},
+                        playerStats: function() {
+                            return [];
+
+                        }
                     }
                 }).
                 when('/tournament/:tournamentName', {
@@ -28,12 +32,16 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                 when("/stats", {
                     templateUrl: 'stats'
                 }).
-                when("/profile/:username",{
+                when("/profile/:alias",{
                     templateUrl: 'profile',
                     controller: 'playerController',
                     resolve: {
                         matchesForPlayer: function($route, matchService) {
-                            return matchService.getMatchesForPlayer($route.current.params.username);
+                            return matchService.getMatchesForPlayer($route.current.params.alias);
+                        },
+                        playerStats: function($route, playerService) {
+                            return playerService.getPlayerStats($route.current.params.alias)
+                            
                         }
                     }
                 }).

@@ -1,5 +1,6 @@
 var schemas = require("../model/schemas");
 var ranking = require("../service/ranking");
+var stats = require("../service/statistic");
 var validation = require("./validation");
 var _ = require("underscore");
 
@@ -11,8 +12,8 @@ module.exports = function(app) {
             res.json(players);
         }).sort({"ranking": -1})
     });
-    app.get("/api/player/:username", function(req, res) {
-        schemas.Player.findOne({"username": req.params.username}, function(err, player) {
+    app.get("/api/player/:alias", function(req, res) {
+        schemas.Player.findOne({"alias": req.params.alias}, function(err, player) {
             if (err) res.send(err);
             res.json(player);
         })
@@ -29,4 +30,7 @@ module.exports = function(app) {
             res.send("Finished successfully")
         })
     });
+    app.get("/api/player/:alias/stats", function(req, res) {
+        res.json(stats.playerStatistics(req.params.alias));
+    })
 };

@@ -11,26 +11,26 @@
                     <table class="table">
                         <tbody>
                         <tr><td>Nombre</td><td>{{thePlayer.firstName}}</td></tr>
-                        <tr><td>PJ</td><td>{{thePlayer.matchesPlayed}}</td></tr>
-                        <!--<tr><td>PJ (local)</td><td>{{thePlayer.matchesAsHome}}</td></tr>
-                        <tr><td>PJ (visitante)</td><td>{{thePlayer.matchesAsAway}}</td></tr>-->
-                        <tr><td>PG</td><td>{{thePlayer.matchesWon}}</td></tr>
-                        <tr><td>PE</td><td>{{thePlayer.matchesTied}}</td></tr>
-                        <tr><td>PP</td><td>{{thePlayer.matchesLost}}</td></tr>
-                        <tr><td>GF</td><td>{{thePlayer.goalsScored}}</td></tr>
-                        <tr><td>GC</td><td>{{thePlayer.goalsReceived}}</td></tr>
-                        <tr><td>DG</td><td>{{thePlayer.goalsScored - thePlayer.goalsReceived}}</td></tr>
-                        <tr><td>Amarillas</td><td>N/A</td></tr>
-                        <tr><td>Rojas</td><td>N/A</td></tr>
+                        <tr><td>Partidos jugados</td><td>{{thePlayer.stats.matches.played}}</td></tr>
+                        <tr><td>Partidos ganados</td><td class="rankPositive">{{thePlayer.stats.matches.won}}</td></tr>
+                        <tr><td>Partidos empatados</td><td>{{thePlayer.stats.matches.tied}}</td></tr>
+                        <tr><td>Partidos perdidos</td><td class="rankNegative">{{thePlayer.stats.matches.lost}}</td></tr>
+                        <tr><td>Goles a favor</td><td class="rankPositive">{{thePlayer.stats.goals.scored}}</td></tr>
+                        <tr><td>Goles en contra</td><td class="rankNegative">{{thePlayer.stats.goals.received}}</td></tr>
+                        <tr><td>Goles por partido</td><td>{{thePlayer.stats.goals.scored / thePlayer.stats.matches.played | number:2}}</td></tr>
+                        <tr><td>Goles por partido (recibidos)</td><td>{{thePlayer.stats.goals.received / thePlayer.stats.matches.played | number:2}}</td></tr>
+                        <tr><td>Diferencia de gol</td>
+                            <!--//FIXME: why diff is zero?-->
+                            <td ng-init="diff = thePlayer.stats.goals.scored - thePlayer.stats.goals.received;" ng-class="diff >0 ? 'rankPositive' : diff < 0 ? 'rankNegative' : ''">
+                                {{thePlayer.stats.goals.scored - thePlayer.stats.goals.received}}
+                            </td></tr>
+                        <tr><td>Amarillas (Partidos)</td><td>{{thePlayer.stats.cards.yellow.count}} ( {{thePlayer.stats.cards.yellow.matches}} )</td></tr>
+                        <tr><td>Rojas (Partidos)</td><td>{{thePlayer.stats.cards.red.count}} ( {{thePlayer.stats.cards.red.matches}} )</td></tr>
                         </tbody>
-
                     </table>
                 </td>
             </tr>
-            
             </tbody>
-            
-            
         </table>
         
     </div>

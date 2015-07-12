@@ -12,7 +12,7 @@ controllers.factory('Data', function() {
 
 });
 
-controllers.controller("playerController", ["$scope", "$http", "$location", "Data", "matchesForPlayer", function($scope, $http, $location, Data, matchesForPlayer) {
+controllers.controller("playerController", ["$scope", "$http", "$location", "Data", "matchesForPlayer", "playerStats", function($scope, $http, $location, Data, matchesForPlayer, playerStats) {
     //FIXME separate controllers...
     Data.setCurrentTournament(undefined);
     
@@ -22,51 +22,14 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "Dat
                 data.image = data.image.substring(0, data.image.lastIndexOf('?'));
                 $scope.thePlayer = data;
                 $scope.matchesForPlayer = matchesForPlayer;
-                $scope.calculateBasicStat(matchesForPlayer);
-
+                $scope.thePlayer.stats = playerStats;
             }
         );
 
     }
-    
-    //FIXME: should be a better way to do this...
-    $scope.calculateBasicStat = function(matches) {
-        var alias = $scope.thePlayer.alias;
-        $scope.thePlayer.matchesPlayed = 0;
-        $scope.thePlayer.matchesAsHome = 0;
-        $scope.thePlayer.matchesAsAway = 0;
-        $scope.thePlayer.matchesWon = 0;
-        $scope.thePlayer.matchesLost = 0;
-        $scope.thePlayer.matchesTied = 0;
-        $scope.thePlayer.goalsScored = 0;
-        $scope.thePlayer.goalsReceived = 0;
-        $scope.thePlayer.yellowCards = 0;
-        $scope.thePlayer.redCards= 0;
-        $.each(matches, function(index, match) {
-            var awayGoals = match.away.goals;
-            var homeGoals = match.home.goals;
-            if (awayGoals == -1 || homeGoals == -1) {
-                return;
-            }
-            $scope.thePlayer.matchesPlayed += 1;
-            var homeWon = homeGoals > awayGoals ? 1 : 0;
-            var tied = homeGoals == awayGoals ? 1 : 0;
-            var awayWon = homeGoals < awayGoals ? 1 : 0;
-            var isHome = match.home.player == alias || match.home.partner == alias;
-            $scope.thePlayer.matchesAsHome += isHome ? 1 : 0; 
-            $scope.thePlayer.matchesAsAway += isHome ? 0 : 1; 
-            $scope.thePlayer.matchesWon += isHome ? homeWon : awayWon;
-            $scope.thePlayer.matchesLost += isHome ? awayWon : homeWon;
-            $scope.thePlayer.matchesTied += tied;
-            $scope.thePlayer.goalsScored += isHome ? homeGoals : awayGoals;
-            $scope.thePlayer.goalsReceived += isHome ? awayGoals : homeGoals;
-        });
-        
-    };
-    
-    
+
     $scope.goTo = function(player) {
-        $location.path('/profile/' + player.username);
+        $location.path('/profile/' + player.alias);
     };
 
     $http.get("/api/player")
