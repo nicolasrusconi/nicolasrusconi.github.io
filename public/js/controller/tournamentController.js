@@ -1,4 +1,4 @@
-angular.module('fifaControllers').controller('tournamentController', ['$scope', '$routeParams', 'Data', "playersData", "matches", "tournament", function($scope, $routeParams, Data, playersData, matches, tournament){
+controllers.controller('tournamentController', ['$scope', 'Data', "playersData", "matches", "tournament", function($scope, Data, playersData, matches, tournament){
 
     var addTagFilter = function(tag) {
         if ($scope.tagFilters.indexOf(tag) == -1) {

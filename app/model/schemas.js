@@ -15,15 +15,6 @@ var playerSchema = new Schema({
     admin: {type: Boolean, default: false}
 });
 
-var teamSchema = new Schema({
-    player1: {type: Schema.Types.ObjectId, ref: 'User'},
-    player2: {type: Schema.Types.ObjectId, ref: 'User'},
-    goals: {type: Number, default: -1},
-    redCards: {type: Number, default: -1},
-    yellowCards: {type: Number, default: -1},
-    teamName: String
-});
-
 var matchSchema = new Schema({
     date: Date,
     home: {
@@ -62,7 +53,6 @@ var tournamentSchema = new Schema({
 });
 
 exports.Player = mongoose.model("Player", playerSchema);
-exports.Team = mongoose.model("Team", teamSchema);
 exports.Match = mongoose.model("Match", matchSchema);
 exports.Tournament = mongoose.model("Tournament", tournamentSchema);
 

@@ -13,7 +13,7 @@ var updateForPlayer = function(playersArray) {
     getAllMatches(function(matches) {
         _.each(matches, function(match) {
             if (match.home.goals == -1 ) return; //FIXME: filter -1 -1
-            collectBasicStat(match, function(alias) {
+            __collectBasicStat(match, function(alias) {
                 return playersArray.indexOf(alias) != -1
             });
         })
@@ -30,10 +30,11 @@ var getAllMatches = function (callback) {
     });
 };
 
+// initialize
 getAllMatches(function(matches) {
     _.each(matches, function(match) {
         if (match.home.goals == -1 ) return; //FIXME: filter -1 -1
-        collectBasicStat(match);
+        __collectBasicStat(match);
     });
 });
 
@@ -110,7 +111,7 @@ var __addPlayerCards = function(alias, yellowCards, redCards) {
     players[alias].cards.yellow.matches += 1;
 };
 
-var collectBasicStat = function(match, playerFilter) {
+var __collectBasicStat = function(match, playerFilter) {
     
     if (!playerFilter) playerFilter = function() {return true};
     

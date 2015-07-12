@@ -1,4 +1,4 @@
-angular.module('fifaControllers').controller('modalController', function ($scope, $modal, $log) {
+controllers.controller('modalController', function ($scope, $modal, $log) {
 
     $scope.animationsEnabled = true;
 

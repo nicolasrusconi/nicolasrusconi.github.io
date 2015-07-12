@@ -38,9 +38,11 @@
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="js/app.js"></script>
     <script src="js/service/appService.js"></script>
-    <script src="js/controller/fifaControllers.js"></script>
+    <script src="js/controller/mainController.js"></script>
     <script src="js/controller/tournamentController.js"></script>
     <script src="js/controller/matchModalController.js"></script>
+    <script src="js/controller/rankingController.js"></script>
+    <script src="js/controller/profileController.js"></script>
 
     <link rel="stylesheet" href="css/app.css">
 </head>
@@ -121,7 +123,7 @@
                         <a href="rules"><i class="fa fa-list fa-fw"></i> Reglamento </a>
                     </li>
                     <li>
-                        <a href="ranking" ng-click="selectTournament(null)"><i class="fa fa-fw fa-star"></i> Ranking</a>
+                        <a href="ranking"><i class="fa fa-fw fa-star"></i> Ranking</a>
                     </li>
                     <li>
                         <a href="#previous" ><i class="fa fa-folder fa-fw"></i> Torneos anteriores <span class="fa arrow"></span></a>

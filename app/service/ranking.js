@@ -107,7 +107,7 @@ var calculateGeneralRanking = function(callback) {
 
             //save ranking...
             _.each(glickoPlayers, function(tuple) {
-                updateRankingDb(tuple);
+                __updateRankingDb(tuple);
             });
             callback.call(this, glickoPlayers);
         }).sort({"date": 1})
@@ -115,7 +115,7 @@ var calculateGeneralRanking = function(callback) {
     });
 };
 
-var updateRankingDb = function(tuple) {
+var __updateRankingDb = function(tuple) {
     if (tuple) {
         var glickoPlayer = tuple.glicko;
         var newRankingValue = glickoPlayer.getRating().toFixed(2);

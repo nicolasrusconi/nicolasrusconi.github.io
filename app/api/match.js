@@ -12,6 +12,7 @@ module.exports = function(app) {
             var match = new schemas.Match(body);
             match.save(function(err, match) {
                 if (err) res.send(err);
+                stats.updateForPlayer([match.home.player, match.home.partner, match.away.player, match.away.partner]);
                 res.send("created");
             })
         })
