@@ -18,9 +18,9 @@ controllers.controller("rankingController", ["$scope", "$location", "Data", "pla
     $.each(players, function(index, player) {
         var allPlayerStat = allPlayerStats[player.alias];
         player.matchesPlayed = allPlayerStat ? allPlayerStat.matches.played : 0;
-        player.wonAvg = allPlayerStat ? (allPlayerStat.matches.won / allPlayerStat.matches.played).toFixed(2) : 0;
-        player.tiedAvg = allPlayerStat ? (allPlayerStat.matches.tied / allPlayerStat.matches.played).toFixed(2) : 0;
-        player.lostAvg = allPlayerStat ? (allPlayerStat.matches.lost / allPlayerStat.matches.played).toFixed(2) : 0;
+        player.wonAvg = allPlayerStat ? (100 * (allPlayerStat.matches.won / allPlayerStat.matches.played)).toFixed(2) : 0;
+        player.tiedAvg = allPlayerStat ? (100 * (allPlayerStat.matches.tied / allPlayerStat.matches.played)).toFixed(2) : 0;
+        player.lostAvg = allPlayerStat ? (100 * (allPlayerStat.matches.lost / allPlayerStat.matches.played)).toFixed(2) : 0;
     })
     
 }]);
