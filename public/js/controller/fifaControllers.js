@@ -47,58 +47,6 @@ controllers.controller("playerController", ["$scope", "$http", "$location", "Dat
     }
 }]);
 
-controllers.controller('modalController', function ($scope, $modal, $log) {
-
-    $scope.animationsEnabled = true;
-
-    $scope.open = function (match) {
-
-        var modalInstance = $modal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: 'resultsEditor',
-            controller: 'modalInstanceController',
-            resolve: {
-                match: function () {
-                    return match;
-                }
-            }
-        });
-
-        modalInstance.result.then(function () {
-            $scope.calculateStandings();
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-    };
-
-    $scope.toggleAnimation = function () {
-        $scope.animationsEnabled = !$scope.animationsEnabled;
-    };
-
-});
-
-angular.module('fifa').controller('modalInstanceController', function ($scope, $modalInstance, match, $http) {
-
-    $scope.match = match;
-    if (match.date) {
-        match.date = new Date(match.date);
-    }
-
-    $scope.ok = function () {
-        $http.put("/api/match", match).success(function(response) {
-            $modalInstance.close();
-        }).error(function() {
-                $modalInstance.dismiss("error")
-            })
-
-    };
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-});
-
-
 controllers.controller('mainController', ['$scope', 'tournamentService', 'Data', function($scope, tournamentService, Data) {
 
     $scope.mainPage = function() {

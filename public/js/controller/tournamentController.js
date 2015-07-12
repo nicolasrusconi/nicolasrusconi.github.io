@@ -5,16 +5,16 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
             $scope.tagFilters.push(tag);
         }
     };
-    
+
     var selectPhase = function(phase) {
         $scope.tagFilters = [];
         $scope.players = [];
         $scope.thePhase = phase;
         addTagFilter(phase);
-        calculateStandings();
+        $scope.calculateStandings();
     };
-    
-    var calculateStandings = function() {
+
+    $scope.calculateStandings = function() {
         var tournament = $scope.theTournament;
         var phase = $scope.thePhase;
         var matches = $scope.matches;
@@ -40,7 +40,7 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
         positions.sort(comparePositions);
         $scope.positions = positions;
     };
-    
+
     var initPosition = function(player, partner) {
         return {player: player, partner: partner,
             matchesPlayed:0, matchesWon:0, matchesTied:0, matchesLost:0,
@@ -48,7 +48,7 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
             points:0};
     };
 
-    var processIndividual = function(standings, player, goalsScored, goalsReceived) {
+    var processIndividualMatch = function(standings, player, goalsScored, goalsReceived) {
         var position = standings[player];
         if (!position) {
             position = initPosition(player);
@@ -57,24 +57,20 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
         return updatePosition(position, goalsScored, goalsReceived);
     };
 
-    //FIXME do this better
+
     var updatePosition = function(position, goalsScored, goalsReceived) {
-        var valid = goalsReceived != -1;
-
-        if (valid) {
-            position.matchesPlayed = position.matchesPlayed + 1;
-
+        if (goalsReceived != -1 && goalsScored != -1) {
             var won = goalsScored > goalsReceived ? 1 : 0;
-            position.matchesWon = position.matchesWon + won;
-
-            var tied = goalsScored == goalsReceived ? 1 : 0;
-            position.matchesTied = position.matchesTied + tied;
-
             var lost = goalsScored < goalsReceived ? 1 : 0;
-            position.matchesLost = position.matchesLost + lost;
+            var tied = goalsScored == goalsReceived ? 1 : 0;
+            
+            position.matchesPlayed += 1;
+            position.matchesWon += won;
+            position.matchesLost += lost;
+            position.matchesTied += tied;
 
-            position.goalsScored = position.goalsScored + goalsScored;
-            position.goalsReceived = position.goalsReceived + goalsReceived;
+            position.goalsScored += goalsScored;
+            position.goalsReceived += goalsReceived;
             position.goalsDiff = position.goalsScored - position.goalsReceived;
 
             position.points = position.points + (won * 3) + tied;
@@ -112,15 +108,15 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
                 break;
             case "Individual":
                 standingCalcFunction = function(standings, team, goalsReceived) {
-                    processIndividual(standings, team.player, team.goals, goalsReceived);
+                    processIndividualMatch(standings, team.player, team.goals, goalsReceived);
                     if (team.partner) {
-                        processIndividual(standings, team.partner, team.goals, goalsReceived);
+                        processIndividualMatch(standings, team.partner, team.goals, goalsReceived);
                     }
                 };
                 break;
             case "IndividualWithSupport":
                 standingCalcFunction = function(standings, team, goalsReceived) {
-                    var position = processIndividual(standings, team.player, team.goals, goalsReceived);
+                    var position = processIndividualMatch(standings, team.player, team.goals, goalsReceived);
                     position["team"] = team.team;
                 };
                 break;
@@ -133,7 +129,7 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
     $scope.hasStandings = function(theTournament, thePhase) {
         return theTournament ? theTournament.config.phasesWithStandings.indexOf(thePhase) != -1 : false;
     };
-    
+
     $scope.getPicture = function(alias) {
         var player = $scope.playersInfo[alias];
         return player ? player.image : "images/icon.question.png";
@@ -187,7 +183,6 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
                     match.away.player == filter[j] || match.away.partner ==filter[j];
                 }
                 if (hasAllPlayers) {
-                    //setResultsClass(match);
                     out.push(match);
                 }
             }
@@ -218,15 +213,11 @@ angular.module('fifaControllers').controller('tournamentController', ['$scope', 
         };
         return function(matches, tagFilter) {
             var out = [];
-            var index = tagFilter.indexOf("Historico");
-            if (index != -1) {
-                tagFilter.splice("Historico", 1);
-            }
             if (tagFilter.length == 0 || (tagFilter.length == 1 && !tagFilter[0])) {
                 return matches;
             }
 
-            for (index = 0; index < matches.length; ++index) {
+            for (var index = 0; index < matches.length; ++index) {
                 var match = matches[index];
                 var hasAllTags = true;
                 for (var j = 0; j < tagFilter.length && hasAllTags; ++j) {
