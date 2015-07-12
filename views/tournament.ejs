@@ -17,6 +17,7 @@
                 <th>Pareja</th>
                 <th>Equipo</th>
                 <th>L</th>
+                <th></th>
                 <th>V</th>
                 <th>Equipo</th>
                 <th>Jugador</th>
@@ -38,18 +39,19 @@
                         <img class="img-circle" ng-src="{{getPicture(match.home.partner)}}" ng-click="addPlayerTag(match.home.partner)">
                         <span>{{match.home.partner}}</span>
                 </td>
-                <td > <!--Equipo-->
+                <td ng-class="match.home.clazz"> <!--Equipo-->
                     <div class="team {{match.home.team}}"></div>
                 </td>
-                <td class="matchGoals"> <!--Local-->
+                <td ng-class="match.home.clazz" class="matchGoals"> <!--Local-->
                     {{match.home.goals}}
                     <span ng-if="match.home.penalties">({{match.home.penalties}})</span>
                 </td>
-                <td class="matchGoals"> <!--Visitante-->
+                <td class="matchGoals">vs</td> <!--vs-->
+                <td ng-class="match.away.clazz" class="matchGoals"> <!--Visitante-->
                     {{match.away.goals}}
                     <span ng-if="match.away.penalties">({{match.away.penalties}})</span>
                 </td>
-                <td > <!--Equipo-->
+                <td ng-class="match.away.clazz"> <!--Equipo-->
                     <div class="team {{match.away.team}}"></div>
                 </td>
                 <td ng-class="match.away.clazz"> <!--Jugador-->

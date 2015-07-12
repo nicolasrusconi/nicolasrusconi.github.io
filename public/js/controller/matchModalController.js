@@ -17,6 +17,7 @@ controllers.controller('modalController', function ($scope, $modal, $log) {
 
         modalInstance.result.then(function () {
             $scope.calculateStandings();
+            match.clazz = "";
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -33,6 +34,8 @@ angular.module('fifa').controller('modalInstanceController', function ($scope, $
     $scope.match = match;
     if (match.date) {
         match.date = new Date(match.date);
+    } else {
+        match.date = new Date();
     }
 
     $scope.ok = function () {
