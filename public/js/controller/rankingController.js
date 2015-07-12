@@ -1,4 +1,4 @@
-controllers.controller("rankingController", ["$scope", "$location", "Data", "players", function($scope, $location, Data, players) {
+controllers.controller("rankingController", ["$scope", "$location", "Data", "players", "allPlayerStats", function($scope, $location, Data, players, allPlayerStats) {
     Data.setCurrentTournament(undefined);
     
     $scope.updateRanking = function() {
@@ -14,5 +14,13 @@ controllers.controller("rankingController", ["$scope", "$location", "Data", "pla
     };
     
     $scope.players = players;
+    
+    $.each(players, function(index, player) {
+        var allPlayerStat = allPlayerStats[player.alias];
+        player.matchesPlayed = allPlayerStat ? allPlayerStat.matches.played : 0;
+        player.wonAvg = allPlayerStat ? (allPlayerStat.matches.won / allPlayerStat.matches.played).toFixed(2) : 0;
+        player.tiedAvg = allPlayerStat ? (allPlayerStat.matches.tied / allPlayerStat.matches.played).toFixed(2) : 0;
+        player.lostAvg = allPlayerStat ? (allPlayerStat.matches.lost / allPlayerStat.matches.played).toFixed(2) : 0;
+    })
     
 }]);

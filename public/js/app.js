@@ -9,6 +9,9 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     resolve: {
                         players: function(playerService) {
                             return playerService.getPlayers();
+                        },
+                        allPlayerStats: function(playerService) {
+                            return playerService.getAllPlayerStats();
                         }
                     }
                 }).
@@ -28,7 +31,14 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     }
                 }).
                 when("/stats", {
-                    templateUrl: 'stats'
+                    templateUrl: 'stats',
+                    controller: 'statsController',
+                    resolve: {
+                        allPlayerStats: function(playerService) {
+                            return playerService.getAllPlayerStats();
+                        }
+                        
+                    }
                 }).
                 when("/profile/:alias",{
                     templateUrl: 'profile',

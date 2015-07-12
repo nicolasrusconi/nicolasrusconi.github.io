@@ -30,7 +30,11 @@ module.exports = function(app) {
             res.send("Finished successfully")
         })
     });
-    app.get("/api/player/:alias/stats", function(req, res) {
+    app.get("/api/player/stats/all", function(req, res) {
+        res.json(stats.allPlayerStatistics());
+    });
+    app.get("/api/player/stats/:alias", function(req, res) {
         res.json(stats.playerStatistics(req.params.alias));
-    })
+    });
+    
 };

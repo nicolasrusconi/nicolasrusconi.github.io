@@ -22,7 +22,12 @@ angular.module("fifa").service("tournamentService", ["$http", function($http) {
             });
         };
         this.getPlayerStats = function(alias) {
-            return $http.get("/api/player/" + alias + "/stats").then(function(response) {
+            return $http.get("/api/player/stats/" + alias).then(function(response) {
+                return response.data;
+            });
+        };
+        this.getAllPlayerStats = function() {
+            return $http.get("/api/player/stats/all").then(function(response) {
                 return response.data;
             });
         }

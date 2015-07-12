@@ -6,6 +6,10 @@ var playerStatistics = function(alias) {
     return players[alias];
 };
 
+var allPlayerStatistics = function() {
+    return players;
+};
+
 var updateForPlayer = function(playersArray) {
     _.each(playersArray, function(alias) {
         players[alias] = __createBasicModel(); //force recalculation
@@ -152,5 +156,6 @@ var __collectBasicStat = function(match, playerFilter) {
 
 module.exports = {
     playerStatistics: playerStatistics,
+    allPlayerStatistics: allPlayerStatistics, 
     updateForPlayer: updateForPlayer
 };

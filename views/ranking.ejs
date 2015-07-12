@@ -13,6 +13,10 @@
                     <th class="text-center">Jugador</th>
                     <th></th>
                     <th class="text-center">Ranking</th>
+                    <th class="text-center">PJ</th>
+                    <th class="text-center">PG %</th>
+                    <th class="text-center">PE %</th>
+                    <th class="text-center">PP %</th>
                     <th class="text-center">Diff</th>
                 </tr>
                 </thead>
@@ -25,12 +29,15 @@
                         <span>{{player.alias}}</span>
                     </td>
                     <td>{{player.ranking}}</td>
+                    <td>{{player.matchesPlayed}}</td>
+                    <td>{{player.wonAvg}}</td>
+                    <td>{{player.tiedAvg}}</td>
+                    <td>{{player.lostAvg}}</td>
                     <td ng-init="diff = player.ranking - player.previousRanking;" ng-class="diff >0 ? 'rankPositive' : diff < 0 ? 'rankNegative' : ''">
                         {{diff | number:2}}
 
                         <i ng-if="diff > 0" class="fa fa-arrow-circle-up"></i>
                         <i ng-if="diff < 0" class="fa fa-arrow-circle-down"></i>
-
                     </td>
                 </tr>
                 </tbody>
