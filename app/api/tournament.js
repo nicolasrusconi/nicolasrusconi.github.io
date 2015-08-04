@@ -25,7 +25,7 @@ module.exports = function(app) {
         schemas.Tournament.findOne(condition, "-_id -__v", function(err, tournament) {
             if (err) res.send(err);
             res.json(tournament);
-        })
+        }).sort({creationDate: -1})
     });
     app.delete("/api/tournament/:name", validation.authenticateUser, function(req, res) {
         schemas.Tournament.findOneAndRemove({"name": req.params.name}, function(err, tournament) {

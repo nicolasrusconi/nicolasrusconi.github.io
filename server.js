@@ -72,6 +72,7 @@ require('./app/api/routes.js')(app, passport);
 require('./app/api/player.js')(app);
 require('./app/api/tournament.js')(app);
 require('./app/api/match.js')(app);
+require('./app/api/randomize.js')(app);
 
 
 app.use(function(req, res, next) {
