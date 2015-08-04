@@ -1,21 +1,6 @@
 var schemas = require("../model/schemas");
 var _ = require("underscore");
 
-var randomSelect = function(players, teams, callback) {
-    if (players.length != teams.length) {
-        throw new Error("Lengths are not the same");
-    }
-    var shuffledPlayers = _.shuffle(players);
-    var shuffledTeams = _.shuffle(teams);
-    var result = [];
-    for (var i=0; i<players.length; i++) {
-        var select = {};
-        select.player = shuffledPlayers[i];
-        select.team = shuffledTeams[i];
-        result.push(select);
-    }
-    callback.call(this, result);
-};
 var createMatchFromCSV = function(matchesCSV) {
     var array = matchesCSV.split("\n").map(function(line) { return line.split(",").map(function(cell) { return cell.trim() }); });
     return createMatchFromArray(array)
@@ -49,7 +34,7 @@ var createMatchFromArray = function(matchesArray) {
     });
 };
 
-var generateMatches = function(model) {
+var generateMatches = function(model, secondRound) {
     var tournamentName = model.tournamentName;
     schemas.Tournament.findOne({"name": tournamentName}, "_id", function(err, tournamentId) {
         if (err) {
@@ -57,17 +42,19 @@ var generateMatches = function(model) {
             return;
         }
         _.each(model.groups, function(group) {
-            var length = group.players.length;
+            var length = group.teams.length;
             var matches = [];
             for (var i = length-1; i >= 0; i--) {
                 for (var j = 1; j < i+1; j++) {
                     var match = new schemas.Match();
                     match.tournament = tournamentId._id;
                     match.phase = group.name;
-                    match.home.player = group.players[i].name;
-                    match.home.team = group.players[i].team;
-                    match.away.player = group.players[i - j].name;
-                    match.away.team = group.players[i - j].team;
+                    match.home.player = group.teams[i].player;
+                    match.home.partner = group.teams[i].partner;
+                    match.home.team = group.teams[i].team;
+                    match.away.player = group.teams[i - j].player;
+                    match.away.partner = group.teams[i - j].partner;
+                    match.away.team = group.teams[i - j].team;
                     console.log(match.home.player + " vs " + match.away.player);
                     matches.push(match);
                 }
@@ -77,6 +64,15 @@ var generateMatches = function(model) {
             for (i = 0; i < rounds; i++) {
                 saveMatch(matches[i]);
                 saveMatch(matches[matches.length-1-i]);
+            }
+            if (secondRound) {
+                for (i = 0; i < rounds; i++) {
+                    var temp = match.home;
+                    match.home = match.away;
+                    match.away = temp;
+                    saveMatch(matches[i]);
+                    saveMatch(matches[matches.length-1-i]);
+                }
             }
         });    
     });
@@ -94,6 +90,5 @@ var saveMatch = function(match) {
 
 module.exports = {
     createMatchFromCSV: createMatchFromCSV,
-    generate: generateMatches,
-    randomSelect: randomSelect
+    generate: generateMatches
 };
