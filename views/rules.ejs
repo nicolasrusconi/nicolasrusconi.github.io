@@ -4,15 +4,52 @@
         <h3 class="panel-title" style="font-size: 30px">Reglamento</h3>
     </div>
     <div class="panel-body">
-        
-        <h2>Copa America 1</h2>
 
+        <h2>Reglas generales</h2>
         <h3>Registro de partidos</h3>
         <ul>
             <li>Mencionar en hipchat incluyendo a todos los integrantes del partido, y como estan conformados los equipos</li>
             <li>Mencionar tambien a <b>NicoR o Eze</b></li>
             <li>Mencionar el resultado, <b>e idealmente, tarjetas amarillas y rojas (para futuras estadisticas)</b></li>
         </ul>
+
+        <h3>Partidos</h3>
+        <ul>
+            <li>6 Minutos</li>
+            <li>Modo normal</li>
+            <li>Dia despejado (sin lluvia, nieve, etc) en horario nocturno (para evitar las sombras de las lamparas)</li>
+            <li>sin extension de tiempo en fase de grupos o liga</li>
+            <li>3 Cambios de jugadores por partido</li>
+            <li>el equipo de la izquierda es el local, el de la derecha es el visitante.</li>
+        </ul>
+
+        <h3>Empates</h3>
+        <h4>Empates en zona de grupos o liga</h4>
+        <ul>
+            <li>En caso de empate en puntos se define por diferencia de gol.</li>
+            <li>En caso de empate en diferencia de goles por goles a favor.</li>
+            <li>En caso de empate en goles a favor, se define por partido entre si</li>
+            <li>Si persiste el empate, se tira la moneda</li>
+        </ul>
+
+        <h4>Empates en eliminacion directa</h4>
+        <ul>
+            <li>Extension de tiempo (no golden o silver goal), si persiste el empate, penales</li>
+        </ul>
+        
+        <h2>Torneo 7</h2>
+        
+        <h3>Modalidad</h3>
+        <ul>
+            <li>Liga, 2 vs 2 compañeros fijos, ida y vuelta, equipos random dentro de un subset</li>
+            <li>Cada jugador debera sortear el equipo con el que disputa ese partido</li>
+            <li>Equipos elegidos: Barcelona, Real Madrid, Juventus, Bayern Munich, Borussia Dortmund, Chelsea, Man. City, Man. Utd, PSG</li>
+            <li>Para obtener un equipo random:
+                <b>curl -X POST -H "Content-Type: application/json" localhost:8080/api/random/value --data '{"data": ["Barcelona", "Real Madrid", "Juventus", "Bayer Munich", "Borussia Dortmund", "Chelsea", "Man. City", "Man. Utd", "PSG"]} '</b>
+            </li>
+        </ul>
+        
+        <h2>Copa America 1</h2>
         
         <h3>Modalidad</h3>
         <ul>
@@ -34,30 +71,6 @@
             <li>Alguien que no este en su mismo grupo en fase de grupos</li>
             <li>La prioridad para la eleccion la tiene el visitante</li>
             <li>Para la fase de eliminacion directa, la eleccion del compañero sera por sorteo para todas las fases (cuartos, semis, final) entre los jugadores que hayan sido eliminados</li>
-        </ul>
-        
-        <h3>Partidos</h3>
-        <ul>
-            <li>6 Minutos</li>
-            <li>Modo normal</li>
-            <li>Dia despejado (sin lluvia, nieve, etc) en horario nocturno (para evitar las sombras de las lamparas)</li>
-            <li>sin extension de tiempo en fase de grupos</li>
-            <li>3 Cambios de jugadores por partido</li>
-            <li>el equipo de la izquierda es el local, el de la derecha es el visitante.</li>
-        </ul>
-
-        <h3>Empates</h3>
-        <h4>Empates en zona de grupos</h4>
-        <ul>
-            <li>En caso de empate en puntos se define por diferencia de gol.</li>
-            <li>En caso de empate en diferencia de goles por goles a favor.</li>
-            <li>En caso de empate en goles a favor, se define por partido entre si</li>
-            <li>Si persiste el empate, se tira la moneda</li>
-        </ul>
-        
-        <h4>Empates en eliminacion directa</h4>
-        <ul>
-            <li>Extension de tiempo (no golden o silver goal), si persiste el empate, penales</li>
         </ul>
         
         <h3>Inclusion invalida del compañero</h3>

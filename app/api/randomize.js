@@ -16,5 +16,8 @@ module.exports = function(app) {
             }
         });
         res.json(groups);
+    });
+    app.post("/api/random/value", function(req, res) {
+        res.send(_.sample(req.body.data));
     })
 };
