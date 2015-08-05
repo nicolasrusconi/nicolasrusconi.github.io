@@ -1,3 +1,8 @@
+body { padding-top: 2em; }
+@media screen and (max-width: 768px) {
+    body { padding-top: 6em; }
+}
+
 .filterLabel {
 	margin-right:5px;
 }

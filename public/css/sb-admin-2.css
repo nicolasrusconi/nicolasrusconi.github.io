@@ -22,7 +22,7 @@ body {
     #page-wrapper {
         position: inherit;
         margin: 0 0 0 250px;
-        padding: 50px 30px;
+        padding: 0 30px;
         border-left: 1px solid #e7e7e7;
     }
 }
@@ -132,7 +132,7 @@ body {
         z-index: 1;
         position: absolute;
         width: 250px;
-        margin-top: 11px;
+        margin-top: 51px;
     }
 
     .navbar-top-links .dropdown-messages,
@@ -257,9 +257,13 @@ table.dataTable thead .sorting:after {
 }
 
 .btn-circle {
-    width: 40px;
+    width: 30px;
     height: 30px;
+    padding: 6px 0;
     border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.428571429;
 }
 
 .btn-circle.btn-lg {

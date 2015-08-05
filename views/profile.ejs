@@ -1,37 +1,40 @@
+<h1 class="page-header"> {{thePlayer.alias}} </h1>
 <div class="panel panel-default">
 
     <div class="panel-heading">
     </div>
     <div class="panel-body">
-        <table>
-            <tbody>
-            <tr>
-                <td><img ng-src="{{thePlayer.image}}" class="img-circle img-circle-large" ng-click="goTo(undefined) "></td>
-                <td>
-                    <table class="table">
-                        <tbody>
-                        <tr><td>Nombre</td><td>{{thePlayer.firstName}}</td></tr>
-                        <tr><td>Partidos jugados</td><td>{{stats.matches.played}}</td></tr>
-                        <tr><td>Partidos ganados</td><td class="rankPositive">{{stats.matches.won}}</td></tr>
-                        <tr><td>Partidos empatados</td><td>{{stats.matches.tied}}</td></tr>
-                        <tr><td>Partidos perdidos</td><td class="rankNegative">{{stats.matches.lost}}</td></tr>
-                        <tr><td>Goles a favor</td><td class="rankPositive">{{stats.goals.scored}}</td></tr>
-                        <tr><td>Goles en contra</td><td class="rankNegative">{{stats.goals.received}}</td></tr>
-                        <tr><td>Goles por partido</td><td>{{stats.goals.scored / stats.matches.played | number:2}}</td></tr>
-                        <tr><td>Goles por partido (recibidos)</td><td>{{stats.goals.received / stats.matches.played | number:2}}</td></tr>
-                        <tr><td>Diferencia de gol</td>
-                            <!--//FIXME: why diff is zero?-->
-                            <td ng-init="diff = stats.goals.scored - stats.goals.received;" ng-class="diff >0 ? 'rankPositive' : diff < 0 ? 'rankNegative' : ''">
-                                {{stats.goals.scored - stats.goals.received}}
-                            </td></tr>
-                        <tr><td>Amarillas (Partidos)</td><td>{{stats.cards.yellow.count}} ( {{stats.cards.yellow.matches}} )</td></tr>
-                        <tr><td>Rojas (Partidos)</td><td>{{stats.cards.red.count}} ( {{stats.cards.red.matches}} )</td></tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <tbody>
+                <tr>
+                    <td><img ng-src="{{thePlayer.image}}" class="img-circle img-circle-large" ng-click="goTo(undefined) "></td>
+                    <td>
+                        <table class="table">
+                            <tbody>
+                            <tr><td>Partidos jugados</td><td>{{stats.matches.played}}</td></tr>
+                            <tr><td>Partidos ganados</td><td class="rankPositive">{{stats.matches.won}}</td></tr>
+                            <tr><td>Partidos empatados</td><td>{{stats.matches.tied}}</td></tr>
+                            <tr><td>Partidos perdidos</td><td class="rankNegative">{{stats.matches.lost}}</td></tr>
+                            <tr><td>Goles a favor</td><td class="rankPositive">{{stats.goals.scored}}</td></tr>
+                            <tr><td>Goles en contra</td><td class="rankNegative">{{stats.goals.received}}</td></tr>
+                            <tr><td>Goles por partido</td><td>{{stats.goals.scored / stats.matches.played | number:2}}</td></tr>
+                            <tr><td>Goles por partido (recibidos)</td><td>{{stats.goals.received / stats.matches.played | number:2}}</td></tr>
+                            <tr><td>Diferencia de gol</td>
+                                <!--//FIXME: why diff is zero?-->
+                                <td ng-init="diff = stats.goals.scored - stats.goals.received;" ng-class="diff >0 ? 'rankPositive' : diff < 0 ? 'rankNegative' : ''">
+                                    {{stats.goals.scored - stats.goals.received}}
+                                </td></tr>
+                            <tr><td>Amarillas (Partidos)</td><td>{{stats.cards.yellow.count}} ( {{stats.cards.yellow.matches}} )</td></tr>
+                            <tr><td>Rojas (Partidos)</td><td>{{stats.cards.red.count}} ( {{stats.cards.red.matches}} )</td></tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         
     </div>
     

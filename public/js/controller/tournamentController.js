@@ -166,7 +166,7 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
     if (tournament && tournament.config.defaultPhase) {
         selectPhase(tournament.config.defaultPhase);
     }
-
+    $(".navbar-collapse").collapse('hide');
 }])
     .filter('matchFilter', function() {
         return function(matches, filter) {
