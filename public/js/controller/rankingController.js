@@ -1,4 +1,4 @@
-controllers.controller("rankingController", ["$scope", "$location", "Data", "players", "allPlayerStats", function($scope, $location, Data, players, allPlayerStats) {
+controllers.controller("rankingController", ["$scope", "$location", "$http", "Data", "players", "allPlayerStats", function($scope, $location, $http, Data, players, allPlayerStats) {
     Data.setCurrentTournament(undefined);
     
     $scope.updateRanking = function() {

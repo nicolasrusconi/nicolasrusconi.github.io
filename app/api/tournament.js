@@ -41,7 +41,7 @@ module.exports = function(app) {
         })
     });
     app.post('/api/tournament/generate', validation.authenticateUser, function(req, res) {
-        generator.generate(req.body);
+        generator.generate(req.body, req.body.secondRound);
         res.send("Received, generating tournament...");
     });
     app.post('/api/tournament/csvGenerate', validation.authenticateUser, function(req, res) {
