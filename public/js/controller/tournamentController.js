@@ -96,11 +96,11 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
         switch(model) {
             case "Team":
                 standingCalcFunction = function(standings, team, goalsReceived) {
-                    var position = standings[team.team + team.player + team.partner];
+                    var position = standings[team.player + team.partner];
                     if (!position) {
                         position = initPosition(team.player, team.partner);
                         position["team"] = team.team;
-                        standings[team.team + team.player + team.partner] = position;
+                        standings[team.player + team.partner] = position;
                     }
 
                     updatePosition(position, team.goals, goalsReceived);
