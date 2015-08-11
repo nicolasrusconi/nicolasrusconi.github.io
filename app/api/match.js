@@ -22,7 +22,7 @@ module.exports = function(app) {
         schemas.Tournament.findOne(body.tournament, function(err, tournament2) {
             if (err) res.send(err);
             body.tournament = tournament2;
-            schemas.Match.update({"home.player": body.home.player, "away.player": body.away.player, tournament: tournament2._id, phase: body.phase}, {$set: body}, function(err, result) {
+            schemas.Match.update({"_id": body._id}, {$set: body}, function(err, result) {
                 if (err) res.send(err);
                 stats.updateForPlayer([body.home.player, body.home.partner, body.away.player, body.away.partner]);
                 res.json(result);
@@ -34,7 +34,7 @@ module.exports = function(app) {
         var filter = function(match) {
             return tournamentName == "current" ? match.tournament.current == true : match.tournament.name == tournamentName;
         };
-        schemas.Match.find({}, "-_id -__v").populate({
+        schemas.Match.find({}, "-__v").populate({
             path: "tournament"/*,
             match: { name: "Torneo 0"},
             select: "-_id -__v"*/
