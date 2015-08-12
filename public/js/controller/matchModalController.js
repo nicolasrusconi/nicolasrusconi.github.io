@@ -32,19 +32,22 @@ controllers.controller('modalController', function ($scope, $modal, $log) {
 angular.module('fifa').controller('modalInstanceController', function ($scope, $modalInstance, match, $http) {
 
     $scope.match = match;
-    if (match.date) {
-        match.date = new Date(match.date);
-    } else {
-        match.date = new Date();
-    }
+    match.date = match.date ? new Date(match.date) : new Date();
 
     $scope.ok = function () {
-        $http.put("/api/match", match).success(function(response) {
-            $modalInstance.close();
-        }).error(function() {
-            $modalInstance.dismiss("error")
-        })
-
+        if (match._id) {
+            $http.put("/api/match", match).success(function(response) {
+                $modalInstance.close();
+            }).error(function() {
+                $modalInstance.dismiss("error")
+            })
+        } else {
+            $http.post("/api/match", match).success(function(response) {
+                $modalInstance.close();
+            }).error(function() {
+                $modalInstance.dismiss("error")
+            })
+        }
     };
 
     $scope.cancel = function () {

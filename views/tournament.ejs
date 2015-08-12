@@ -10,6 +10,9 @@
         </div>
         <h3>{{thePhase}}</h3>
         <h4>Partidos</h4>
+        <% if (user.admin) { %>
+        <div ng-controller="modalController"> <button type="button" class="btn btn-success" ng-click="open({'tournament': theTournament, 'phase': thePhase})">Cargar partido<i class=""></i></button></div>
+        <% } %>
         <div class="table-responsive">
             <table class="table table-striped table-hover middleData">
             <thead>
@@ -145,11 +148,11 @@
                 <tbody>
                 <tr>
                     <td> <!--Jugador-->
-                        <span>{{match.home.player}}</span>
+                        <input type="text" ng-model="match.home.player">
                     </td>
                     <th>Jugadores</th>
                     <td> <!--Jugador-->
-                        <span>{{match.away.player}}</span>
+                        <input type="text" ng-model="match.away.player">
                     </td>
                 </tr>
                 <tr>
