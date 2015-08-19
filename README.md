@@ -8,6 +8,7 @@
 - nodejs
 
 ### Steps
+- run mongod
 - npm install
 - node server.js
 - enjoy!
