@@ -52,6 +52,9 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                         },
                         player: function($route, playerService) {
                             return playerService.getPlayer($route.current.params.alias);
+                        },
+                        playersData: function(playerService) {
+                            return playerService.getPlayers();
                         }
                     }
                 }).

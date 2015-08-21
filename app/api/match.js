@@ -48,7 +48,7 @@ module.exports = function(app) {
     });
     app.get("/api/match/player/:alias", function(req, res) {
         var alias = req.params.alias;
-        schemas.Match.find({ $or: [{"home.player": alias}, {"away.player": alias}, {"home.partner": alias}, {"away.partner": alias}]}, "-_id -__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
+        schemas.Match.find({ $or: [{"home.player": alias}, {"away.player": alias}, {"home.partner": alias}, {"away.partner": alias}]}, "-__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
             if (err) res.send(err);
             res.json(matches);
         })

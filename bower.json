@@ -21,6 +21,7 @@
     "metisMenu": "~2.0.2",
     "jquery": "~2.1.4",
     "angular-route": "~1.4.1",
-    "jquery.countdown": "~2.0.4"
+    "jquery.countdown": "~2.0.4",
+    "underscore": "~1.8.3"
   }
 }
