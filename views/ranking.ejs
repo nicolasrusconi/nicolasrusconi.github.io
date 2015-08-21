@@ -34,7 +34,7 @@
                         <td>{{player.wonAvg}}</td>
                         <td>{{player.tiedAvg}}</td>
                         <td>{{player.lostAvg}}</td>
-                        <td ng-init="diff = player.ranking - player.previousRanking;" ng-class="diff >0 ? 'rankPositive' : diff < 0 ? 'rankNegative' : ''">
+                        <td ng-init="diff = player.delta;" ng-class="diff >0 ? 'rankPositive' : diff < 0 ? 'rankNegative' : ''">
                             {{diff | number:2}}
 
                             <i ng-if="diff > 0" class="fa fa-arrow-circle-up"></i>

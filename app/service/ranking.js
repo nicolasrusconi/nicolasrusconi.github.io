@@ -29,8 +29,8 @@ glicko2.Glicko2.prototype.updateRatings = function(match){
         console.error("something wrong happened, one of the partners is null");
         return;
     } else {
-        player1 = this.makePlayer(avg(homePlayer.getRating(), homePartner.getRating()), avg(homePlayer.getRd(), homePartner.getRd()), avg(homePlayer.getVol(), homePartner.getVol()), avg(homePlayer._tau, homePartner._tau));
-        player2 = this.makePlayer(avg(awayPlayer.getRating(), awayPartner.getRating()), avg(awayPlayer.getRd(), awayPartner.getRd()), avg(awayPlayer.getVol(), awayPartner.getVol()), avg(awayPlayer._tau, awayPartner._tau));
+        player1 = this.makePlayer(avg(homePlayer.getRating(), homePartner.getRating()));
+        player2 = this.makePlayer(avg(awayPlayer.getRating(), awayPartner.getRating()));
     }
 
     this.addResult(player1, player2, matchResult);
@@ -61,7 +61,7 @@ var settings = {
     //     small number = good confidence on the rating accuracy
     rd : 10,
     //vol : Default volatility (expected fluctation on the player rating)
-    vol : 0.06
+    vol : 0.6
 };
 
 var ranking = new glicko2.Glicko2(settings);
@@ -91,17 +91,39 @@ var calculateGeneralRanking = function(callback) {
     schemas.Player.find(function(err, players) {
         if (err) res.send(err);
         _.each(players, function (player) {
-            var tuple = {};
-            tuple["glicko"] = ranking.makePlayer(settings.rating, settings.rd, settings.vol);
-            tuple["model"] = player;
-            glickoPlayers[player.alias] = tuple;
+            glickoPlayers[player.alias] = {
+                glicko: ranking.makePlayer(settings.rating, settings.rd, settings.vol),
+                model: player
+            };
         });
         schemas.Match.find({$and: [{"home.goals": {$gt: -1}}, {"away.goals": {$gt: -1}}]}, function(err, matches) {
+            _.each(glickoPlayers, function (tuple) {
+                tuple.model.rankingHistory = [];
+            });
             _.each(matches, function(match) {
                 console.log("team 1 : " + match.home.player + " " + match.home.partner);
                 console.log("team 2 : " + match.away.player + " " + match.away.partner);
                 ranking.updateRatings(__buildGlickoMatch(match));
+                // TODO: we can only iterate the four participants of the match
+                _.each(glickoPlayers, function (tuple) {
+                    var player = tuple.glicko;
+                    var model = tuple.model;
+                    var h = model.rankingHistory;
+                    var newRanking = player.getRating().toFixed(2);
+                    var lastRanking = h[h.length-1];
+                    lastRanking = lastRanking == null ? null : lastRanking.ranking;
+                    console.log(model.username + ": " + lastRanking + " > " + newRanking);
+                    if (newRanking != lastRanking) {
+                        h.push({
+                            date: match.date,
+                            match: match._id,
+                            ranking: newRanking,
+                            delta: newRanking - lastRanking
+                        });
+                    }
+                });
             });
+            
 
             console.timeEnd("ranking calculation");
 
@@ -119,7 +141,8 @@ var __updateRankingDb = function(tuple) {
     if (tuple) {
         var glickoPlayer = tuple.glicko;
         var newRankingValue = glickoPlayer.getRating().toFixed(2);
-        schemas.Player.update({_id: tuple.model._id}, { $set: { ranking: newRankingValue, "previousRanking": tuple.model.ranking} }, function(err, player) {
+        //console.log(tuple.model.username + ":" + JSON.stringify(tuple.model.rankingHistory))
+        schemas.Player.update({_id: tuple.model._id}, { $set: { ranking: newRankingValue, previousRanking: tuple.model.ranking, rankingHistory: tuple.model.rankingHistory } }, function(err, player) {
             if (err) console.error(err);
             console.log("new ranking for: " + tuple.model.alias + ", " + newRankingValue);
             console.log("old ranking for: " + tuple.model.alias + ", " + tuple.model.ranking);

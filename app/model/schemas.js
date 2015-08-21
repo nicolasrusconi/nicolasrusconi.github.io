@@ -11,6 +11,7 @@ var playerSchema = new Schema({
     lastAccess: { type: Date, default: Date.now },
     ranking: {type: Number, default: 1500},
     previousRanking: Number,
+    rankingHistory: {type: Array},
     googleId: {type: String, required: true},
     admin: {type: Boolean, default: false}
 });

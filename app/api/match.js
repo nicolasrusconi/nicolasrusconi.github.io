@@ -1,5 +1,6 @@
 var schemas = require("../model/schemas");
 var stats = require("../service/statistic");
+var ranking = require("../service/ranking");
 var validation = require("./validation");
 
 module.exports = function(app) {
@@ -13,7 +14,9 @@ module.exports = function(app) {
             match.save(function(err, match) {
                 if (err) res.send(err);
                 stats.updateForPlayer([match.home.player, match.home.partner, match.away.player, match.away.partner]);
-                res.send("created");
+                ranking.calculateGeneralRanking(function() {
+                    res.send("created");
+                });
             })
         })
     });
@@ -25,7 +28,9 @@ module.exports = function(app) {
             schemas.Match.update({"_id": body._id}, {$set: body}, function(err, result) {
                 if (err) res.send(err);
                 stats.updateForPlayer([body.home.player, body.home.partner, body.away.player, body.away.partner]);
-                res.json(result);
+                ranking.calculateGeneralRanking(function() {
+                    res.json(result);
+                });
             })    
         })
     });
@@ -48,7 +53,7 @@ module.exports = function(app) {
     });
     app.get("/api/match/player/:alias", function(req, res) {
         var alias = req.params.alias;
-        schemas.Match.find({ $or: [{"home.player": alias}, {"away.player": alias}, {"home.partner": alias}, {"away.partner": alias}]}, "-_id -__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
+        schemas.Match.find({ $or: [{"home.player": alias}, {"away.player": alias}, {"home.partner": alias}, {"away.partner": alias}]}, "-__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
             if (err) res.send(err);
             res.json(matches);
         })
