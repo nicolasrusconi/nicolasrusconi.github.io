@@ -4,7 +4,7 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
         function($routeProvider, $locationProvider) {
             $routeProvider.
                 when('/ranking', {
-                    templateUrl: 'ranking',
+                    templateUrl: 'templates/ranking',
                     controller: 'rankingController',
                     resolve: {
                         players: function(playerService) {
@@ -16,7 +16,7 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     }
                 }).
                 when('/tournament/:tournamentName', {
-                    templateUrl: 'tournament',
+                    templateUrl: 'templates/tournament',
                     controller: 'tournamentController',
                     resolve: {
                         playersData: function(playerService) {
@@ -31,7 +31,7 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     }
                 }).
                 when("/stats", {
-                    templateUrl: 'stats',
+                    templateUrl: 'templates/stats',
                     controller: 'statsController',
                     resolve: {
                         allPlayerStats: function(playerService) {
@@ -41,7 +41,7 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     }
                 }).
                 when("/profile/:alias",{
-                    templateUrl: 'profile',
+                    templateUrl: 'templates/profile',
                     controller: 'profileController',
                     resolve: {
                         matchesForPlayer: function($route, matchService) {
@@ -50,16 +50,16 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                         playerStats: function($route, playerService) {
                             return playerService.getPlayerStats($route.current.params.alias)
                         },
-                        player: function($route, playerService) {
-                            return playerService.getPlayer($route.current.params.alias);
-                        },
                         playersData: function(playerService) {
                             return playerService.getPlayers();
+                        },
+                        player: function($route, playerService) {
+                            return playerService.getPlayer($route.current.params.alias);
                         }
                     }
                 }).
                 when('/rules', {
-                    templateUrl: 'rules'
+                    templateUrl: 'templates/rules'
                 }).
                 otherwise({
                     redirectTo: '/tournament/current'

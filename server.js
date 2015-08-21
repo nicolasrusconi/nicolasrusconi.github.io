@@ -60,24 +60,24 @@ app.use( passport.session());
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(methodOverride());
 
-require('./app/api/routes.js')(app, passport);
 require('./app/api/player.js')(app);
 require('./app/api/tournament.js')(app);
 require('./app/api/match.js')(app);
 require('./app/api/randomize.js')(app);
+require('./app/api/routes.js')(app, passport);
 
 
-app.use(function(req, res, next) {
-    res.status(404).redirect("/");
-});
+//app.use(function(req, res, next) {
+    //res.status(404).redirect("/");
+//});
 
 // listen (start app with node server.js) ======================================
 app.set('port', (process.env.PORT || 8080));
