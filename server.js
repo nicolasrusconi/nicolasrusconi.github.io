@@ -11,7 +11,6 @@ var favicon = require('serve-favicon');
 var passport = require('passport');
 var session = require('express-session');
 var RedisStore = require( 'connect-redis' )( session );
-
 var cookieSession = require('cookie-session');
 
 app.use(cookieSession({
@@ -26,11 +25,15 @@ app.use(cookieSession({
 //   have a database of user records, the complete Google profile is
 //   serialized and deserialized.
 passport.serializeUser(function(user, done) {
-    done(null, user);
+    done(null, user._id.valueOf());
 });
 
+var schemas = require("./app/model/schemas");
 passport.deserializeUser(function(obj, done) {
-    done(null, obj);
+    if (typeof obj !== 'string') {
+        obj = obj._id;
+    }
+    schemas.Player.findOne({_id: mongoose.Types.ObjectId(obj)}, done);
 });
 
 
@@ -73,11 +76,6 @@ require('./app/api/tournament.js')(app);
 require('./app/api/match.js')(app);
 require('./app/api/randomize.js')(app);
 require('./app/api/routes.js')(app, passport);
-
-
-//app.use(function(req, res, next) {
-    //res.status(404).redirect("/");
-//});
 
 // listen (start app with node server.js) ======================================
 app.set('port', (process.env.PORT || 8080));
