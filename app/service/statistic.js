@@ -18,7 +18,7 @@ var updateForPlayer = function(playersArray) {
         _.each(matches, function(match) {
             if (match.home.goals == -1 ) return; //FIXME: filter -1 -1
             __collectBasicStat(match, function(alias) {
-                return playersArray.indexOf(alias) != -1
+                return playersArray.indexOf(alias) != -1;
             });
         })
     })

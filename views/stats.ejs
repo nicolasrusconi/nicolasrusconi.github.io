@@ -1,1 +1,29 @@
-<img src="http://creativetravelgroup.com/wp-content/uploads/2013/04/under_construction2.png">
+<h1 class="page-header"> Estadisticas</h1>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div ng-repeat="stat in stats" class="col-md-4">
+                <h3>{{stat.name}}</h3>
+                <h5>{{stat.description}}</h5>
+                <table  class="table table-hover table-striped text-center middleData">
+                    <thead>
+                    <tr>
+                        <th class="col-xs-1">Jugador</th>
+                        <th class="col-xs-1">Valor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in stat.list" ng-if="$index < 10">
+                        <td class="col-xs-1">{{item.name}}</td>
+                        <td class="col-xs-1">{{item.value | number:2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            
+        </div>
+
+        
+    </div>
+</div>

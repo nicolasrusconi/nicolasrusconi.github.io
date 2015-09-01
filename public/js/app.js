@@ -36,8 +36,11 @@ var app = angular.module('fifa', ['ngRoute', 'ui.bootstrap', 'fifaControllers'])
                     resolve: {
                         allPlayerStats: function(playerService) {
                             return playerService.getAllPlayerStats();
+                        },
+                        playersData: function(playerService) {
+                            return playerService.getPlayers();
                         }
-                        
+
                     }
                 }).
                 when("/profile/:alias",{
