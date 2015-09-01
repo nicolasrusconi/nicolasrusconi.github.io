@@ -31,7 +31,7 @@
                 <!--th>Tags</th-->
             </tr>
             </thead>
-                <tbody ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters) | orderBy:'date'">
+                <tbody ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters | orderBy:'date')">
 
                 <tr ng-class="match.clazz">
                     <td ng-class="match.home.clazz"> <!--Jugador-->
