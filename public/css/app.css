@@ -40,7 +40,7 @@ body { padding-top: 2em; }
 
 .matchGoals {
     font-weight: bold;
-
+    font-size: x-large;
 }
 .img-circle {
 	cursor:pointer;
@@ -48,6 +48,14 @@ body { padding-top: 2em; }
 	width:48px;
 	vertical-align:middle!important;
 }
+
+.img-circle-small {
+    cursor:pointer;
+    height:40px;
+    width:40px;
+    vertical-align:middle!important;
+}
+
 
 .img-circle-large {
     cursor:pointer;
@@ -75,6 +83,8 @@ table tr th {
 .team {
 	min-width:50px;
 	height:50px;
+    background-size: 43px;
+    background-repeat: no-repeat;
 	display:inline-block;
 	vertical-align:middle!important;
 }

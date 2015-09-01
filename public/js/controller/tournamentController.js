@@ -132,7 +132,7 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
 
     $scope.getPicture = function(alias) {
         var player = $scope.playersInfo[alias];
-        return player ? player.image : "images/icon.question.png";
+        return player ? player.image : "";
     };
 
     $scope.$watch(function () { return Data.getCurrentPhase(); }, function (newValue, oldValue) {
