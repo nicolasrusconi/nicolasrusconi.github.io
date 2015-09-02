@@ -166,6 +166,14 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
     if (tournament && tournament.config.defaultPhase) {
         selectPhase(tournament.config.defaultPhase);
     }
+    
+    $scope.orderByDateFn = function(match) {
+        if (match.date instanceof Date) {
+            match.date = match.date.toString();
+        }
+        return match.date;
+    };
+    
     $(".navbar-collapse").collapse('hide');
 }])
     .filter('matchFilter', function() {
