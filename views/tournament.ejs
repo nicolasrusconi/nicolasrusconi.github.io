@@ -132,8 +132,8 @@
                 <thead>
                 <tr>
                     <th class=""> <!--Equipo-->
-                        <div class="team {{match.home.team}}"></div>
-                        <input type="text" ng-model="match.home.team">
+                        <div class="team {{match.home.team}}" ng-hide="!match.home.team"></div>
+                        <input type="text" ng-model="match.home.team" placeholder="type home team">
                     </th>
                     <th class="col-md-1" >
                         <p class="input-group">
@@ -142,28 +142,32 @@
 
                     </th>
                     <th class=""> <!--Equipo-->
-                        <div class="team {{match.away.team}}"></div>
-                        <input type="text" ng-model="match.away.team">
+                        <input type="text" ng-model="match.away.team" placeholder="type away team">
+                        <div class="team {{match.away.team}}" ng-hide="!match.away.team"></div>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td> <!--Jugador-->
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.home.player)}}" ng-show="getPicture(match.home.player) != ''">
                         <input type="text" ng-model="match.home.player">
                     </td>
                     <th>Jugadores</th>
                     <td> <!--Jugador-->
                         <input type="text" ng-model="match.away.player">
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.away.player)}}" ng-show="getPicture(match.away.player) != ''">
                     </td>
                 </tr>
                 <tr>
                     <td>
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.home.partner)}}" ng-show="getPicture(match.home.partner) != ''">
                         <input type="text" ng-model="match.home.partner">
                     </td>
                     <th>Compañeros</th>
                     <td>
                         <input type="text" ng-model="match.away.partner">
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.away.partner)}}" ng-show="getPicture(match.away.partner) != ''">
                     </td>
                 </tr>
                 <tr>

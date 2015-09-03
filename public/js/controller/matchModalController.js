@@ -1,4 +1,4 @@
-controllers.controller('modalController', function ($scope, $modal, $log) {
+controllers.controller('modalController', ["$scope", "$modal", "$log", "playerService", function ($scope, $modal, $log, playerService) {
 
     $scope.animationsEnabled = true;
 
@@ -11,6 +11,9 @@ controllers.controller('modalController', function ($scope, $modal, $log) {
             resolve: {
                 match: function () {
                     return match;
+                },
+                players: function() {
+                    return playerService.getPlayers();
                 }
             }
         });
@@ -27,13 +30,23 @@ controllers.controller('modalController', function ($scope, $modal, $log) {
         $scope.animationsEnabled = !$scope.animationsEnabled;
     };
 
-});
+}]);
 
-angular.module('fifa').controller('modalInstanceController', function ($scope, $modalInstance, match, $http) {
+angular.module('fifa').controller('modalInstanceController', function ($scope, $modalInstance, match, players, $http) {
 
     $scope.match = match;
     match.date = match.date ? new Date(match.date) : new Date();
 
+    $scope.players = players;
+    var playersMap = {};
+    $.each(players, function(index, player) {
+        playersMap[player.alias] = player;
+    });
+    $scope.getPicture = function(alias) {
+        var player = playersMap[alias];
+        return player ? player.image : "";
+    };
+    
     $scope.ok = function () {
         if (match._id) {
             $http.put("/api/match", match).success(function(response) {

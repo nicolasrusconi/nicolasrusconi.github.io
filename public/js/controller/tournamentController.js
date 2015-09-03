@@ -131,7 +131,7 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
     };
 
     $scope.getPicture = function(alias) {
-        var player = $scope.playersInfo[alias];
+        var player = $scope.playersMap[alias];
         return player ? player.image : "";
     };
 
@@ -153,11 +153,12 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
 
     //Data
     $scope.players = [];
+    $scope.playersArray = playersData;
     $scope.tagFilters = [];
-    $scope.playersInfo = {};
+    $scope.playersMap = {};
 
     $.each(playersData, function (index, player) {
-        $scope.playersInfo[player.alias] = player;
+        $scope.playersMap[player.alias] = player;
     });
     $scope.matches = matches;
     $scope.filteredMatches = {};

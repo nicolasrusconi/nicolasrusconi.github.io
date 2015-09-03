@@ -10,14 +10,14 @@ controllers.controller("profileController", ["$scope", "$location", "player", "m
     });
 
     $scope.getPicture = function(alias) {
-        var player = $scope.playersInfo[alias];
+        var player = $scope.playersMap[alias];
         return player ? player.image : "images/icon.question.png";
     };
 
-    $scope.playersInfo = {};
+    $scope.playersMap = {};
 
     $.each(playersData, function (index, player) {
-        $scope.playersInfo[player.alias] = player;
+        $scope.playersMap[player.alias] = player;
     });
 
     $scope.goTo = function(player) {

@@ -77,7 +77,8 @@ table tr th {
 }
 
 .table input {
-    width: 4em;
+    width: 8em;
+    text-align: center;
 }
 
 .team {
