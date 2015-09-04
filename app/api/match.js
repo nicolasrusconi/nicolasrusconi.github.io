@@ -20,7 +20,7 @@ module.exports = function(app) {
             })
         })
     });
-    app.put("/api/match/", validation.authenticateUser, function(req, res) {
+    app.put("/api/match/", validation.authenticateAdmin, function(req, res) {
         var body = req.body;
         schemas.Tournament.findOne(body.tournament, function(err, tournament2) {
             if (err) res.send(err);
