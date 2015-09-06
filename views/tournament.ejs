@@ -127,47 +127,47 @@
             <h3>Editar</h3>
             <h4 class="modal-title">{{match.tournament.name}} - {{match.phase}} - {{match.date | date:'dd-MM-yyyy'}}</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body table-responsive">
             <table class="table table-striped table-hover middleData text-center">
                 <thead>
                 <tr>
                     <th class=""> <!--Equipo-->
-                        <div class="team {{match.home.team}}" ng-hide="!match.home.team"></div>
-                        <input type="text" ng-model="match.home.team" placeholder="type home team">
+                        <select id="homeTeam" ng-model="match.home.team" init-team-select></select>
                     </th>
-                    <th class="col-md-1" >
-                        <p class="input-group">
-                            <input type="date" class="form-control" datepicker-popup="{{format}}"  ng-model="match.date" is-open="opened" ng-required="true"  />
-                        </p>
+                    <th>
+                        <div class="col-xs-12">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="match.date" is-open="opened" ng-required="true" close-text="Close" />
+                            </p>
+                        </div>
 
                     </th>
                     <th class=""> <!--Equipo-->
-                        <input type="text" ng-model="match.away.team" placeholder="type away team">
-                        <div class="team {{match.away.team}}" ng-hide="!match.away.team"></div>
+                        <select id="awayTeam" ng-model="match.away.team" init-team-select></select>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td> <!--Jugador-->
-                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.home.player)}}" ng-show="getPicture(match.home.player) != ''">
-                        <input type="text" ng-model="match.home.player">
+                        <select id="homePlayer" ng-model="match.home.player" init-player-select ng-options="player for player in playeropts ">
+                        </select>
                     </td>
                     <th>Jugadores</th>
                     <td> <!--Jugador-->
-                        <input type="text" ng-model="match.away.player">
-                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.away.player)}}" ng-show="getPicture(match.away.player) != ''">
+                        <select id="awayPlayer" ng-model="match.away.player" init-player-select ng-options="player for player in playeropts track by player">
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.home.partner)}}" ng-show="getPicture(match.home.partner) != ''">
-                        <input type="text" ng-model="match.home.partner">
+                        <select id="homePartner" ng-model="match.home.partner" init-player-select ng-options="player for player in playeropts track by player">
+                        </select>
                     </td>
                     <th>Compañeros</th>
                     <td>
-                        <input type="text" ng-model="match.away.partner">
-                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.away.partner)}}" ng-show="getPicture(match.away.partner) != ''">
+                        <select id="awayPartner" ng-model="match.away.partner" init-player-select ng-options="player for player in playeropts track by player">
+                        </select>
                     </td>
                 </tr>
                 <tr>
