@@ -135,12 +135,8 @@ angular.module('fifa').controller('modalInstanceController', function ($scope, $
         var homeOrAway = $(element).attr('ng-model').split(".")[1];
         var team = $scope.match[homeOrAway].team;
         if (team) {
-            var placeholder = _.find(data, function(item) {
-                return item.id == team;
-            });
-            var text = placeholder ? placeholder.text : "";
-            $(element).val(text);
-            $(element).select2().val(text);
+            $(element).val(team);
+            $(element).select2().val(team);
         }
 
         
