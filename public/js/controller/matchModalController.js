@@ -134,10 +134,12 @@ angular.module('fifa').controller('modalInstanceController', function ($scope, $
         });
         var homeOrAway = $(element).attr('ng-model').split(".")[1];
         var team = $scope.match[homeOrAway].team;
-        if (team) {
-            $(element).val(team);
+        _.delay(function() {
+            // Don't ask why with just one doesn't work
             $(element).select2().val(team);
-        }
+            $(element).select2().val(team);
+        });
+
 
         
     }

@@ -3,6 +3,15 @@
     <div class="panel-heading">
         Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}
     </div>
+
+    <!--<ui-select ng-model="person.selected" theme="bootstrap">
+        <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="player in players">
+            <div ng-bind-html="player.alias"></div>
+            <small ng-bind-html="player.alias"></small>
+        </ui-select-choices>
+    </ui-select>-->
+    
     <div class="panel-body">
         <span style="display: inline-block;" ng-show="players.length > 0">Tags: </span>
         <div style="display: inline-block;" ng-repeat="player in players">
@@ -174,6 +183,11 @@
                     <td><input type="number" ng-model="match.home.goals"></td>
                     <th>Goles</th>
                     <td><input type="number" ng-model="match.away.goals"></td>
+                </tr>
+                <tr ng-show="match.away.goals == match.home.goals">
+                    <td><input type="number" ng-model="match.home.penalties"></td>
+                    <th>Penales</th>
+                    <td><input type="number" ng-model="match.away.penalties"></td>
                 </tr>
                 <tr>
                     <td><input type="number" ng-model="match.home.yellowCards"></td>

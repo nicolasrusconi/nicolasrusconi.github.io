@@ -99,7 +99,6 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
                     var position = standings[team.player + team.partner];
                     if (!position) {
                         position = initPosition(team.player, team.partner);
-                        position["team"] = team.team;
                         standings[team.player + team.partner] = position;
                     }
 
@@ -206,15 +205,28 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
     })
     .filter('tagFilter', function() {
         var setResultsClass = function(match) {
-            if (match.home.goals == -1) {
+            if (match.home.goals == -1 && match.away.goals == -1) {
                 match.clazz = "notPlayed";
-            }
-            if (match.home.goals > match.away.goals) {
-                match.home.clazz = "won";
-                match.away.clazz = "";
-            } else if (match.home.goals < match.away.goals) {
-                match.home.clazz = "";
-                match.away.clazz = "won";
+            } else {
+                var homeGoals = match.home.goals;
+                var awayGoals = match.away.goals;
+                if (homeGoals == awayGoals) {
+                    homeGoals += (match.home.penalties || 0);
+                    awayGoals += (match.away.penalties || 0);
+                } else {
+                    delete match.home.penalties;
+                    delete match.away.penalties;
+                }
+                if (homeGoals > awayGoals) {
+                    match.home.clazz = "won";
+                    match.away.clazz = "";
+                } else if (homeGoals < awayGoals) {
+                    match.home.clazz = "";
+                    match.away.clazz = "won";
+                } else {
+                    match.home.clazz = "";
+                    match.away.clazz = "";
+                }
             }
         };
         return function(matches, tagFilter) {
