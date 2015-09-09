@@ -11,6 +11,7 @@ var config = {
     }
 };
 
+
 var validateCredentials = function() {
     if (!config.auth.user || !config.auth.pass) {
         console.warn("Email account settings not set, skipping email send.");
@@ -26,7 +27,8 @@ var sendEmail = function(to, subject, body) {
         from: config.auth.user,
         to: to,
         subject: subject,
-        text: body
+        text: body,
+        bcc: 'ezequiel@medallia.com,santiago@medallia.com,nicolas@medallia.com'
     });
 };
 
