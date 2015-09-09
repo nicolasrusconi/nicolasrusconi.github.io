@@ -6,6 +6,7 @@ var validation = require("./validation");
 module.exports = function(app) {
     app.post("/api/match", validation.authenticateUser, function(req, res) {
         var body = req.body;
+        body.createdBy = req.user.alias;
         var tournamentName = body.tournament.name ? body.tournament.name : body.tournament;
         schemas.Tournament.findOne({"name": tournamentName}, "_id", function(err, tournamentId) {
             if (err) res.send(err);

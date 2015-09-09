@@ -18,10 +18,12 @@ var playerSchema = new Schema({
 
 var matchSchema = new Schema({
     date: Date,
+    createdBy: {type: String, required: false},
     home: {
         player: {type: String, required: true},
         partner: {type: String, required: false},
         goals: {type: Number, default: -1},
+        penalties: {type: Number, default: -1},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},
         team: String
@@ -30,6 +32,7 @@ var matchSchema = new Schema({
         player: {type: String, required: true},
         partner: {type: String, required: false},
         goals: {type: Number, default: -1},
+        penalties: {type: Number, default: -1},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},
         team: String
