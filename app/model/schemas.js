@@ -23,7 +23,7 @@ var matchSchema = new Schema({
         player: {type: String, required: true},
         partner: {type: String, required: false},
         goals: {type: Number, default: -1},
-        penalties: {type: Number, default: -1},
+        penalties: {type: Number, default: 0},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},
         team: String
@@ -32,7 +32,7 @@ var matchSchema = new Schema({
         player: {type: String, required: true},
         partner: {type: String, required: false},
         goals: {type: Number, default: -1},
-        penalties: {type: Number, default: -1},
+        penalties: {type: Number, default: 0},
         redCards: {type: Number, default: -1},
         yellowCards: {type: Number, default: -1},
         team: String
