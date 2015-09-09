@@ -23,7 +23,6 @@ controllers.controller("statsController", ['$scope', 'allPlayerStats', 'playersD
     var mostPlayed = createStatTemplate("Vicio yo?", "El que mas partidos jugo");
     var tiedMatches = createStatTemplate("Deportivo empate", "Promedio de partidos empatados");
     var wonMatches = createStatTemplate("Este juega conmigo", "Promedio de victorias");
-    var lostMatches = createStatTemplate("Este no juega conmigo", "Promedio de derrotas");
 
     $.each(allPlayerStats, function(playerName, stat) {
         var playerAttributes = playersMap[playerName];
@@ -34,7 +33,6 @@ controllers.controller("statsController", ['$scope', 'allPlayerStats', 'playersD
             mostPlayed.pushValue(playerName, stat.matches.played);
             tiedMatches.pushValue(playerName, stat.matches.tied / stat.matches.played);
             wonMatches.pushValue(playerName, stat.matches.won / stat.matches.played);
-            lostMatches.pushValue(playerName, stat.matches.lost / stat.matches.played);
         }
     });
 
@@ -45,7 +43,7 @@ controllers.controller("statsController", ['$scope', 'allPlayerStats', 'playersD
         $scope.stats.push(stat);
     }
     
-    _.each([scoredGoals, receivedGoals, redCards, mostPlayed, tiedMatches, wonMatches, lostMatches], function(stat) {
+    _.each([scoredGoals, receivedGoals, redCards, mostPlayed, tiedMatches, wonMatches], function(stat) {
         sortAndPush(stat);
     });
 
