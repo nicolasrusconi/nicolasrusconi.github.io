@@ -60,13 +60,14 @@ var formatTeam = function(match, homeOrAway) {
     if (partner) {
         suffix = " & " + partner;
     }
-    return "\t" + player + suffix + "\n\tGoals: "+ team.goals; 
+    return "\t" + player + suffix + 
+        "\n\tGoals: "+ team.goals + ", Yellow cards: " + team.yellowCards + ", Red cards: " + team.redCards; 
 };
 
 var sendMatchEmail = function(match) {
     validateCredentials();
     var creator = match.createdBy;
-    var body = "Match highlights: \n" +
+    var body = "Match highlights: \n\n" +
             "Home Team: \n" +
             formatTeam(match, constants.HOME) + "\n" +
             "----\n" +
