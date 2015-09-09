@@ -44,25 +44,11 @@ getAllMatches(function(matches) {
 
 var __createBasicModel = function(){
     return {
-        matches: {
-            played:0,
-            won: 0,
-            lost: 0,
-            tied: 0
-        },
-        goals: {
-            received: 0,
-            scored: 0
-        },
+        matches: { played:0, won: 0, lost: 0, tied: 0 },
+        goals: { received: 0, scored: 0 },
         cards: {
-            red: {
-                matches: 0,
-                count: 0
-            },
-            yellow: {
-                matches: 0,
-                count: 0
-            }
+            red: { matches: 0, count: 0 },
+            yellow: { matches: 0, count: 0 }
         }
     };
 };

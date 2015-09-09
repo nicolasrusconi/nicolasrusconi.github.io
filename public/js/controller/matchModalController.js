@@ -58,9 +58,12 @@ angular.module('fifa').controller('modalInstanceController', function ($scope, $
 
         //FIXME: use select2 and angular properly
         match.home.player = $("#homePlayer").val().replace("string:","");
-        match.home.partner = $("#homePartner").val().replace("string:","");
+        var homePartner = $("#homePartner").val().replace("string:", "");
+        match.home.partner = homePartner != '?' ? homePartner : undefined;;
         match.away.player = $("#awayPlayer").val().replace("string:","");
-        match.away.partner = $("#awayPartner").val().replace("string:","");
+        var awayPartner = $("#awayPartner").val().replace("string:", "");
+        match.away.partner = awayPartner != '?' ? awayPartner : undefined;
+
         match.home.team = $("#homeTeam").val();
         match.away.team = $("#awayTeam").val();
 

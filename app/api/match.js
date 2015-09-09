@@ -2,6 +2,7 @@ var schemas = require("../model/schemas");
 var stats = require("../service/statistic");
 var ranking = require("../service/ranking");
 var validation = require("./validation");
+var email = require('../service/email');
 
 module.exports = function(app) {
     app.post("/api/match", validation.authenticateUser, function(req, res) {
@@ -16,6 +17,7 @@ module.exports = function(app) {
                 if (err) res.send(err);
                 stats.updateForPlayer([match.home.player, match.home.partner, match.away.player, match.away.partner]);
                 ranking.calculateGeneralRanking(function() {
+                    email.sendMatchEmail(match);
                     res.send("created");
                 });
             })
