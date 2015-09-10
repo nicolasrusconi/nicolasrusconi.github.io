@@ -39,11 +39,18 @@ module.exports = function(app) {
     });
     app.get("/api/match/tournament/:tournament", function(req, res) {
         var tournamentName = req.params.tournament;
+        if (tournamentName == "current") {
+            //FIXME: create a module for commons operations in the db.
+            schemas.Tournament.findOne({current: true}, "name", function(err, tournament) {
+                if (err) res.send(err);
+                tournamentName = tournament.name;
+            }).sort({creationDate: -1})
+        }
         var filter = function(match) {
-            return tournamentName == "current" ? match.tournament.current == true : match.tournament.name == tournamentName;
+            return match.tournament.name == tournamentName;
         };
         schemas.Match.find({}, "-__v").populate({
-            path: "tournament"/*,
+            path: "tournament"/*, FIXME: this should work but I don't know why not...
             match: { name: "Torneo 0"},
             select: "-_id -__v"*/
         }).exec(function(err, matches) {
