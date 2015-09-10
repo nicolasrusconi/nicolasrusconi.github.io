@@ -149,6 +149,11 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
             $scope.players.splice(index, 1);
         }
     };
+    
+    $scope.orderByDateFn = function(match) {
+        return match.date instanceof Date ? match.date.toISOString() : match.date;
+    };
+
 
     //Data
     $scope.players = [];
@@ -166,11 +171,6 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
     if (tournament && tournament.config.defaultPhase) {
         selectPhase(tournament.config.defaultPhase);
     }
-
-    $scope.orderByDateFn = function(match) {
-        return match.date instanceof Date ? match.date.toISOString() : match.date;
-    };
-    
     $(".navbar-collapse").collapse('hide');
 }])
     .filter('matchFilter', function() {
@@ -193,15 +193,6 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
             }
             return out;
         }
-    })
-    .filter('tournamentFilter', function() {
-        return function(tournaments, filterKey) {
-            var filter = [];
-            $.each(tournaments, function(index, tournament) {
-                filter.push(tournament[filterKey])
-            });
-            return filter;
-        };
     })
     .filter('tagFilter', function() {
         var setResultsClass = function(match) {
