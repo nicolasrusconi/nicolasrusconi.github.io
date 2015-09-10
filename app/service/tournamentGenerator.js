@@ -1,5 +1,6 @@
 var schemas = require("../model/schemas");
 var _ = require("underscore");
+var cons = require("../constants");
 
 var createMatchFromCSV = function(matchesCSV) {
     var array = matchesCSV.split("\n").map(function(line) { return line.split(",").map(function(cell) { return cell.trim() }); });
@@ -42,37 +43,31 @@ var generateMatches = function(model, secondRound) {
             return;
         }
         _.each(model.groups, function(group) {
-            var length = group.teams.length;
-            var matches = [];
-            for (var i = length-1; i >= 0; i--) {
-                for (var j = 1; j < i+1; j++) {
-                    var match = new schemas.Match();
-                    match.tournament = tournamentId._id;
-                    match.phase = group.name;
-                    match.home.player = group.teams[i].player;
-                    match.home.partner = group.teams[i].partner;
-                    match.home.team = group.teams[i].team;
-                    match.away.player = group.teams[i - j].player;
-                    match.away.partner = group.teams[i - j].partner;
-                    match.away.team = group.teams[i - j].team;
-                    console.log(match.home.player + " vs " + match.away.player);
-                    matches.push(match);
+            var createMatches = function(home, away) {
+                var length = group.teams.length;
+                var matches = [];
+                for (var i = length-1; i >= 0; i--) {
+                    for (var j = 1; j < i+1; j++) {
+                        var match = new schemas.Match();
+                        match.tournament = tournamentId._id;
+                        match.phase = group.name;
+                        match[home].player = group.teams[i].player;
+                        match[home].partner = group.teams[i].partner;
+                        match[home].team = group.teams[i].team;
+                        match[away].player = group.teams[i - j].player;
+                        match[away].partner = group.teams[i - j].partner;
+                        match[away].team = group.teams[i - j].team;
+                        console.log(match.home.player + " & " + match.home.partner + " vs " + match.away.player + " & " + match.away.partner);
+                        matches.push(match);
+                    }
                 }
-            }
-            var rounds = matches.length / 2;
-            console.log("rounds: " + rounds);
-            for (i = 0; i < rounds; i++) {
-                saveMatch(matches[i]);
-                saveMatch(matches[matches.length-1-i]);
-            }
+                _.each(matches, function(match) {
+                    saveMatch(match);
+                })                 
+            };
+            createMatches(cons.HOME, cons.AWAY);
             if (secondRound) {
-                for (i = 0; i < rounds; i++) {
-                    var temp = match.home;
-                    match.home = match.away;
-                    match.away = temp;
-                    saveMatch(matches[i]);
-                    saveMatch(matches[matches.length-1-i]);
-                }
+                createMatches( cons.AWAY, cons.HOME);
             }
         });    
     });
