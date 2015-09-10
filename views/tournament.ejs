@@ -1,7 +1,8 @@
 <h1 class="page-header"> {{theTournament.name}} </h1>
 <div class="panel panel-default">
     <div class="panel-heading">
-        Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}
+        <span>Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}</span><br>
+        <span><a target="_blank" href="https://jsfiddle.net/qnv0wkp6/embedded/result/">Sorteo de equipos (no selecciones)</a></span>
     </div>
 
     <!--<ui-select ng-model="person.selected" theme="bootstrap">
