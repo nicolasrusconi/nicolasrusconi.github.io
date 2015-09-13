@@ -2,7 +2,7 @@ module.exports = function(app, passport) {
 	var index = function (req, res) {
 		res.render('index', {user: req.user});
     };
-    app.get('/', ensureAuthenticated, index);
+    app.get('/', index);
 	app.get('/templates/:name', function (req, res) {
 		res.render(req.params.name, { user: req.user });
 	});
@@ -30,8 +30,8 @@ module.exports = function(app, passport) {
 		res.redirect('/');
 	});
 
-	app.get('/:whatever', ensureAuthenticated, index);
-	app.get('/:whatever/:whatever2', ensureAuthenticated, index);
+	app.get('/:whatever', index);
+	app.get('/:whatever/:whatever2', index);
 
 	// Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

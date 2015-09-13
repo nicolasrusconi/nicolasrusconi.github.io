@@ -21,8 +21,9 @@
         <h3>{{thePhase}}</h3>
         <h4>Partidos</h4>
 
+        <% if (user) { %>
         <div ng-controller="modalController"> <button type="button" class="btn btn-success" ng-click="open({'tournament': theTournament, 'phase': thePhase})">Cargar partido<i class=""></i></button></div>
-
+        <% } %>
         <div class="table-responsive">
             <table class="table middleData text-center">
             <thead>
@@ -70,7 +71,7 @@
                     <td rowspan="2" class="col-md-1 hidden-xs"> <!--Dia-->
                         {{match.date | date:'dd-MM'}}
                     </td>
-                    <% if (user.admin) { %>
+                    <% if (user && user.admin) { %>
                     <td rowspan="2" class="col-md-1" ng-controller="modalController" style="border-top: 0px; background-color: #ffffff!important;"><button type="button" class="btn btn-circle btn-success" ng-click="open(match)"><i class="fa fa-fw fa-edit"></i></button></td>
                     <% } %>
                 </tr>

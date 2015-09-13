@@ -21,6 +21,10 @@ controllers.controller('mainController', ['$scope', 'tournamentService', 'Data',
     $scope.logout = function() {
         window.location = '/account/logout';
     };
+    
+    $scope.signIn = function() {
+        window.location = "/login";
+    };
 
     tournamentService.getTournaments().then(function(response) {
         $scope.tournaments = response.data;

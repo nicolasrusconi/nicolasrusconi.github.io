@@ -69,6 +69,12 @@
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
+            <% if (!user) { %>
+            <li>
+                <button type="button" class="btn btn-default navbar-btn btn-google" ng-click="signIn()">
+                    <i class="fa fa-google-plus"></i><span>Sign in with Google</span></button>
+            </li>
+            <% } else { %>
             <li class="dropdown">
 
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="padding: 0px">
@@ -85,6 +91,8 @@
                     </li>
                 </ul>
             </li>
+            <% } %>
+
             <!-- /.dropdown -->
         </ul>
         <!-- /.navbar-top-links -->
