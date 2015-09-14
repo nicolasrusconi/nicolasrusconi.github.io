@@ -3,14 +3,18 @@
 ## Setup
 
 ### Requirements 
-- MongoDb already installed
-- npm
-- nodejs
+- Latest MongoDb.
+- Latest npm version
+- Latest nodejs version
 
-### Steps
-- run mongod
-- npm install
-- node server.js
-- enjoy!
+### Configuration
+Configure the [env.config](env.config) file properly
 
-If you would like a db environment, please contact ezequielbergamaschi@gmail.com
+### Running
+```Shell
+> mongod
+> npm install
+> node server.js
+```
+
+Developer information: ezequielbergamaschi@gmail.com
