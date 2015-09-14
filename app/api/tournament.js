@@ -1,6 +1,6 @@
 var apiHandler = require("./apiHandler");
-var generator = require('../service/tournamentGenerator');
-var service = require("../service/tournamentService");
+var generator = require('../service/TournamentGeneratorService');
+var service = require("../service/TournamentService");
 
 module.exports = function(app) {
     app.post("/api/tournament", apiHandler.authenticateUser, function(req, res, next) {

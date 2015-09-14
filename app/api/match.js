@@ -1,9 +1,9 @@
 var schemas = require("../model/schemas");
-var stats = require("../service/statistic");
-var ranking = require("../service/ranking");
+var stats = require("../service/BasicStatsService");
+var ranking = require("../service/RankingService");
 var apiHandler = require("./apiHandler");
-var email = require('../service/email');
-var tournamentService = require("../service/tournamentService");
+var email = require('../service/EmailService');
+var tournamentService = require("../service/TournamentService");
 
 module.exports = function(app) {
     app.post("/api/match", apiHandler.authenticateUser, function(req, res, next) {

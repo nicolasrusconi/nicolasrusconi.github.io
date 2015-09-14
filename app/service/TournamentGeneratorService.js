@@ -1,5 +1,5 @@
 var schemas = require("../model/schemas");
-var service = require("../service/tournamentService");
+var service = require("../service/TournamentService");
 var _ = require("underscore");
 var cons = require("../constants");
 
