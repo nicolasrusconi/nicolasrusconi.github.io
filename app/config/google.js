@@ -3,9 +3,9 @@ var playerManager = require("../model/playerManager");
 
 module.exports = function(passport) {
     passport.use(new GoogleStrategy({
-            clientID: "1082858892607-rads72knh0qse436hqgph68t063emiig.apps.googleusercontent.com",
-            clientSecret: "3l0va1TrAL6Bd43ht3QmfeCB",
-            callbackURL: (process.env.HEROKU_URL || "http://localhost:8080") + "/auth/google/callback",
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: (process.env.HEROKU_URL || process.env.LOCAL_URL + ":" + process.env.PORT) + "/auth/google/callback",
             passReqToCallback   : true
 
         },

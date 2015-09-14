@@ -12,7 +12,9 @@ var passport = require('passport');
 var session = require('express-session');
 var RedisStore = require( 'connect-redis' )( session );
 var cookieSession = require('cookie-session');
+var env = require('node-env-file');
 
+env(__dirname + "/" + (process.env.ENV_FILE || '/env.config'));
 app.use(cookieSession({
     keys: ['key1', 'key2']
 }));
@@ -42,7 +44,7 @@ require("./app/config/google")(passport);
 
 var mongoUri = process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
-    'mongodb://localhost/fifa';
+    process.env.LOCAL_DB_URL;
 
 mongoose.connect(mongoUri);
 
@@ -78,7 +80,7 @@ require('./app/api/randomize.js')(app);
 require('./app/api/routes.js')(app, passport);
 
 // listen (start app with node server.js) ======================================
-app.set('port', (process.env.PORT || 8080));
+app.set('port', (process.env.PORT));
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
