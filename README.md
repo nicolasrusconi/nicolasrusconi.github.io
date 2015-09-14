@@ -10,7 +10,7 @@
 ### Configuration
 Configure the [env.config](env.config) file properly
 
-### Running
+## Running
 ```Shell
 > mongod
 > npm install
