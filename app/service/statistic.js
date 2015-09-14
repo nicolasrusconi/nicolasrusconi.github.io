@@ -16,7 +16,7 @@ var updateForPlayer = function(playersArray) {
     });
     getAllMatches(function(matches) {
         _.each(matches, function(match) {
-            if (match.home.goals == -1 ) return; //FIXME: filter -1 -1
+            if (match.home.goals == -1 && match.away.goals == -1) return;
             __collectBasicStat(match, function(alias) {
                 return playersArray.indexOf(alias) != -1;
             });
@@ -37,7 +37,7 @@ var getAllMatches = function (callback) {
 // initialize
 getAllMatches(function(matches) {
     _.each(matches, function(match) {
-        if (match.home.goals == -1 ) return; //FIXME: filter -1 -1
+        if (match.home.goals == -1 && match.away.goals == -1) return;
         __collectBasicStat(match);
     });
 });
@@ -115,7 +115,7 @@ var __collectBasicStat = function(match, playerFilter) {
     var homeTied = goals.home == goals.away ? 1 : 0;
 
     
-    
+
     _.each(matchPlayers, function(matchTeam, index) {
         _.each(matchTeam, function(player) {
             if (playerFilter(player) && player) {

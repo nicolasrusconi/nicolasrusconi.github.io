@@ -1,7 +1,7 @@
 var schemas = require("../model/schemas");
 var ranking = require("../service/ranking");
 var stats = require("../service/statistic");
-var validation = require("./validation");
+var validation = require("./apiHandler");
 var _ = require("underscore");
 
 module.exports = function(app) {

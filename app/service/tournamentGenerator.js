@@ -1,4 +1,5 @@
 var schemas = require("../model/schemas");
+var service = require("../service/tournamentService");
 var _ = require("underscore");
 var cons = require("../constants");
 
@@ -24,20 +25,21 @@ var createMatchFromArray = function(matchesArray) {
         match.date = new Date(matchArray[8]);
         var tournamentName = matchArray[9];
         match.phase = matchArray[10];
-        schemas.Tournament.findOne({"name": tournamentName}, "_id", function(err, tournament) {
+        service.getTournament({"name": tournamentName}, function(err, tournament) {
             if (err) {
                 console.error(err);
                 return;
             }
             match.tournament = tournament._id;
             saveMatch(match);
-        });
+        })
+        
     });
 };
 
 var generateMatches = function(model, secondRound) {
     var tournamentName = model.tournamentName;
-    schemas.Tournament.findOne({"name": tournamentName}, "_id", function(err, tournamentId) {
+    service.getTournament({"name": tournamentName}, "_id", function(err, tournament) {
         if (err) {
             console.error(err);
             return;
@@ -49,7 +51,7 @@ var generateMatches = function(model, secondRound) {
                 for (var i = length-1; i >= 0; i--) {
                     for (var j = 1; j < i+1; j++) {
                         var match = new schemas.Match();
-                        match.tournament = tournamentId._id;
+                        match.tournament = tournament._id;
                         match.phase = group.name;
                         match[home].player = group.teams[i].player;
                         match[home].partner = group.teams[i].partner;
@@ -63,14 +65,14 @@ var generateMatches = function(model, secondRound) {
                 }
                 _.each(matches, function(match) {
                     saveMatch(match);
-                })                 
+                })
             };
             createMatches(cons.HOME, cons.AWAY);
             if (secondRound) {
                 createMatches( cons.AWAY, cons.HOME);
             }
-        });    
-    });
+        });
+    })
 };
 
 var saveMatch = function(match) {
