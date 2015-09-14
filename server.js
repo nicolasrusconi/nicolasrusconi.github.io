@@ -1,6 +1,7 @@
 // server.js
 
 // set up ========================
+require('newrelic');
 var express  = require('express');
 var app      = express();                               // create our app w/ express
 var mongoose = require('mongoose');                     // mongoose for mongodb
@@ -13,7 +14,6 @@ var session = require('express-session');
 var RedisStore = require( 'connect-redis' )( session );
 var cookieSession = require('cookie-session');
 var env = require('node-env-file');
-require('newrelic');
 
 env(__dirname + "/" + (process.env.ENV_FILE || '/env.config'));
 app.use(cookieSession({
