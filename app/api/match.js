@@ -17,7 +17,7 @@ module.exports = function(app) {
                 if (err) res.send(err);
                 stats.updateForPlayer([match.home.player, match.home.partner, match.away.player, match.away.partner]);
                 ranking.calculateGeneralRanking(function() {
-                    email.sendMatchEmail(match);
+                    email.sendMatchEmail(match, tournamentName);
                     res.send("created");
                 });
             })
