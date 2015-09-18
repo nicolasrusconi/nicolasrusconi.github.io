@@ -27,9 +27,13 @@ var __createNewPlayer = function(jsonPlayer, callback) {
 };
 
 module.exports = function(passport) {
+    if (!process.env.GOOGLE_CLIENT_ID && ! process.env.GOOGLE_CLIENT_SECRET) {
+        console.warn("[WARN] Google client id and secret not valid, login disabled.");
+    }
+    
     passport.use(new GoogleStrategy({
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientID: process.env.GOOGLE_CLIENT_ID || '0',
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || '0',
             callbackURL: (process.env.HEROKU_URL || process.env.LOCAL_URL + ":" + process.env.PORT) + "/auth/google/callback",
             passReqToCallback   : true
 

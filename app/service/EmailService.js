@@ -12,14 +12,17 @@ var config = {
 };
 
 
-var validateCredentials = function() {
+var hasConfigAvailable = function() {
     if (!config.auth.user || !config.auth.pass) {
-        console.warn("Email account settings not set, skipping email send.");
-        return;
+        console.warn("[WARN] Email account settings not set, skipping email send.");
+        return false;
     }
+    return true;
 };
 
-validateCredentials();
+if (!hasConfigAvailable()) {
+    return;
+}
 
 var transporter = nodemailer.createTransport(config);
 var sendEmail = function(to, subject, body) {
@@ -65,7 +68,9 @@ var formatTeam = function(match, homeOrAway) {
 };
 
 var sendMatchEmail = function(match, tournamentName) {
-    validateCredentials();
+    if (!hasConfigAvailable()) {
+        return;
+    }
     var creator = match.createdBy;
     var body = "Match highlights: \n\n" +
             "Tournament: " + tournamentName + ", Phase: " + match.phase + "\n\n" +

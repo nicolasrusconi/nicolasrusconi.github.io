@@ -2,6 +2,6 @@
 *.iml
 node_modules
 bower_components
-npm-debug.log
+*.log
 mongo-backup*
 env.config.prod

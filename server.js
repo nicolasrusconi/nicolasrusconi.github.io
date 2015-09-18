@@ -20,6 +20,10 @@ app.use(cookieSession({
     keys: ['key1', 'key2']
 }));
 
+if (!process.env.NEW_RELIC_LICENSE_KEY) {
+    console.warn("[WARN] Newrelic not enabled");
+}
+
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
 //   serialize users into and deserialize users out of the session.  Typically,
