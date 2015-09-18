@@ -1,40 +1,36 @@
-var schemas = require("../model/schemas");
-var ranking = require("../service/RankingService");
-var stats = require("../service/BasicStatsService");
-var validation = require("./apiHandler");
+var rankingService = require("../service/RankingService");
+var statsService = require("../service/BasicStatsService");
+var apiHandler = require("./apiHandler");
+var playerService = require("../service/PlayerService");
 var _ = require("underscore");
 
 module.exports = function(app) {
-    app.get("/api/player", function(req, res) {
-        schemas.Player.find(function(err, players) {
-            if (err) res.send(err);
-
-            res.json(players);
-        }).sort({"ranking": -1})
+    app.get("/api/player", function(req, res, next) {
+        playerService.getPlayers(function(err, players) {
+            apiHandler.handleResponse(req, res, next, err, players);
+        });
     });
-    app.get("/api/player/:alias", function(req, res) {
-        schemas.Player.findOne({"alias": req.params.alias}, function(err, player) {
-            if (err) res.send(err);
-            res.json(player);
-        })
+    app.get("/api/player/:alias", function(req, res, next) {
+        playerService.getByAlias(req.params.alias, function(err, player) {
+            apiHandler.handleResponse(req, res, nex, err, player);
+        });
     });
-    app.post("/api/player", function(req, res) {
+    app.post("/api/player", function(req, res, next) {
         var body = req.body;
-        new schemas.Player(body).save(function(err, created) {
-            if (err) res.send(err);
-            res.send("created");
-        })
+        playerService.save(body, function(err) {
+            apiHandler.handleResponse(req, res, next, err, body);
+        });
     });
-    app.post("/api/player/ranking", validation.authenticateUser, function(req, res) {
-        ranking.calculateGeneralRanking(function(glickoPlayers) {
+    app.post("/api/player/ranking", apiHandler.authenticateUser, function(req, res, next) {
+        rankingService.calculateGeneralRanking(function(glickoPlayers) {
             res.send("Finished successfully")
         })
     });
-    app.get("/api/player/stats/all", function(req, res) {
-        res.json(stats.allPlayerStatistics());
+    app.get("/api/player/stats/all", function(req, res, next) {
+        res.json(statsService.allPlayerStatistics());
     });
-    app.get("/api/player/stats/:alias", function(req, res) {
-        res.json(stats.playerStatistics(req.params.alias));
+    app.get("/api/player/stats/:alias", function(req, res, next) {
+        res.json(statsService.playerStatistics(req.params.alias));
     });
     
 };

@@ -1,4 +1,4 @@
-var schemas = require("../model/schemas");
+var playerService = require("../service/PlayerService");
 var _ = require("underscore");
 
 var accessDenied = function(res) {
@@ -23,13 +23,13 @@ var authenticateAdmin = function(req, res, next) {
     if (!req.user || !req.user.admin) {
         accessDenied(res);
     } else {
-        schemas.Player.findOne({_id: req.user.id}, function(err, user) {
+        playerService.getById(req.user.id, function(err, user) {
             if (!err & user.admin) {
                 next();
             } else {
                 accessDenied(res);
             }
-        })
+        });
     }
 };
 
@@ -37,13 +37,13 @@ var authenticateUser = function(req, res, next) {
     if (!req.user) {
         accessDenied(res);
     } else {
-        schemas.Player.findOne({_id: req.user.id}, function(err, user) {
+        playerService.getById(req.user.id, function(err, user) {
             if (!err && user) {
                 next();
             } else {
                 accessDenied(res);
             }
-        })
+        });
     }
 };
 

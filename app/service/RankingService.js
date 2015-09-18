@@ -1,6 +1,7 @@
 var glicko2 = require("glicko2");
 var _ = require("underscore");
 var schemas = require("../model/schemas");
+var playerService = require("../service/PlayerService");
 
 /**
  * A tuple is a Json object which contains glicko and model keys for glicko players and db players respectively.
@@ -123,7 +124,7 @@ var ranking = new glicko2.Glicko2(settings);
 var calculateGeneralRanking = function(callback) {
     console.time("ranking calculation");
 
-    schemas.Player.find(function(err, players) {
+    playerService.getPlayers(function(err, players) {
         if (err) {
             console.log(err);
         } else {
@@ -161,7 +162,7 @@ var calculateGeneralRanking = function(callback) {
                     __updateRankingDb(tuple);
                 });
                 callback.call(this, playersTuple);
-            }).sort({"date": 1})    
+            }).sort({"date": 1})
         }
 
     });

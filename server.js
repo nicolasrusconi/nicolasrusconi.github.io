@@ -31,12 +31,12 @@ passport.serializeUser(function(user, done) {
     done(null, user._id.valueOf());
 });
 
-var schemas = require("./app/model/schemas");
+var playerService = require("./app/service/PlayerService");
 passport.deserializeUser(function(obj, done) {
     if (typeof obj !== 'string') {
         obj = obj._id;
     }
-    schemas.Player.findOne({_id: mongoose.Types.ObjectId(obj)}, done);
+    playerService.getById(mongoose.Types.ObjectId(obj), done);
 });
 
 

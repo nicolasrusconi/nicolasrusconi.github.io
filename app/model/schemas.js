@@ -59,4 +59,5 @@ var tournamentSchema = new Schema({
 exports.Player = mongoose.model("Player", playerSchema);
 exports.Match = mongoose.model("Match", matchSchema);
 exports.Tournament = mongoose.model("Tournament", tournamentSchema);
+exports.ObjectId = mongoose.Types.ObjectId;
 

@@ -65,7 +65,7 @@ module.exports = function(app) {
                     res.json(matches);
                 });
             })
-        });
+        }, "desc");
     });
     app.get("/api/match/player/:alias", function(req, res, next) {
         var alias = req.params.alias;

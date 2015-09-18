@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 var _ = require("underscore");
 var constants = require("../constants");
-var schemas = require("../model/schemas");
+var playerService = require("../service/PlayerService");
 
 var config = {
     service: 'gmail',
@@ -80,7 +80,7 @@ var sendMatchEmail = function(match, tournamentName) {
     _.each(aliases, function(alias) {
         condition["$or"].push({"alias": alias})
     });
-    schemas.Player.find(condition, "email", function(err, values) {
+    playerService.getPlayersBy(condition, function(err, values) {
         if (err) {
             console.error(err);
         } else {
@@ -91,8 +91,6 @@ var sendMatchEmail = function(match, tournamentName) {
             sendEmail(textValues.join(), creator + ' added a match in which you played', body)
         }
     });
-    
-    
 };
 
 module.exports = {

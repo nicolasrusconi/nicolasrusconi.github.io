@@ -1,4 +1,3 @@
-var schemas = require("../model/schemas");
 /*
  { provider: 'google',
  id: '110890234919138773163',
@@ -16,7 +15,7 @@ var schemas = require("../model/schemas");
 
 function parse(jsonPlayer) {
     //console.log(jsonPlayer);
-    var player = new schemas.Player();
+    var player = {};
     var medalliaDomain = "medallia.com";
     var email = jsonPlayer.email;
     var domain = jsonPlayer.domain || email.split("@")[1];
