@@ -1,8 +1,12 @@
 <h1 class="page-header"> {{theTournament.name}} </h1>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <span>Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}</span><br>
-        <span><a target="_blank" href="https://jsfiddle.net/qnv0wkp6/embedded/result/">Sorteo de equipos (no selecciones)</a></span>
+        <span style="height: 50px">Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}
+            <a ng-click="generateRandomTeams()" href="#" role="button" > Sorteo de equipos (no selecciones)<a/>
+            <div ng-repeat="team in randomTeams" style="display: inline-block;">
+                <div class="team {{team}}">
+            </div>
+        </span><br>
     </div>
 
     <!--<ui-select ng-model="person.selected" theme="bootstrap">

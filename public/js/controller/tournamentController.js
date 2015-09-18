@@ -154,6 +154,11 @@ controllers.controller('tournamentController', ['$scope', 'Data', "playersData",
         return match.date instanceof Date ? match.date.toISOString() : match.date;
     };
 
+    $scope.generateRandomTeams = function() {
+        // Todo get valid teams from the tournament
+        var random = _.shuffle(["Barcelona", "RealMadrid", "Juventus", "Bayern", "Borussia", "Chelsea", "ManCity", "ManUtd", "PSG"]);
+        $scope.randomTeams = [random[0], random[1]];
+    };
 
     //Data
     $scope.players = [];
