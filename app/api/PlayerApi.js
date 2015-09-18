@@ -1,6 +1,6 @@
 var rankingService = require("../service/RankingService");
 var statsService = require("../service/BasicStatsService");
-var apiHandler = require("./apiHandler");
+var apiHandler = require("./ApiHandler");
 var playerService = require("../service/PlayerService");
 var _ = require("underscore");
 

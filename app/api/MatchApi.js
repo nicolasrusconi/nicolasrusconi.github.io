@@ -1,7 +1,7 @@
 var schemas = require("../model/schemas");
 var stats = require("../service/BasicStatsService");
 var ranking = require("../service/RankingService");
-var apiHandler = require("./apiHandler");
+var apiHandler = require("./ApiHandler");
 var email = require('../service/EmailService');
 var tournamentService = require("../service/TournamentService");
 

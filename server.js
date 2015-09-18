@@ -74,11 +74,10 @@ app.use(bodyParser.urlencoded({'extended':'true'}));            // parse applica
 app.use(bodyParser.json());                                     // parse application/json
 app.use(methodOverride());
 
-require('./app/api/player.js')(app);
-require('./app/api/tournament.js')(app);
-require('./app/api/match.js')(app);
-require('./app/api/randomize.js')(app);
-require('./app/api/routes.js')(app, passport);
+require('./app/api/PlayerApi.js')(app);
+require('./app/api/TournamentApi.js')(app);
+require('./app/api/MatchApi.js')(app);
+require('./app/api/Routes.js')(app, passport);
 
 // listen (start app with node server.js) ======================================
 app.set('port', (process.env.PORT));

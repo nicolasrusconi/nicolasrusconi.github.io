@@ -1,4 +1,4 @@
-var apiHandler = require("./apiHandler");
+var apiHandler = require("./ApiHandler");
 var generator = require('../service/TournamentGeneratorService');
 var service = require("../service/TournamentService");
 
