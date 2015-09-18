@@ -1,14 +1,14 @@
-var schemas = require("../model/schemas");
+var Player = require("../model/schemas").Player;
 var __ = require("../constants");
 
 var __get = function(condition, callback) {
-    schemas.Player.findOne(condition, callback);
+    Player.findOne(condition, callback);
 };
 
 var getById = function(id, callback) {
     var condition = {};
-    if (typeof id !== schemas.ObjectId) {
-        id = schemas.ObjectId(id);
+    if (typeof id !== Player.ObjectId) {
+        id = Player.ObjectId(id);
     }
     condition[__.MONGO_ID] = id;
     __get(condition, callback);
@@ -23,15 +23,15 @@ var getByAlias = function(alias, callback) {
 };
 
 var getPlayers = function(callback) {
-    schemas.Player.find(callback).sort({"ranking": -1})
+    Player.find(callback).sort({"ranking": -1})
 };
 
 var getPlayersBy = function(condition, callback) {
-    schemas.Player.find(condition, callback);
+    Player.find(condition, callback);
 };
 
 var save = function(json, callback) {
-    var player = new schemas.Player(json);
+    var player = new Player(json);
     player.save(callback);
 };
 
