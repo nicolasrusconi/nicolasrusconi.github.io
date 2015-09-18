@@ -64,16 +64,17 @@ var formatTeam = function(match, homeOrAway) {
         "\n\tGoals: "+ team.goals + ", Yellow cards: " + team.yellowCards + ", Red cards: " + team.redCards; 
 };
 
-var sendMatchEmail = function(match) {
+var sendMatchEmail = function(match, tournamentName) {
     validateCredentials();
     var creator = match.createdBy;
     var body = "Match highlights: \n\n" +
+            "Tournament: " + tournamentName + ", Phase: " + match.phase + "\n\n" +
             "Home Team: \n" +
             formatTeam(match, constants.HOME) + "\n" +
             "----\n" +
             "Away Team: \n" +
             formatTeam(match, constants.AWAY) + "\n\n" +
-        "Cheers, The Fifa Medallia Team\n http://fifamedallia.herokuapp.com";
+        "Cheers, The Fifa Medallia Team\n " + (process.env.HEROKU_URL) ;
     var aliases = findUsersForMatchEmail(match);
     var condition = {"$or": []};
     _.each(aliases, function(alias) {
