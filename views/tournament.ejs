@@ -2,8 +2,8 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <span>
-            Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}
-            <a ng-click="generateRandomTeams()" href="#" role="button" > Sorteo de equipos (no selecciones)<a/>
+            Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}</br>
+            <a ng-click="generateRandomTeams()" href="#" role="button" > Sorteo de equipos (no selecciones)</a>
             <div ng-repeat="team in randomTeams" style="display: inline-block;">
                  {{$index == 1 ? 'vs' : ''}}
                  <div class="team {{team}}" > </div>
