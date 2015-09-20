@@ -1,7 +1,7 @@
-var schemas = require("../model/schemas");
 var service = require("../service/TournamentService");
 var _ = require("underscore");
 var cons = require("../constants");
+var matchService = require("./MatchService");
 
 var createMatchFromCSV = function(matchesCSV) {
     var array = matchesCSV.split("\n").map(function(line) { return line.split(",").map(function(cell) { return cell.trim() }); });
@@ -13,7 +13,8 @@ var createMatchFromArray = function(matchesArray) {
         if (matchArray.length != 11) {
             throw new Error("invalid array length");
         }
-        var match = new schemas.Match();
+        //FIXME: replace by a match template
+        var match = {"home": {}, "away": {}};
         match.home.player = matchArray[0];
         match.home.partner = matchArray[1];
         match.home.team = matchArray[2];
@@ -50,7 +51,8 @@ var generateMatches = function(model, secondRound) {
                 var matches = [];
                 for (var i = length-1; i >= 0; i--) {
                     for (var j = 1; j < i+1; j++) {
-                        var match = new schemas.Match();
+                        //FIXME: replace by a match template
+                        var match = {"home": {}, "away": {}};
                         match.tournament = tournament._id;
                         match.phase = group.name;
                         match[home].player = group.teams[i].player;
@@ -76,13 +78,10 @@ var generateMatches = function(model, secondRound) {
 };
 
 var saveMatch = function(match) {
-    match.save(function(err, match) {
-        if (err) {
-            console.error(err);
-            throw new Error();
-        }
+    matchService.save(match, function(err, match) {
+        if (err) console.error(err);
         console.log("created");
-    });
+    })
 };
 
 module.exports = {

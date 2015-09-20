@@ -10,21 +10,8 @@ var config = {
         pass: process.env.FIFA_EMAIL_PASS
     }
 };
-
-
-var hasConfigAvailable = function() {
-    if (!config.auth.user || !config.auth.pass) {
-        console.warn("[WARN] Email account settings not set, skipping email send.");
-        return false;
-    }
-    return true;
-};
-
-if (!hasConfigAvailable()) {
-    return;
-}
-
 var transporter = nodemailer.createTransport(config);
+
 var sendEmail = function(to, subject, body) {
     transporter.sendMail({
         from: config.auth.user,
@@ -33,6 +20,14 @@ var sendEmail = function(to, subject, body) {
         text: body,
         bcc: 'ezequiel@medallia.com,santiago@medallia.com,nicolas@medallia.com'
     });
+};
+
+var hasConfigAvailable = function() {
+    if (!config.auth.user || !config.auth.pass) {
+        console.warn("[WARN] Email account settings not set, skipping email send.");
+        return false;
+    }
+    return true;
 };
 
 var findUsersForMatchEmail = function(match) {
@@ -98,6 +93,7 @@ var sendMatchEmail = function(match, tournamentName) {
     });
 };
 
+hasConfigAvailable();
 module.exports = {
     sendMatchEmail: sendMatchEmail
 };

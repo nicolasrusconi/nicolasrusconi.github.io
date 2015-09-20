@@ -1,4 +1,4 @@
-var schemas = require("../model/schemas");
+var matchService = require("./MatchService");
 var _ = require("underscore");
 var players = {};
 
@@ -16,7 +16,6 @@ var updateForPlayer = function(playersArray) {
     });
     getAllMatches(function(matches) {
         _.each(matches, function(match) {
-            if (match.home.goals == -1 && match.away.goals == -1) return;
             __collectBasicStat(match, function(alias) {
                 return playersArray.indexOf(alias) != -1;
             });
@@ -25,7 +24,7 @@ var updateForPlayer = function(playersArray) {
 };
 
 var getAllMatches = function (callback) {
-    schemas.Match.find({}, function(err, matches) {
+    matchService.getPlayedMatches(function(err, matches) {
         if (err) {
             console.log(err);
         } else {
@@ -33,14 +32,6 @@ var getAllMatches = function (callback) {
         }
     });
 };
-
-// initialize
-getAllMatches(function(matches) {
-    _.each(matches, function(match) {
-        if (match.home.goals == -1 && match.away.goals == -1) return;
-        __collectBasicStat(match);
-    });
-});
 
 var __createBasicModel = function(){
     return {
@@ -139,6 +130,14 @@ var __collectBasicStat = function(match, playerFilter) {
         });
     });
 };
+
+// initialize
+getAllMatches(function(matches) {
+    _.each(matches, function(match) {
+        __collectBasicStat(match);
+    });
+});
+
 
 module.exports = {
     playerStatistics: playerStatistics,

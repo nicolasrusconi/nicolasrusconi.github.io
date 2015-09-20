@@ -1,6 +1,6 @@
 var glicko2 = require("glicko2");
 var _ = require("underscore");
-var schemas = require("../model/schemas");
+var matchService = require("../service/MatchService");
 var playerService = require("../service/PlayerService");
 
 /**
@@ -129,7 +129,7 @@ var calculateGeneralRanking = function(callback) {
             console.log(err);
         } else {
             var playersTuple = __initPlayersTuple(players);
-            schemas.Match.find({$and: [{"home.goals": {$gt: -1}}, {"away.goals": {$gt: -1}}]}, function(err, matches) {
+            matchService.getPlayedMatches(function(err, matches) {
                 _.each(matches, function(match) {
                     var homePlayer = match.home.player, homePartner = match.home.partner;
                     console.log("team 1 : " + homePlayer + " " + homePartner);
@@ -162,7 +162,7 @@ var calculateGeneralRanking = function(callback) {
                     __updateRankingDb(tuple);
                 });
                 callback.call(this, playersTuple);
-            }).sort({"date": 1})
+            }, 'asc')
         }
 
     });

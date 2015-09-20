@@ -1,4 +1,5 @@
 var Player = require("../model/schemas").Player;
+var ObjectId = require("../model/schemas").ObjectId;
 var __ = require("../constants");
 
 var __get = function(condition, callback) {
@@ -7,8 +8,8 @@ var __get = function(condition, callback) {
 
 var getById = function(id, callback) {
     var condition = {};
-    if (typeof id !== Player.ObjectId) {
-        id = Player.ObjectId(id);
+    if (typeof id !== ObjectId) {
+        id = ObjectId(id);
     }
     condition[__.MONGO_ID] = id;
     __get(condition, callback);

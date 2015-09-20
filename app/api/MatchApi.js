@@ -1,9 +1,9 @@
-var schemas = require("../model/schemas");
 var stats = require("../service/BasicStatsService");
 var ranking = require("../service/RankingService");
 var apiHandler = require("./ApiHandler");
 var email = require('../service/EmailService');
 var tournamentService = require("../service/TournamentService");
+var matchService = require("../service/MatchService");
 
 module.exports = function(app) {
     app.post("/api/match", apiHandler.authenticateUser, function(req, res, next) {
@@ -11,37 +11,30 @@ module.exports = function(app) {
         body.createdBy = req.user.alias;
         var tournamentName = body.tournament.name ? body.tournament.name : body.tournament;
         tournamentService.getTournament({"name": tournamentName}, function(err, tournament) {
-            apiHandler.handleResponse(req, res, next, err, function() {
+            apiHandler.handleResponse(req, res, next, err, function () {
                 body.tournament = tournament._id;
-                var match = new schemas.Match(body);
-                match.save(function(err, match) {
-                    apiHandler.handleResponse(req, res, next, err, function() {
+                matchService.save(body, function (err, match) {
+                    apiHandler.handleResponse(req, res, next, err, function () {
                         stats.updateForPlayer([match.home.player, match.home.partner, match.away.player, match.away.partner]);
-                        ranking.calculateGeneralRanking(function() {
+                        ranking.calculateGeneralRanking(function () {
                             email.sendMatchEmail(match);
-                            res.send("created");
+                            apiHandler.handleResponse(req, res, next, err, "created");
                         });
-                    })
-                })
-            })
-        })
-
+                    });
+                });
+            });
+        });
     });
     app.put("/api/match/", apiHandler.authenticateAdmin, function(req, res, next) {
         var body = req.body;
-        tournamentService.getTournament(body.tournament, function(err, tournament) {
-            apiHandler.handleResponse(req, res, next, err, function() {
-                body.tournament = tournament;
-                schemas.Match.update({"_id": body._id}, {$set: body}, function(err, result) {
+                matchService.update(body._id, body, function(err, result) {
                     apiHandler.handleResponse(req, res, next, err, function() {
                         stats.updateForPlayer([body.home.player, body.home.partner, body.away.player, body.away.partner]);
                         ranking.calculateGeneralRanking(function() {
-                            res.json(result);
+                            apiHandler.handleResponse(req, res, next, err, result);
                         });
                     });
-                })
-            })
-        })
+                });
     });
     app.get("/api/match/tournament/:tournament", function(req, res, next) {
         var tournamentName = req.params.tournament;
@@ -49,35 +42,21 @@ module.exports = function(app) {
         tournamentName == "current" ? condition.current = true : condition.name = tournamentName;
         tournamentService.getTournament(condition, function(err, tournament) {
             apiHandler.handleResponse(res, req, next, err, function() {
-                tournamentName = tournament.name;
-                var filter = function(match) {
-                    return match.tournament.name == tournamentName;
-                };
-                schemas.Match.find({}, "-__v").populate({
-                    path: "tournament"/*, FIXME: this should work but I don't know why not...
-                     match: { name: "Torneo 0"},
-                     select: "-_id -__v"*/
-                }).exec(function(err, matches) {
-                    if (err) res.send(err);
-                    matches = matches.filter(function(match) {
-                        return filter(match);
-                    });
-                    res.json(matches);
+                matchService.getForTournament(tournament._id, function(err, matches) {
+                    apiHandler.handleResponse(req, res, next, err, matches);
                 });
             })
         }, "desc");
     });
     app.get("/api/match/player/:alias", function(req, res, next) {
         var alias = req.params.alias;
-        schemas.Match.find({ $or: [{"home.player": alias}, {"away.player": alias}, {"home.partner": alias}, {"away.partner": alias}]}, "-__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
-            if (err) res.send(err);
-            res.json(matches);
-        })
+        matchService.getForAlias(alias, function(err, matches) {
+            apiHandler.handleResponse(req, res, next, err, matches);
+        });
     });
-    app.get("/api/match", function(req, res, nextreq, res) {
-        schemas.Match.find({}, "-_id -__v").populate("tournament", "-_id -__v").exec(function(err, matches) {
-            if (err) res.send(err);
-            res.json(matches);
-        })
+    app.get("/api/match", function(req, res, next) {
+        matchService.getMatches(function(err, matches) {
+            apiHandler.handleResponse(req, res, next, err, matches);
+        });
     })
 };

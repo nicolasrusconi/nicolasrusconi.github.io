@@ -12,7 +12,7 @@ module.exports = function(app) {
     });
     app.get("/api/player/:alias", function(req, res, next) {
         playerService.getByAlias(req.params.alias, function(err, player) {
-            apiHandler.handleResponse(req, res, nex, err, player);
+            apiHandler.handleResponse(req, res, next, err, player);
         });
     });
     app.post("/api/player", function(req, res, next) {
