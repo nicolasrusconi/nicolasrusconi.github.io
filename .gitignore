@@ -1,0 +1,7 @@
+**/.idea
+*.iml
+node_modules
+bower_components
+*.log
+mongo-backup*
+env.config.prod

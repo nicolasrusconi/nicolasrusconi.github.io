@@ -1,0 +1,54 @@
+<h1 class="page-header"> Ranking </h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <% if (user && user.admin) { %>
+            <button type="button" class="btn btn-danger" ng-click="updateRanking()" >Actualizar ranking!</button>
+        <% } %>
+    </div>
+    <div class="panel-body">
+        <div id="ranking">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped text-center middleData text-center">
+                    <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Jugador</th>
+                        <th></th>
+                        <th>Ranking</th>
+                        <th>PJ</th>
+                        <th>PG %</th>
+                        <th>PE %</th>
+                        <th>PP %</th>
+                        <th>Diff</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="player in players track by $index | orderBy:'-ranking'" ng-if="player.active != false" ng-click="goTo(player)" style="cursor: pointer">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            <img ng-src="{{player.image}}" class="img-circle">
+                        </td>
+                        <td>
+                            <span>{{player.alias}}</span>
+                        </td>
+                        <td>{{player.ranking}}</td>
+                        <td>{{player.matchesPlayed}}</td>
+                        <td>{{player.wonAvg}}</td>
+                        <td>{{player.tiedAvg}}</td>
+                        <td>{{player.lostAvg}}</td>
+                        <td ng-init="diff = player.delta;" ng-class="diff >0 ? 'rankPositive' : diff < 0 ? 'rankNegative' : ''">
+                            {{diff | number:2}}
+
+                            <i ng-if="diff > 0" class="fa fa-arrow-circle-up"></i>
+                            <i ng-if="diff < 0" class="fa fa-arrow-circle-down"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
