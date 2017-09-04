@@ -1,0 +1,218 @@
+<h1 class="page-header"> {{theTournament.name}} </h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span>
+            Fecha: {{theTournament.creationDate | date:'dd-MM-yyyy'}}</br>
+            <a ng-click="generateRandomTeams()" href="#" role="button" > Sorteo de equipos (no selecciones)</a>
+            <div ng-repeat="team in randomTeams" style="display: inline-block;">
+                 {{$index == 1 ? 'vs' : ''}}
+                 <div class="team {{team}}" > </div>
+            </div>
+        </span>
+    </div>
+
+    <!--<ui-select ng-model="person.selected" theme="bootstrap">
+        <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="player in players">
+            <div ng-bind-html="player.alias"></div>
+            <small ng-bind-html="player.alias"></small>
+        </ui-select-choices>
+    </ui-select>-->
+    
+    <div class="panel-body">
+        <span style="display: inline-block;" ng-show="players.length > 0">Tags: </span>
+        <div style="display: inline-block;" ng-repeat="player in players">
+            <a  ng-click="removePlayerTag(player)" class="filterLabel label label-primary" href="#" role="button" > {{player}} X </a>
+        </div>
+        <h3>{{thePhase}}</h3>
+        <h4>Partidos</h4>
+
+        <% if (user) { %>
+        <div ng-controller="modalController"> <button type="button" class="btn btn-success" ng-click="open({'tournament': theTournament, 'phase': thePhase})">Cargar partido<i class=""></i></button></div>
+        <% } %>
+        <div class="table-responsive">
+            <table class="table middleData text-center">
+            <thead>
+            <tr>
+                <th class="hidden-xs">Jugadores</th>
+                <th class="hidden-lg">J</th>
+                <th class="hidden-xs">Equipo</th>
+                <th>L</th>
+                <th></th>
+                <th>V</th>
+                <th class="hidden-xs">Equipo</th>
+                <th class="hidden-xs">Jugadores</th>
+                <th class="hidden-lg">J</th>
+                <th class="hidden-xs">Dia</th>
+
+                <!--th>Tags</th-->
+            </tr>
+            </thead>
+                <tbody ng-repeat="match in filteredMatches = (matches | matchFilter:players | tagFilter: tagFilters | orderBy:orderByDateFn)">
+
+                <tr ng-class="match.clazz">
+                    <td ng-class="match.home.clazz"> <!--Jugador-->
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.home.player)}}" ng-click="addPlayerTag(match.home.player)">
+                        <span class="">{{match.home.player}}</span>
+                    </td>
+                    <td rowspan="2" ng-class="match.home.clazz" class="hidden-xs col-md-1"> <!--Equipo-->
+                        <div class="team {{match.home.team}}"></div>
+                    </td>
+                    <td rowspan="2" ng-class="match.home.clazz" class="matchGoals"> <!--Local-->
+                        {{match.home.goals}}
+                        <span ng-if="match.home.penalties">({{match.home.penalties}})</span>
+                    </td>
+                    <td rowspan="2">vs</td> <!--vs-->
+                    <td rowspan="2" ng-class="match.away.clazz" class="matchGoals"> <!--Visitante-->
+                        {{match.away.goals}}
+                        <span ng-if="match.away.penalties">({{match.away.penalties}})</span>
+                    </td>
+                    <td rowspan="2" ng-class="match.away.clazz" class="hidden-xs col-md-1"> <!--Equipo-->
+                        <div class="team {{match.away.team}}"></div>
+                    </td>
+                    <td ng-class="match.away.clazz"> <!--Jugador-->
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.away.player)}}" ng-click="addPlayerTag(match.away.player)">
+                        <span class="">{{match.away.player}}</span>
+                    </td>
+                    <td rowspan="2" class="col-md-1 hidden-xs"> <!--Dia-->
+                        {{match.date | date:'dd-MM'}}
+                    </td>
+                    <% if (user && user.admin) { %>
+                    <td rowspan="2" class="col-md-1" ng-controller="modalController" style="border-top: 0px; background-color: #ffffff!important;"><button type="button" class="btn btn-circle btn-success" ng-click="open(match)"><i class="fa fa-fw fa-edit"></i></button></td>
+                    <% } %>
+                </tr>
+                <tr ng-class="match.clazz">
+                    <td ng-class="match.home.clazz" ng-show="getPicture(match.home.partner)"> <!--Pareja-->
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.home.partner)}}" ng-click="addPlayerTag(match.home.partner)">
+                        <span class="">{{match.home.partner}}</span>
+                    </td>
+                    <td ng-class="match.away.clazz" ng-show="getPicture(match.away.partner)">    <!--Pareja-->
+                        <img class="img-circle img-circle-small" ng-src="{{getPicture(match.away.partner)}}" ng-click="addPlayerTag(match.away.partner)"  >
+                        <span class="">{{match.away.partner}}</span>
+                    </td>
+                </tr>
+                <tr ng-hide="filteredMatches.length"><td colspan="8">Nada por aqui!</td></tr>
+                </tbody>
+        </table>
+        </div>
+        <h4 ng-show="hasStandings(theTournament, thePhase)">Posiciones</h4>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped text-center middleData" ng-show="hasStandings(theTournament, thePhase)">
+            <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Equipo</th>
+                <th class="text-center" >Pts</th>
+                <th class="text-center">PJ</th>
+                <th class="text-center">PG</th>
+                <th class="text-center">PE</th>
+                <th class="text-center">PP</th>
+                <th class="text-center">GF</th>
+                <th class="text-center">GC</th>
+                <th class="text-center">DG</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="position in positions">
+                <td>{{$index + 1}}</td>
+                <td>
+                    <div ng-if="position.team" class="team {{position.team}}"></div>
+                    <img class="img-circle" ng-src="{{getPicture(position.player)}}">
+                    <span class="playerPosition">{{position.player}}</span>
+                    <img ng-if="position.partner" class="img-circle" ng-src="{{getPicture(position.partner)}}">
+                    <span class="playerPosition" ng-if="position.partner">{{position.partner}}</span>
+                </td>
+                <td class="table-bordered" style="background-color: aliceblue" >{{position.points}}</td>
+                <td>{{position.matchesPlayed}}</td>
+                <td>{{position.matchesWon}}</td>
+                <td>{{position.matchesTied}}</td>
+                <td>{{position.matchesLost}}</td>
+                <td>{{position.goalsScored}}</td>
+                <td>{{position.goalsReceived}}</td>
+                <td>{{position.goalsDiff}}</td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+
+<div ng-controller="modalController">
+    <script type="text/ng-template" id="resultsEditor">
+        <div class="modal-header">
+            <h3>Editar</h3>
+            <h4 class="modal-title">{{match.tournament.name}} - {{match.phase}} - {{match.date | date:'dd-MM-yyyy'}}</h4>
+        </div>
+        <div class="modal-body table-responsive">
+            <table class="table table-striped table-hover middleData text-center">
+                <thead>
+                <tr>
+                    <th class=""> <!--Equipo-->
+                        <select id="homeTeam" ng-model="match.home.team" init-team-select></select>
+                    </th>
+                    <th>
+                        <div class="col-xs-12">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="match.date" is-open="opened" ng-required="true" close-text="Close" />
+                            </p>
+                        </div>
+
+                    </th>
+                    <th class=""> <!--Equipo-->
+                        <select id="awayTeam" ng-model="match.away.team" init-team-select></select>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td> <!--Jugador-->
+                        <select id="homePlayer" ng-model="match.home.player" init-player-select ng-options="player for player in playeropts ">
+                        </select>
+                    </td>
+                    <th>Jugadores</th>
+                    <td> <!--Jugador-->
+                        <select id="awayPlayer" ng-model="match.away.player" init-player-select ng-options="player for player in playeropts track by player">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="homePartner" ng-model="match.home.partner" init-player-select ng-options="player for player in playeropts track by player">
+                        </select>
+                    </td>
+                    <th>Compañeros</th>
+                    <td>
+                        <select id="awayPartner" ng-model="match.away.partner" init-player-select ng-options="player for player in playeropts track by player">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="number" ng-model="match.home.goals"></td>
+                    <th>Goles</th>
+                    <td><input type="number" ng-model="match.away.goals"></td>
+                </tr>
+                <tr ng-show="match.away.goals == match.home.goals">
+                    <td><input type="number" ng-model="match.home.penalties"></td>
+                    <th>Penales</th>
+                    <td><input type="number" ng-model="match.away.penalties"></td>
+                </tr>
+                <tr>
+                    <td><input type="number" ng-model="match.home.yellowCards"></td>
+                    <th>Amarillas</th>
+                    <td><input type="number" ng-model="match.away.yellowCards"></td>
+                </tr>
+                <tr>
+                    <td><input type="number" ng-model="match.home.redCards"></td>
+                    <th>Rojas</th>
+                    <td><input type="number" ng-model="match.away.redCards"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>
